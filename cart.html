@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giỏ hàng - Tecknole</title>
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cart-container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 30px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cart-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    }
+
+    h2 {
+      text-align: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: #667eea;
+      font-size: 32px;
+      margin-top: 20px;
+      margin-bottom: 30px;
+      font-weight: 700;
+      position: relative;
+    }
+
+
+
+    .cart-items {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 30px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .cart-items::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .cart-items::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .cart-items::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 10px;
+    }
+
+    .cart-items::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 100px 2fr 1fr 150px 1fr 80px;
+      gap: 20px;
+      align-items: center;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 20px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .cart-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    @media (hover: none) {
+      .cart-item:hover {
+        transform: none;
+      }
+    }
+
+    .item-image img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .item-name {
+      font-weight: 600;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .item-price {
+      font-weight: 700;
+      font-size: 18px;
+      color: #667eea;
+    }
+
+    .item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      padding: 8px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .qty-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .qty-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .qty-btn:active {
+      transform: scale(0.95);
+    }
+
+    @media (hover: none) {
+      .qty-btn:hover {
+        transform: none;
+      }
+      .qty-btn:active {
+        transform: scale(0.95);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+    }
+
+    .qty-input {
+      width: 50px;
+      padding: 8px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .qty-input:focus {
+      border-color: #667eea;
+      outline: none;
+      transform: scale(1.05);
+    }
+
+    .item-subtotal {
+      font-weight: 700;
+      font-size: 18px;
+      color: #764ba2;
+    }
+
+    .btn-delete {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      min-width: 60px;
+    }
+
+    .btn-delete:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    }
+
+    .btn-delete:active {
+      transform: scale(0.95);
+    }
+
+    @media (hover: none) {
+      .btn-delete:hover {
+        transform: none;
+      }
+      .btn-delete:active {
+        transform: scale(0.95);
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+      }
+    }
+
+    .total-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-top: 30px;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .total-section p {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: right;
+      margin: 0;
+    }
+
+    .cart-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 15px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      font-size: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+      filter: grayscale(70%);
+    }
+
+    .btn-continue {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      color: white;
+    }
+
+    .btn-checkout {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-clear {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      color: white;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 80px 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .empty-cart img {
+      width: 250px;
+      margin-bottom: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .empty-cart p {
+      font-size: 24px;
+      color: #666;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 30px;
+      background: rgba(0,0,0,0.3);
+      color: white;
+      margin-top: 50px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Modal xác nhận xóa */
+    .confirm-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .confirm-modal.active {
+      display: flex;
+    }
+
+    .confirm-modal-content {
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+      width: 90%;
+      max-width: 450px;
+      animation: scaleIn 0.3s ease;
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .confirm-modal-header {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .confirm-modal-body {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 30px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .confirm-modal-footer {
+      display: flex;
+      gap: 15px;
+    }
+
+    .confirm-modal-btn {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .confirm-modal-btn-cancel {
+      background: #e0e0e0;
+      color: #555;
+    }
+
+    .confirm-modal-btn-cancel:hover {
+      background: #d0d0d0;
+    }
+
+    .confirm-modal-btn-confirm {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      color: white;
+    }
+
+    .confirm-modal-btn-confirm:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    }
+
+    @media (hover: none) {
+      .confirm-modal-btn:hover {
+        transform: none;
+      }
+      .confirm-modal-btn:active {
+        transform: scale(0.98);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .cart-item {
+        grid-template-columns: 80px 1fr;
+        gap: 15px;
+      }
+      
+      .item-price, .item-quantity, .item-subtotal {
+        grid-column: 2;
+      }
+      
+      .btn-delete {
+        grid-column: 2;
+        justify-self: end;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .cart-container {
+        padding: 25px 15px;
+        margin: 20px auto;
+      }
+      
+      h2 {
+        font-size: 24px;
+      }
+      
+      .cart-item {
+        padding: 15px;
+      }
+
+      .item-image img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .item-name {
+        font-size: 14px;
+      }
+
+      .item-price, .item-subtotal {
+        font-size: 16px;
+      }
+
+      .qty-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+
+      .qty-input {
+        width: 45px;
+        padding: 6px;
+        font-size: 14px;
+      }
+
+      .btn {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+
+      .cart-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .cart-actions > div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+      }
+
+      .total-section p {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cart-container {
+        padding: 20px 10px;
+      }
+
+      .cart-items {
+        max-height: 300px;
+      }
+
+      .item-quantity {
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-top">
+      <div class="inner-logo">
+        <a href="index.html">
+          <img src="assets/images/logoteck.png" alt="logotecknole">
+          <span>Tecknole</span>
+        </a>
+      </div>
+      <div class="user-actions">
+        <a href="login.html" class="login">Đăng nhập</a>
+        <a href="register.html" class="register">Đăng kí</a>
+        <a href="cart.html" class="cart cart-badge">Giỏ hàng <span>0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="cart-container fade-in">
+    <h2>Giỏ hàng của bạn</h2>
+
+    <div id="cart-items" class="cart-items"></div>
+
+    <div id="empty-cart" class="empty-cart" style="display:none;">
+      <img src="https://cdn.sforum.vn/sforum/wp-content/uploads/2024/02/anh-meme-buon-54.jpg" alt="empty">
+      <p>Giỏ hàng của bạn đang trống</p>
+      <a href="products.html" class="btn btn-continue">Quay lại mua sắm</a>
+    </div>
+
+    <div class="total-section" id="total-section">
+      <p>Tổng cộng: <span id="cart-total">0</span> đ</p>
+    </div>
+
+    <div class="cart-actions">
+      <button id="clear-cart" class="btn btn-clear">Xóa tất cả</button>
+      <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <a href="products.html" class="btn btn-continue">Tiếp tục mua hàng</a>
+        <button id="checkout-btn" class="btn btn-checkout">Thanh toán</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal xác nhận xóa -->
+  <div class="confirm-modal" id="confirm-modal">
+    <div class="confirm-modal-content">
+      <div class="confirm-modal-header">Xác nhận xóa</div>
+      <div class="confirm-modal-body">
+        Bạn có chắc chắn muốn xóa tất cả sản phẩm trong giỏ hàng không?
+      </div>
+      <div class="confirm-modal-footer">
+        <button class="confirm-modal-btn confirm-modal-btn-cancel" id="modal-cancel-btn">Hủy</button>
+        <button class="confirm-modal-btn confirm-modal-btn-confirm" id="modal-confirm-btn">Xóa tất cả</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Tecknole. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const cartItemsContainer = document.getElementById("cart-items");
+    const totalEl = document.getElementById("cart-total");
+    const emptyCartEl = document.getElementById("empty-cart");
+    const totalSection = document.getElementById("total-section");
+    const clearBtn = document.getElementById("clear-cart");
+    const checkoutBtn = document.getElementById("checkout-btn");
+    const confirmModal = document.getElementById("confirm-modal");
+    const modalCancelBtn = document.getElementById("modal-cancel-btn");
+    const modalConfirmBtn = document.getElementById("modal-confirm-btn");
+
+    // Hàm tính và cập nhật tổng tiền
+    function updateTotal() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      totalEl.textContent = total.toLocaleString();
+    }
+
+    // Hàm cập nhật số lượng trên header
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const cartBadge = document.querySelector(".cart-badge span");
+      if (cartBadge) cartBadge.innerText = totalItems;
+    }
+
+    // Load giỏ hàng
+    function loadCart() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cartItemsContainer.innerHTML = "";
+
+      if (cart.length === 0) {
+        emptyCartEl.style.display = "block";
+        cartItemsContainer.style.display = "none";
+        totalSection.style.display = "none";
+        clearBtn.disabled = true;
+        checkoutBtn.disabled = true;
+      } else {
+        emptyCartEl.style.display = "none";
+        cartItemsContainer.style.display = "flex";
+        totalSection.style.display = "block";
+        clearBtn.disabled = false;
+        checkoutBtn.disabled = false;
+
+        cart.forEach((item, index) => {
+          const subtotal = item.price * item.quantity;
+
+          const cartItem = document.createElement("div");
+          cartItem.className = "cart-item";
+          cartItem.innerHTML = `
+            <div class="item-image">
+              <img src="${item.img}" alt="${item.name}">
+            </div>
+            <div class="item-name">${item.name}</div>
+            <div class="item-price">${item.price.toLocaleString()}đ</div>
+            <div class="item-quantity">
+              <button class="qty-btn qty-decrease" data-index="${index}">-</button>
+              <input type="number" min="1" max="999" value="${item.quantity}" class="qty-input" data-index="${index}">
+              <button class="qty-btn qty-increase" data-index="${index}">+</button>
+            </div>
+            <div class="item-subtotal subtotal-cell">${subtotal.toLocaleString()}đ</div>
+            <button class="btn-delete" data-index="${index}">Xóa</button>
+          `;
+          cartItemsContainer.appendChild(cartItem);
+        });
+      }
+
+      updateTotal();
+      updateCartCount();
+    }
+
+    // Xử lý tăng/giảm số lượng
+    cartItemsContainer.addEventListener("click", (e) => {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      
+      if (e.target.classList.contains("qty-decrease")) {
+        const index = parseInt(e.target.dataset.index);
+        if (cart[index].quantity > 1) {
+          cart[index].quantity--;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          updateItemQuantity(index, cart[index].quantity, cart[index].price);
+        }
+      }
+      
+      if (e.target.classList.contains("qty-increase")) {
+        const index = parseInt(e.target.dataset.index);
+        if (cart[index].quantity < 999) {
+          cart[index].quantity++;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          updateItemQuantity(index, cart[index].quantity, cart[index].price);
+        }
+      }
+      
+      if (e.target.classList.contains("btn-delete")) {
+        const index = parseInt(e.target.dataset.index);
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCart();
+      }
+    });
+
+    // Cập nhật số lượng khi nhập trực tiếp
+    cartItemsContainer.addEventListener("input", (e) => {
+      if (e.target.classList.contains("qty-input")) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const index = parseInt(e.target.dataset.index);
+        let inputValue = e.target.value;
+        
+        if (inputValue.length > 3) {
+          e.target.value = inputValue.slice(0, 3);
+          inputValue = e.target.value;
+        }
+        
+        let newQty = parseInt(inputValue) || 1;
+        
+        if (newQty < 1) {
+          newQty = 1;
+        } else if (newQty > 999) {
+          newQty = 999;
+          e.target.value = 999;
+        }
+        
+        cart[index].quantity = newQty;
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateItemQuantity(index, newQty, cart[index].price);
+      }
+    });
+
+    // Hàm cập nhật số lượng và thành tiền
+    function updateItemQuantity(index, quantity, price) {
+      const items = cartItemsContainer.querySelectorAll(".cart-item");
+      const item = items[index];
+      const input = item.querySelector(".qty-input");
+      const subtotalCell = item.querySelector(".subtotal-cell");
+      
+      input.value = quantity;
+      subtotalCell.textContent = (price * quantity).toLocaleString() + "đ";
+      
+      updateTotal();
+      updateCartCount();
+    }
+
+    // Xóa tất cả - Mở modal xác nhận
+    clearBtn.addEventListener("click", () => {
+      confirmModal.classList.add("active");
+    });
+
+    // Đóng modal
+    modalCancelBtn.addEventListener("click", () => {
+      confirmModal.classList.remove("active");
+    });
+
+    // Click ngoài modal để đóng
+    confirmModal.addEventListener("click", (e) => {
+      if (e.target === confirmModal) {
+        confirmModal.classList.remove("active");
+      }
+    });
+
+    // Xác nhận xóa tất cả
+    modalConfirmBtn.addEventListener("click", () => {
+      localStorage.removeItem("cart");
+      confirmModal.classList.remove("active");
+      loadCart();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector(".cart-container").classList.add("fade-in");
+      loadCart();
+    });
+  </script>
+</body>
+</html>

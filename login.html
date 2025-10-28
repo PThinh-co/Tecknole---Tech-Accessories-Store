@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập | Phụ kiện công nghệ Tecknole</title>
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/login.css" />
+  </head>
+
+  <body>
+    <div class="login-container">
+      <div class="login-form-box">
+        <h2>Đăng nhập vào Tecknole</h2>
+        <form action="/login" method="POST">
+          <div class="form-group">
+            <label for="username">Tên đăng nhập hoặc Email:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              required
+              aria-label="Tên đăng nhập hoặc Email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Mật khẩu:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              aria-label="Mật khẩu"
+            />
+          </div>
+          <button type="submit" class="submit-btn">ĐĂNG NHẬP</button>
+        </form>
+
+        <div class="links">
+          <a href="forgot-password.html">Quên mật khẩu?</a>
+          |
+          <span
+            >Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></span
+          >
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Về TechStore</h3>
+          <ul>
+            <li><a href="about.html">Giới thiệu</a></li>
+            <li><a href="#">Tuyển dụng</a></li>
+            <li><a href="#">Chính sách bảo mật</a></li>
+            <li><a href="#">Điều khoản sử dụng</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Hỗ trợ khách hàng</h3>
+          <ul>
+            <li><a href="#">Hướng dẫn mua hàng</a></li>
+            <li><a href="#">Chính sách đổi trả</a></li>
+            <li><a href="#">Bảo hành</a></li>
+            <li><a href="#">Câu hỏi thường gặp</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Chính sách</h3>
+          <ul>
+            <li><a href="#">Chính sách thanh toán</a></li>
+            <li><a href="#">Chính sách vận chuyển</a></li>
+            <li><a href="#">Chính sách bảo hành</a></li>
+            <li><a href="#">Chính sách đổi trả</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section contact-info">
+          <h3>Liên hệ</h3>
+          <p>📍 123 Nguyễn Văn Linh, Q7, TP.HCM</p>
+          <p>📞 Hotline: 1900 xxxx</p>
+          <p>✉️ Email: support@techstore.vn</p>
+          <p>🕐 Giờ làm việc: 8:00 - 22:00</p>
+          <div class="social-links">
+            <a href="#">f</a>
+            <a href="#">📷</a>
+            <a href="#">▶️</a>
+            <a href="#">💼</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Tecknole. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

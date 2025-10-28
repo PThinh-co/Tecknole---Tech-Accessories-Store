@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tất cả sản phẩm - Tecknole</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Override CSS để cá đúng 4 sản phẩm mỗi hàng */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-top">
+            <div class="inner-logo">
+                <a href="index.html">        
+                    <img src="assets/images/logoteck.png" alt="logotecknole">
+                    <span>Tecknole</span>
+                </a>
+            </div>
+            <div class="header-search">
+                <form method="get" action="/tim" enctype="multipart/form-data" class="clearfix search-form bg-white" role="search" aria-label="Tìm kiếm sản phẩm">
+                  <select name="scat_id" aria-label="Chọn danh mục">
+                    <option value="">Tất cả danh mục</option>
+                    <option value="1">Màn Hình</option>
+                    <option value="2">Bàn Phím</option>
+                    <option value="3">Chuột</option>
+                    <option value="4">Tai Nghe</option>
+                    <option value="5">Loa</option>
+                    <option value="6">Mic</option>
+                  </select>
+            
+                  <div class="searh-form-container">
+                    <input type="text" id="js-search" class="text_search" name="q" placeholder="Tìm kiếm sản phẩm..." autocomplete="off" aria-autocomplete="list" aria-controls="autocomplete-list" />
+                    <button type="submit" class="submit-search" aria-label="Tìm kiếm">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                        <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      Tìm kiếm
+                    </button>
+            
+                    <div class="autocomplete-suggestions" id="autocomplete-list" role="listbox" aria-hidden="true">
+                      <ul></ul>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            <div class="user-actions">
+                <a href="login.html" class="login">Đăng nhập</a>
+                <a href="register.html" class="register">Đăng kí</a>
+                <a href="cart.html" class="cart cart-badge">
+                    Giỏ hàng
+                    <span>0</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- THANH MENU -->
+        <nav>
+            <div class="nav-container">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="about.html">Giới thiệu</a></li>
+                    <li class="dropdown">
+                        <a href="products.html">Danh mục sản phẩm ▼</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="category.html?type=manhinh">Màn hình</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html?brand=acer">Acer</a></li>
+                                    <li><a href="category.html?brand=asus">Asus</a></li>
+                                    <li><a href="category.html?brand=lg">LG</a></li>
+                                    <li><a href="category.html?brand=msi">Msi</a></li>
+                                    <li><a href="category.html?brand=viewsonic">Viewsonic</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="category.html?type=banphim">Bàn Phím</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html?brand=aula">Aula</a></li>
+                                    <li><a href="category.html?brand=akko">Akko</a></li>
+                                    <li><a href="category.html?brand=razer">Razer</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="category.html?type=chuot">Chuột</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html?brand=razer">Razer</a></li>
+                                    <li><a href="category.html?brand=corsair">Corsair</a></li>
+                                    <li><a href="category.html?brand=logitech">Logitech</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="category.html?type=tainghe">Tai Nghe</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html?brand=apple">Apple</a></li>
+                                    <li><a href="category.html?brand=bose">Bose</a></li>
+                                    <li><a href="category.html?brand=marshall">Marshall</a></li>
+                                    <li><a href="category.html?brand=sony">Sony</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="category.html?type=loa">Loa</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html?brand=acnos">Acnos</a></li>
+                                    <li><a href="category.html?brand=devialet">Devialet</a></li>
+                                    <li><a href="category.html?brand=sony">Sony</a></li>
+                                    <li><a href="category.html?brand=jbl">JBL</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- END HEADER -->
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <h2 class="section-title">Tất cả sản phẩm</h2>
+        
+        <div class="products-grid">
+            <!-- Sản phẩm 1 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=1'">
+                <div class="product-image">
+                    <img src="assets/images/popular_items/aulaf75_vang.png" alt="aula_f75">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Bàn phím Aula F75</div>
+                    <div class="product-price">
+                        1.050.000đ
+                        <span class="old-price">1.380.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 2 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=3'">
+                <div class="product-image">
+                    <img src="assets/images/popular_items/loa_marshal3.webp" alt="loa_marshall_stanmore_3">
+                    <span class="product-badge">NEW</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Loa Marshall Stanmore 3</div>
+                    <div class="product-price">
+                        7.500.000đ
+                        <span class="old-price">7.990.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 3 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=2'">
+                <div class="product-image">
+                    <img src="assets/images/popular_items/msi_mag_274qf_x24_gearvn_d23c9ec1aab847818a2b31d35a3d25e8_1024x1024.jpg" alt="man-hinh-gaming-msi-mag-274qf-x24">
+                    <span class="product-badge">HOT</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Màn hình MSI MAG 274QF X24 27"</div>
+                    <div class="product-price">6.690.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 4 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=4'">
+                <div class="product-image">
+                    <img src="assets/images/popular_items/death_adder_v3pro.webp" alt="chuot-razer">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Chuột Razer Deathadder V3 Pro</div>
+                    <div class="product-price">
+                        5.990.000đ
+                        <span class="old-price">6.990.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 5 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=5'">
+                <div class="product-image">
+                    <img src="assets/images/popular_items/airpods-pro-gen-2-magsafe-charge-usb-c.jpg" alt="airpod_pro2">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Apple Airpod Pro Gen 2</div>
+                    <div class="product-price">6.090.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 6 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=6'">
+                <div class="product-image">
+                    <img src="assets/images/popular_items/G502_hero.jpg" alt="G502_logitech">
+                    <span class="product-badge">NEW</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Chuột G502 Hero Logitech</div>
+                    <div class="product-price">1.490.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+             <!-- Sản phẩm 7 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=7'">
+                <div class="product-image">
+                    <img src="assets/images/popular_items/major5.jpg" alt="loa-major5">
+                    <span class="product-badge">SALE</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Tai nghe Marshall Major V</div>
+                    <div class="product-price">
+                        4.290.000đ
+                        <span class="old-price">4.990.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 8 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=8'">
+                <div class="product-image">
+                    <img src="assets/images/img/banphim/asus_anhtrungbay2.jpg" alt="ban-phim-asus-rog">
+                    <span class="product-badge">HOT</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Bàn phím Asus ROG Falchion RX Low Profile</div>
+                    <div class="product-price">4.090.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+            
+            <!-- Sản phẩm 9 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=9'">
+                <div class="product-image">
+                    <img src="assets/images/img/chuot/corsar_trungbay1.jpg" alt="chuot-corsair-katar-pro">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Chuột Corsair Katar Pro Wireless"</div>
+                    <div class="product-price">
+                        890.000đ
+                        <span class="old-price">990.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+            
+            <!-- Sản phẩm 10 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=10'">
+                <div class="product-image">
+                    <img src="assets/images/img/loa/Acnos_trungbay1.webp" alt="loa-acnos">
+                    <span class="product-badge">NEW</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Loa xách tay Acnos QUAD 64 Ver2</div>
+                    <div class="product-price">
+                        7.590.000đ
+                        <span class="old-price">8.890.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+            
+            <!-- Sản phẩm 11 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=11'">
+                <div class="product-image">
+                    <img src="assets/images/img/banphim/aula-trungbay_2.png" alt="aula-s89">
+                    <span class="product-badge">SALE</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Bàn phím AuLa S98 PRO TM</div>
+                    <div class="product-price">
+                        1.849.000đ
+                        <span class="old-price">2.499.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+            
+            <!-- Sản phẩm 12 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=12'">
+                <div class="product-image">
+                    <img src="assets/images/img/loa/devialet_trungbay1.webp" alt="loa-devialet">
+                    <span class="product-badge">HOT</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Loa Devialet Phantom Ultimate 98dB</div>
+                    <div class="product-price">47.990.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 13 -->
+             <div class="product-card" onclick="window.location='product-detail.html?id=1'">
+                <div class="product-image">
+                    <img src="assets/images/img/banphim/akko_anhtrungbay1.jpg" alt="akko_5075b_plus">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Bàn phím AKKO 5075B Plus</div>
+                    <div class="product-price">1.750.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 14 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=9'">
+                <div class="product-image">
+                    <img src="assets/images/img/tainghe/apple_trungbay1.jpg" alt="apple-beat-solo">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Tai nghe Apple Beats Solo Pro</div>
+                    <div class="product-price">
+                        5.790.000đ
+                        <span class="old-price">6.000.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+            
+            <!-- Sản phẩm 15 -->
+             <div class="product-card" onclick="window.location='product-detail.html?id=1'">
+                <div class="product-image">
+                    <img src="assets/images/img/chuot/logitech_trungbay1.jpg" alt="logitech-g203">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Chuột Logitech G203 Lightsync</div>
+                    <div class="product-price">590.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                        
+            <!-- Sản phẩm 16 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=10'">
+                <div class="product-image">
+                    <img src="assets/images/img/loa/jbl_trungbay1.webp" alt="loa-jbl">
+                    <span class="product-badge">NEW</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Loa Karaoke JBL CV1852T</div>
+                    <div class="product-price">11.590.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                        
+            <!-- Sản phẩm 17 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=12'">
+                <div class="product-image">
+                    <img src="assets/images/img/manhinh/Acer_anhtrungbay.png" alt="man-hinh-acer">
+                    <span class="product-badge">HOT</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Màn hình Acer KG270-X1 27</div>
+                    <div class="product-price">4.290.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+            
+            <!-- Sản phẩm 18 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=9'">
+                <div class="product-image">
+                    <img src="assets/images/img/tainghe/bose_trungbay1.jpg" alt="tai-nghe-bose">
+                    <span class="product-badge">SALE</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Tai nghe Bose QuietComfort Ultra</div>
+                    <div class="product-price">
+                        9.690.000đ
+                        <span class="old-price">10.990.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                        
+            <!-- Sản phẩm 19 -->
+             <div class="product-card" onclick="window.location='product-detail.html?id=1'">
+                <div class="product-image">
+                    <img src="assets/images/img/banphim/aula_trungbay1.png" alt="aula_f75_pro">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Bàn phím AuLa F75 Pro</div>
+                    <div class="product-price">1.860.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+        
+            <!-- Sản phẩm 20 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=9'">
+                <div class="product-image">
+                    <img src="assets/images/img/manhinh/asus_anhtrungbay1.jpg" alt="man-hinh-asus-rog">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Màn hình Asus ROG Strix XG259CMS</div>
+                    <div class="product-price">
+                        7.799.000đ
+                        <span class="old-price">8.999.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                    
+            <!-- Sản phẩm 21 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=12'">
+                <div class="product-image">
+                    <img src="assets/images/img/chuot/razer_trungbay1.jpg" alt="razer-basilisk-v3">
+                    <span class="product-badge">HOT</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Chuột Razer Basilisk V3 Pro</div>
+                    <div class="product-price">4.290.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                                    
+            <!-- Sản phẩm 22 -->
+             <div class="product-card" onclick="window.location='product-detail.html?id=1'">
+                <div class="product-image">
+                    <img src="assets/images/img/tainghe/marshall_trungbay.jpg" alt="marshall-mode2">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Tai nghe Marshall Mode II</div>
+                    <div class="product-price">3.360.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                                            
+            <!-- Sản phẩm 23 -->
+             <div class="product-card" onclick="window.location='product-detail.html?id=1'">
+                <div class="product-image">
+                    <img src="assets/images/img/loa/marshall_trungbay1.webp" alt="loa_marshall_middleton">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Loa Marshall Middleton</div>
+                    <div class="product-price">
+                        6.650.000đ
+                        <span class="old-price">7.790.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                                
+            <!-- Sản phẩm 24 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=10'">
+                <div class="product-image">
+                    <img src="assets/images/img/manhinh/asus_anhtrungbay2.jpg" alt="man-hinh-asus-tuf">
+                    <span class="product-badge">NEW</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Màn hình Asus TUF Gaming VG27AQ5A</div>
+                    <div class="product-price">5.999.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                           
+            <!-- Sản phẩm 25 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=10'">
+                <div class="product-image">
+                    <img src="assets/images/img/banphim/razer_trungbay2.jpg" alt="ban-phim-razer">
+                    <span class="product-badge">NEW</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Bàn phím Razer Huntsman V3 Pro</div>
+                    <div class="product-price">5.999.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                                                
+            <!-- Sản phẩm 26 -->
+             <div class="product-card" onclick="window.location='product-detail.html?id=1'">
+                <div class="product-image">
+                    <img src="assets/images/img/manhinh/lg_anhtrungbay1.jpg" alt="man-hinh-lg">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Màn hình LG 27G850A-B</div>
+                    <div class="product-price">20.390.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                                                    
+            <!-- Sản phẩm 27 -->
+             <div class="product-card" onclick="window.location='product-detail.html?id=1'">
+                <div class="product-image">
+                    <img src="assets/images/img/chuot/Steelseries_trungbay1.jpg" alt="chuot-steelseries">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Chuột SteelSeries Aerox 5 Wireless</div>
+                    <div class="product-price">
+                        4.090.000đ
+                        <span class="old-price">4.590.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                                               
+            <!-- Sản phẩm 28 -->
+            <div class="product-card" onclick="window.location='product-detail.html?id=10'">
+                <div class="product-image">
+                    <img src="assets/images/img/tainghe/sony_trungbay.jpg" alt="tai-nghe-sony">
+                    <span class="product-badge">NEW</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Tai nghe Sony WH‑CH520</div>
+                    <div class="product-price">1.590.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                                                        
+            <!-- Sản phẩm 29 -->
+             <div class="product-card" onclick="window.location='product-detail.html?id=1'">
+                <div class="product-image">
+                    <img src="assets/images/img/loa/sony_trungbay1.webp" alt="loa-sony">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Loa Sony ULT Field 5</div>
+                    <div class="product-price">
+                        7.690.000đ
+                        <span class="old-price">8.090.000đ</span>
+                    </div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                           
+            <!-- Sản phẩm 30 -->
+             <div class="product-card" onclick="window.location='product-detail.html?id=1'">
+                <div class="product-image">
+                    <img src="assets/images/img/manhinh/viewsonic_anhtrungbay1.jpg" alt="man-hinh-viewsonic">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Màn hình Viewsonic VX2428AJ-BL</div>
+                    <div class="product-price">3.890.000đ</div>
+                    <button class="add-to-cart">Thêm vào giỏ</button>
+                </div>
+            </div>
+                                 
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Về TechStore</h3>
+                <ul>
+                    <li><a href="about.html">Giới thiệu</a></li>
+                    <li><a href="#">Tuyển dụng</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                    <li><a href="#">Điều khoản sử dụng</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Hỗ trợ khách hàng</h3>
+                <ul>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Bảo hành</a></li>
+                    <li><a href="#">Câu hỏi thường gặp</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Chính sách</h3>
+                <ul>
+                    <li><a href="#">Chính sách thanh toán</a></li>
+                    <li><a href="#">Chính sách vận chuyển</a></li>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section contact-info">
+                <h3>Liên hệ</h3>
+                <p>📍 123 Nguyễn Văn Linh, Q7, TP.HCM</p>
+                <p>📞 Hotline: 1900 xxxx</p>
+                <p>✉️ Email: support@techstore.vn</p>
+                <p>🕐 Giờ làm việc: 8:00 - 22:00</p>
+                <div class="social-links">
+                    <a href="#">f</a>
+                    <a href="#">📷</a>
+                    <a href="#">▶️</a>
+                    <a href="#">💼</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Tecknole. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
