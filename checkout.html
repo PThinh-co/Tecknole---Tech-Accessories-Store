@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh toán - Tecknole</title>
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    body {
+      background: #f5f5f5;
+    }
+
+    .checkout-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 30px;
+    }
+
+    .checkout-form {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .order-summary {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+    }
+
+    h2 {
+      color: var(--text-color-one);
+      margin-bottom: 25px;
+      font-size: 24px;
+      font-weight: 700;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--color-three);
+    }
+
+    .form-section {
+      margin-bottom: 30px;
+    }
+
+    .form-section h3 {
+      color: var(--text-color-one);
+      font-size: 18px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    .form-group input, 
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--color-one);
+      outline: none;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 15px;
+      flex-direction: column;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .radio-option:hover {
+      border-color: var(--color-one);
+      background: #f8f9ff;
+    }
+
+    .radio-option input[type="radio"] {
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .radio-option.selected {
+      border-color: var(--color-one);
+      background: #f8f9ff;
+    }
+
+    .address-option {
+      display: block;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .address-option:hover {
+      border-color: var(--color-one);
+    }
+
+    .address-option input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .address-option.selected {
+      border-color: var(--color-one);
+      background: #f8f9ff;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      align-items: center;
+    }
+
+    .summary-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 12px;
+    }
+
+    .item-details {
+      flex: 1;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .item-info {
+      flex: 1;
+    }
+
+    .item-name {
+      font-weight: 600;
+      color: var(--text-color-one);
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .item-quantity {
+      color: #999;
+      font-size: 12px;
+    }
+
+    .item-price {
+      font-weight: 600;
+      color: var(--color-one);
+    }
+
+    .summary-total {
+      padding: 20px 0;
+      margin-top: 15px;
+      border-top: 2px solid var(--color-three);
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .total-row.final {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-one);
+      padding-top: 15px;
+      border-top: 2px solid #e0e0e0;
+    }
+
+    .btn-checkout {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--color-one), var(--color-two));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 20px;
+    }
+
+    .btn-checkout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(81, 112, 255, 0.4);
+    }
+
+    .btn-back {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #6c757d;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s;
+      margin-bottom: 20px;
+    }
+
+    .btn-back:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .checkout-container {
+        grid-template-columns: 1fr;
+      }
+
+      .order-summary {
+        order: -1;
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-top">
+      <div class="inner-logo">
+        <a href="index.html">
+          <img src="assets/images/logoteck.png" alt="logotecknole">
+          <span>Tecknole</span>
+        </a>
+      </div>
+      <div class="user-actions">
+        <a href="login.html" class="login">Đăng nhập</a>
+        <a href="register.html" class="register">Đăng kí</a>
+        <a href="cart.html" class="cart cart-badge">Giỏ hàng <span>0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="checkout-container">
+    <!-- FORM THANH TOÁN -->
+    <div class="checkout-form">
+      <a href="cart.html" class="btn-back">← Quay lại giỏ hàng</a>
+      <h2>🛒 Thanh toán đơn hàng</h2>
+
+      <form id="checkout-form">
+        <!-- Thông tin người nhận -->
+        <div class="form-section">
+          <h3>📋 Thông tin người nhận</h3>
+          <div class="form-group">
+            <label>Họ và tên *</label>
+            <input type="text" id="receiver-name" required>
+          </div>
+          <div class="form-group">
+            <label>Số điện thoại *</label>
+            <input type="tel" id="receiver-phone" required pattern="[0-9]{10,11}">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="receiver-email">
+          </div>
+        </div>
+
+        <!-- Địa chỉ giao hàng -->
+        <div class="form-section">
+          <h3>📍 Địa chỉ giao hàng</h3>
+          <div class="form-group">
+            <div class="radio-group" id="address-options">
+              <!-- Options will be generated by JS -->
+            </div>
+          </div>
+          <div id="new-address-fields" style="display: none;">
+            <div class="form-group">
+              <label>Tỉnh/Thành phố *</label>
+              <select id="province" required>
+                <option value="">Chọn Tỉnh/Thành phố</option>
+                <option value="Hà Nội">Hà Nội</option>
+                <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                <option value="Đà Nẵng">Đà Nẵng</option>
+                <option value="Cần Thơ">Cần Thơ</option>
+                <option value="Hải Phòng">Hải Phòng</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Quận/Huyện *</label>
+              <input type="text" id="district" required>
+            </div>
+            <div class="form-group">
+              <label>Phường/Xã *</label>
+              <input type="text" id="ward" required>
+            </div>
+            <div class="form-group">
+              <label>Địa chỉ cụ thể *</label>
+              <textarea id="street" required placeholder="Số nhà, tên đường..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phương thức thanh toán -->
+        <div class="form-section">
+          <h3>💳 Phương thức thanh toán</h3>
+          <div class="radio-group">
+            <label class="radio-option selected">
+              <input type="radio" name="payment" value="cash" checked>
+              <div>
+                <strong>💵 Thanh toán khi nhận hàng (COD)</strong>
+                <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                  Thanh toán bằng tiền mặt khi nhận hàng
+                </div>
+              </div>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="payment" value="transfer">
+              <div>
+                <strong>🏦 Chuyển khoản ngân hàng</strong>
+                <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                  Chuyển khoản qua ngân hàng (sẽ gửi thông tin sau khi đặt hàng)
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Ghi chú -->
+        <div class="form-section">
+          <h3>📝 Ghi chú đơn hàng</h3>
+          <div class="form-group">
+            <textarea id="order-note" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-checkout">
+          🛍️ Đặt hàng ngay
+        </button>
+      </form>
+    </div>
+
+    <!-- ĐƠN HÀNG -->
+    <div class="order-summary">
+      <h2>📦 Đơn hàng của bạn</h2>
+      <div id="order-items"></div>
+      <div class="summary-total">
+        <div class="total-row">
+          <span>Tạm tính:</span>
+          <span id="subtotal">0đ</span>
+        </div>
+        <div class="total-row">
+          <span>Phí vận chuyển:</span>
+          <span id="shipping">30.000đ</span>
+        </div>
+        <div class="total-row final">
+          <span>Tổng cộng:</span>
+          <span id="total">0đ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/auth.js"></script>
+  <script>
+    // Kiểm tra đăng nhập
+    if (!requireLogin()) {
+      // Redirected
+    }
+
+    const user = getCurrentUser();
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const currentUserData = users.find(u => u.username === user.username);
+    const cart = getCart();
+
+    // Kiểm tra giỏ hàng
+    if (cart.length === 0) {
+      alert('Giỏ hàng trống!');
+      window.location.href = 'cart.html';
+    }
+
+    // Hiển thị đơn hàng
+    function displayOrder() {
+      const orderItems = document.getElementById('order-items');
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const shipping = 30000;
+      const total = subtotal + shipping;
+
+      orderItems.innerHTML = cart.map(item => `
+        <div class="summary-item">
+          <div class="item-details">
+            <img src="${item.img}" alt="${item.name}">
+            <div class="item-info">
+              <div class="item-name">${item.name}</div>
+              <div class="item-quantity">Số lượng: ${item.quantity}</div>
+            </div>
+          </div>
+          <div class="item-price">${(item.price * item.quantity).toLocaleString()}đ</div>
+        </div>
+      `).join('');
+
+      document.getElementById('subtotal').textContent = subtotal.toLocaleString() + 'đ';
+      document.getElementById('total').textContent = total.toLocaleString() + 'đ';
+    }
+
+    // Load thông tin người dùng
+    function loadUserInfo() {
+      document.getElementById('receiver-name').value = currentUserData.fullname || '';
+      document.getElementById('receiver-phone').value = currentUserData.phone || '';
+      document.getElementById('receiver-email').value = currentUserData.email || '';
+    }
+
+    // Load địa chỉ
+    function loadAddressOptions() {
+      const addressOptions = document.getElementById('address-options');
+      let html = '';
+
+      if (currentUserData.address) {
+        html += `
+          <label class="address-option selected">
+            <input type="radio" name="address" value="saved" checked>
+            <div>
+              <strong>📍 Địa chỉ đã lưu</strong>
+              <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                ${currentUserData.address}
+              </div>
+            </div>
+          </label>
+        `;
+      }
+
+      html += `
+        <label class="address-option ${!currentUserData.address ? 'selected' : ''}">
+          <input type="radio" name="address" value="new" ${!currentUserData.address ? 'checked' : ''}>
+          <strong>📝 Nhập địa chỉ mới</strong>
+        </label>
+      `;
+
+      addressOptions.innerHTML = html;
+
+      // Handle address selection
+      document.querySelectorAll('input[name="address"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+          document.querySelectorAll('.address-option').forEach(opt => opt.classList.remove('selected'));
+          this.closest('.address-option').classList.add('selected');
+          
+          const newAddressFields = document.getElementById('new-address-fields');
+          if (this.value === 'new') {
+            newAddressFields.style.display = 'block';
+            newAddressFields.querySelectorAll('input, select, textarea').forEach(field => {
+              field.required = true;
+            });
+          } else {
+            newAddressFields.style.display = 'none';
+            newAddressFields.querySelectorAll('input, select, textarea').forEach(field => {
+              field.required = false;
+            });
+          }
+        });
+      });
+
+      // Trigger initial state
+      if (currentUserData.address) {
+        document.getElementById('new-address-fields').style.display = 'none';
+      } else {
+        document.getElementById('new-address-fields').style.display = 'block';
+      }
+    }
+
+    // Handle payment method selection
+    document.querySelectorAll('.radio-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
+        this.classList.add('selected');
+        this.querySelector('input[type="radio"]').checked = true;
+      });
+    });
+
+    // Submit form
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const receiverName = document.getElementById('receiver-name').value.trim();
+      const receiverPhone = document.getElementById('receiver-phone').value.trim();
+      const receiverEmail = document.getElementById('receiver-email').value.trim();
+      const addressType = document.querySelector('input[name="address"]:checked').value;
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+      const orderNote = document.getElementById('order-note').value.trim();
+
+      let shippingAddress = '';
+      if (addressType === 'saved') {
+        shippingAddress = currentUserData.address;
+      } else {
+        const province = document.getElementById('province').value;
+        const district = document.getElementById('district').value.trim();
+        const ward = document.getElementById('ward').value.trim();
+        const street = document.getElementById('street').value.trim();
+        shippingAddress = `${street}, ${ward}, ${district}, ${province}`;
+      }
+
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const shipping = 30000;
+      const total = subtotal + shipping;
+
+      const order = {
+        items: cart,
+        receiverName: receiverName,
+        receiverPhone: receiverPhone,
+        receiverEmail: receiverEmail,
+        shippingAddress: shippingAddress,
+        paymentMethod: paymentMethod,
+        orderNote: orderNote,
+        subtotal: subtotal,
+        shipping: shipping,
+        total: total,
+        orderDate: new Date().toISOString(),
+        status: 'pending'
+      };
+
+      // Lưu đơn hàng
+      const orders = JSON.parse(localStorage.getItem(`orders_${user.username}`)) || [];
+      orders.push(order);
+      localStorage.setItem(`orders_${user.username}`, JSON.stringify(orders));
+
+      // Xóa giỏ hàng
+      clearCart();
+
+      // Hiển thị thông báo thành công
+      alert(`
+✅ Đặt hàng thành công!
+
+Mã đơn hàng: #${orders.length}
+Tổng tiền: ${total.toLocaleString()}đ
+Phương thức thanh toán: ${paymentMethod === 'cash' ? 'Tiền mặt' : 'Chuyển khoản'}
+
+Cảm ơn bạn đã mua hàng tại Tecknole!
+      `);
+
+      // Chuyển đến trang đơn hàng
+      window.location.href = 'profile.html';
+    });
+
+    // Initialize
+    displayOrder();
+    loadUserInfo();
+    loadAddressOptions();
+  </script>
+</body>
+</html>
