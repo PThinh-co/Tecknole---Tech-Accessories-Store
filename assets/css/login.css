@@ -22,9 +22,9 @@ body{
 .login-form-box h2 {
   text-align: center;
   margin-bottom: 25px;
-  color: #333;
+  color: var(--text-color-one); 
   font-size: 24px;
-  font-weight: 600px;
+  font-weight: 800; 
 
 }
 

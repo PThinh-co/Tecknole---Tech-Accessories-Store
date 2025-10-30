@@ -29,38 +29,33 @@
   </div>
 
   <script>
-    // Lấy ID sản phẩm từ URL
     const params = new URLSearchParams(window.location.search);
     const id = parseInt(params.get("id"));
-
-    // Giả lập danh sách sản phẩm (giống file products.html)
-    const products = [
-      { id: 1, name: "Bàn phím Aula F75", price: 750000, img: "assets/images/popular_items/aulaf75_vang.png", desc: "Bàn phím cơ hot swap, 3 mode, thiết kế compact." },
-      { id: 2, name: "Màn hình MSI MAG 274QF X24 27\"", price: 5590000, img: "assets/images/popular_items/msi_mag_274qf_x24_gearvn_d23c9ec1aab847818a2b31d35a3d25e8_1024x1024.jpg", desc: "Màn hình gaming 240Hz, độ phân giải 2K." },
-      { id: 3, name: "Loa Marshall Stanmore 3", price: 9550000, img: "assets/images/popular_items/loa_marshal3.webp", desc: "Loa Bluetooth cao cấp, âm thanh trung thực." }
-    ];
-
+  
+    const products = [ /* giữ nguyên */ ];
+  
     const product = products.find(p => p.id === id);
-    if (!product) {
-      document.body.innerHTML = "<h2>Không tìm thấy sản phẩm!</h2>";
-    } else {
+    if (product) {
       document.getElementById("product-img").src = product.img;
       document.getElementById("product-name").innerText = product.name;
       document.getElementById("product-price").innerText = product.price.toLocaleString() + "đ";
       document.getElementById("product-desc").innerText = product.desc;
     }
-
-    // Thêm vào giỏ hàng
+  
+    // DÙNG addToCart() thay vì localStorage trực tiếp
     document.getElementById("add-to-cart").addEventListener("click", () => {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const existing = cart.find(item => item.name === product.name);
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        cart.push({ name: product.name, price: product.price, img: product.img, quantity: 1 });
+      if (!window.isLoggedIn()) {
+        sessionStorage.setItem('returnUrl', window.location.href);
+        alert('Vui lòng đăng nhập để thêm vào giỏ!');
+        window.location.href = 'login.html';
+        return;
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
-      alert("🛒 Đã thêm " + product.name + " vào giỏ hàng!");
+  
+      window.addToCart({
+        name: product.name,
+        price: product.price,
+        img: product.img
+      });
     });
   </script>
 </body>
