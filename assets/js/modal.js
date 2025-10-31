@@ -78,7 +78,7 @@ function togglePassword(inputId, iconId) {
     input.type = 'text';
     icon.textContent = '👁️';
   } else {
-input.type = 'password';
+    input.type = 'password';
     icon.textContent = '👁️‍🗨️';
   }
 }
@@ -100,7 +100,7 @@ function handleLogin(e) {
   e.preventDefault();
   
   const username = document.getElementById('login-username').value.trim();
-const password = document.getElementById('login-password').value;
+  const password = document.getElementById('login-password').value;
   
   clearFormErrors();
   
@@ -131,6 +131,7 @@ const password = document.getElementById('login-password').value;
     return;
   }
   
+  // Lưu thông tin người dùng đang đăng nhập (bỏ password đi)
   localStorage.setItem('bs_user', JSON.stringify({ 
     username: user.username,
     fullName: user.fullName,
@@ -141,8 +142,8 @@ const password = document.getElementById('login-password').value;
   
   closeLoginModal();
   alert('Đăng nhập thành công!');
-  updateAuthUI();
-  location.reload();
+  updateAuthUI(); // Cập nhật giao diện sau khi đăng nhập
+  location.reload(); // Tải lại trang để cập nhật các thành phần khác nếu cần
 }
 
 // Xử lý đăng ký
@@ -178,7 +179,7 @@ function handleRegister(e) {
     document.getElementById('error-password').textContent = 'Vui lòng nhập mật khẩu';
     hasError = true;
   } else if (password.length < 6) {
-document.getElementById('error-password').textContent = 'Mật khẩu phải có ít nhất 6 ký tự';
+    document.getElementById('error-password').textContent = 'Mật khẩu phải có ít nhất 6 ký tự';
     hasError = true;
   }
   
@@ -196,7 +197,7 @@ document.getElementById('error-password').textContent = 'Mật khẩu phải có
   }
   
   if (!phone) {
-document.getElementById('error-phone').textContent = 'Vui lòng nhập số điện thoại';
+    document.getElementById('error-phone').textContent = 'Vui lòng nhập số điện thoại';
     hasError = true;
   } else if (!validatePhone(phone)) {
     document.getElementById('error-phone').textContent = 'Số điện thoại phải có 10 chữ số';
@@ -219,7 +220,7 @@ document.getElementById('error-phone').textContent = 'Vui lòng nhập số đi�
   const newUser = {
     fullName,
     username,
-    password,
+    password, // Lưu mật khẩu dưới dạng plain text (chỉ dùng cho mục đích demo)
     email,
     phone,
     address,
@@ -231,7 +232,8 @@ document.getElementById('error-phone').textContent = 'Vui lòng nhập số đi�
   
   closeRegisterModal();
   alert('Đăng ký thành công! Vui lòng đăng nhập.');
-  setTimeout(() => openLoginModal(), 300);
+  // Logic hiện modal đăng nhập sau khi đăng ký thành công
+  setTimeout(() => openLoginModal(), 300); 
 }
 
 // Đăng xuất từ modal
@@ -239,7 +241,57 @@ function handleLogoutModal() {
   if (confirm('Bạn có chắc muốn đăng xuất?')) {
     localStorage.removeItem('bs_user');
     closeProfileModal();
-    updateAuthUI();
-    location.reload();
+    updateAuthUI(); // Cập nhật giao diện sau khi đăng xuất
+    location.reload(); // Tải lại trang để cập nhật giao diện
   }
 }
+
+
+// ==================== CẬP NHẬT GIAO DIỆN XÁC THỰC ====================
+
+// Hàm bổ sung để cập nhật khu vực đăng nhập/profile trong header
+function updateAuthUI() {
+  const authArea = document.getElementById('authArea');
+  const userStr = localStorage.getItem('bs_user');
+  
+  if (authArea) {
+    if (userStr) {
+      // Đã đăng nhập
+      const user = JSON.parse(userStr);
+      const firstName = user.fullName.split(' ').slice(-1)[0]; // Lấy tên cuối
+      authArea.innerHTML = `
+        <a href="cart.html" class="cart cart-badge">Giỏ hàng <span>0</span></a>
+        <button class="btn-profile" onclick="openProfileModal()">
+          Xin chào, ${firstName} 👤
+        </button>
+      `;
+    } else {
+      // Chưa đăng nhập (Giao diện mặc định từ HTML)
+      authArea.innerHTML = `
+        <button class="btn-auth" onclick="openLoginModal()">Đăng nhập</button>
+        <button class="btn-auth btn-signup" onclick="openRegisterModal()">
+          Đăng ký
+        </button>
+        <a href="cart.html" class="cart cart-badge">Giỏ hàng <span>0</span></a>
+      `;
+    }
+  }
+}
+
+// ==================== KHỞI TẠO ====================
+
+// Chạy hàm này khi toàn bộ DOM đã tải xong để kiểm tra trạng thái đăng nhập
+document.addEventListener('DOMContentLoaded', updateAuthUI);
+
+// Gắn sự kiện submit cho form đăng nhập và đăng ký
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', handleLogin);
+  }
+
+  const registerForm = document.getElementById('register-form');
+  if (registerForm) {
+    registerForm.addEventListener('submit', handleRegister);
+  }
+});

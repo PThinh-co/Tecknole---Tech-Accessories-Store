@@ -127,14 +127,15 @@
    }
    .cart{
     padding: 10px 20px;
-    border-radius: 10px;
-    border: none;
-    background: #ffffff ; 
-    font-weight: 400;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    color: var(--text-color-one);
+  border-radius: 10px;
+  border: none;
+  background: #fff; /* Màu nền nhạt hơn để phân biệt */
+  color: var(--text-color-one);
+  font-weight: 600; /* Làm nổi bật hơn */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     
    }
    .cart-badge {
@@ -426,7 +427,19 @@
   color: #2c3e50;
   font-weight: 600;
 }
-
+.btn-profile {
+  /* Kế thừa các style cơ bản của nút xác thực */
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #ffffff; /* Màu nền nhạt hơn để phân biệt */
+  color: var(--text-color-one);
+  font-weight: 600; /* Làm nổi bật hơn */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 .btn-logout {
   padding: 6px 12px;
   border-radius: 8px;
@@ -438,7 +451,6 @@
   transition: all 0.3s ease;
   font-size: 0.85rem;
 }
-
 .btn-logout:hover {
   background: #c0392b;
   transform: translateY(-2px);
