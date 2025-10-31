@@ -1,62 +1,381 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chi tiết sản phẩm</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    .product-detail { display: flex; gap: 20px; align-items: flex-start; }
-    img { width: 300px; border-radius: 10px; }
-    .info { max-width: 500px; }
-    h2 { margin: 0 0 10px; }
-    .price { color: #e74c3c; font-size: 20px; font-weight: bold; }
-    button {
-      background: #3498db; color: white; padding: 10px 20px;
-      border: none; border-radius: 6px; cursor: pointer; margin-top: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm - Tecknole</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body {
+            background: #0a0e27;
+            color: white;
+        }
+
+        .product-detail-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .product-image-section {
+            background: #f5f5f5;
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+        }
+
+        .product-image-section img {
+            max-width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+        }
+
+        .product-info-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        .product-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .product-price {
+            font-size: 42px;
+            color: #ff5722;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-price .old-price {
+            font-size: 24px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 15px;
+        }
+
+        .product-stock {
+            font-size: 16px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stock-label {
+            color: #aaa;
+        }
+
+        .stock-value {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .product-description {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 40px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .quantity-selector label {
+            font-weight: 600;
+            color: #ddd;
+        }
+
+        .quantity-selector input {
+            width: 80px;
+            padding: 12px;
+            text-align: center;
+            border: 2px solid #444;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            background: #1a1e3a;
+            color: white;
+        }
+
+        .btn-add-to-cart {
+            flex: 1;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #ff5722, #ff7043);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(255, 87, 34, 0.4);
+        }
+
+        .btn-add-to-cart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 30px rgba(255, 87, 34, 0.6);
+        }
+
+        .product-tabs {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 20px;
+            background: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button.active {
+            color: white;
+            border-bottom-color: #ff5722;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table tr {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .specs-table td {
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .specs-table td:first-child {
+            color: #aaa;
+            font-weight: 600;
+            width: 200px;
+        }
+
+        .specs-table td:last-child {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .product-title {
+                font-size: 32px;
+            }
+
+            .product-price {
+                font-size: 32px;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .quantity-selector {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="product-detail">
-    <img id="product-img" src="" alt="">
-    <div class="info">
-      <h2 id="product-name"></h2>
-      <div class="price" id="product-price"></div>
-      <p id="product-desc"></p>
-      <button id="add-to-cart">Thêm vào giỏ</button>
-    </div>
-  </div>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-top">
+            <div class="inner-logo">
+                <a href="index.html">
+                    <img src="assets/images/logoteck.png" alt="logotecknole">
+                    <span>Tecknole</span>
+                </a>
+            </div>
+            <div class="header-search">
+                <form method="get" action="/tim" class="clearfix search-form bg-white">
+                    <select name="scat_id">
+                        <option value="">Tất cả danh mục</option>
+                        <option value="1">Màn Hình</option>
+                        <option value="2">Bàn Phím</option>
+                        <option value="3">Chuột</option>
+                        <option value="4">Tai Nghe</option>
+                        <option value="5">Loa</option>
+                    </select>
+                    <div class="searh-form-container">
+                        <input type="text" id="js-search" class="text_search" name="q" placeholder="Tìm kiếm sản phẩm..." />
+                        <button type="submit" class="submit-search">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Tìm kiếm
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="user-actions">
+                <a href="login.html" class="login">Đăng nhập</a>
+                <a href="register.html" class="register">Đăng ký</a>
+                <a href="cart.html" class="cart cart-badge">
+                    Giỏ hàng
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+        
+        <nav>
+            <div class="nav-container">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="about.html">Giới thiệu</a></li>
+                    <li class="dropdown">
+                        <a href="products.html">Danh mục sản phẩm ▼</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="category.html?type=manhinh">Màn hình</a></li>
+                            <li><a href="category.html?type=banphim">Bàn Phím</a></li>
+                            <li><a href="category.html?type=chuot">Chuột</a></li>
+                            <li><a href="category.html?type=tainghe">Tai Nghe</a></li>
+                            <li><a href="category.html?type=loa">Loa</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const id = parseInt(params.get("id"));
-  
-    const products = [ /* giữ nguyên */ ];
-  
-    const product = products.find(p => p.id === id);
-    if (product) {
-      document.getElementById("product-img").src = product.img;
-      document.getElementById("product-name").innerText = product.name;
-      document.getElementById("product-price").innerText = product.price.toLocaleString() + "đ";
-      document.getElementById("product-desc").innerText = product.desc;
-    }
-  
-    // DÙNG addToCart() thay vì localStorage trực tiếp
-    document.getElementById("add-to-cart").addEventListener("click", () => {
-      if (!window.isLoggedIn()) {
-        sessionStorage.setItem('returnUrl', window.location.href);
-        alert('Vui lòng đăng nhập để thêm vào giỏ!');
-        window.location.href = 'login.html';
-        return;
-      }
-  
-      window.addToCart({
-        name: product.name,
-        price: product.price,
-        img: product.img
-      });
-    });
-  </script>
+    <!-- PRODUCT DETAIL -->
+    <div class="product-detail-container">
+        <div class="product-detail-grid">
+            <div class="product-image-section">
+                <img id="product-image" src="" alt="Product Image">
+            </div>
+
+            <div class="product-info-section">
+                <h1 class="product-title" id="product-name">McLaren 750S</h1>
+                
+                <div class="product-price">
+                    <span id="product-price">$142,000.00</span>
+                    <span class="old-price" id="product-old-price" style="display: none;">$160,000.00</span>
+                </div>
+
+                <div class="product-stock">
+                    <span class="stock-label">In Stock:</span>
+                    <span class="stock-value" id="product-stock">8</span>
+                </div>
+
+                <div class="product-description" id="product-description">
+                    Loading product description...
+                </div>
+
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <label for="quantity">Số lượng:</label>
+                        <input type="number" id="quantity" value="1" min="1" max="100">
+                    </div>
+                    <button class="btn-add-to-cart" onclick="addToCart()">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="product-tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="switchTab(0)">Description</button>
+                <button class="tab-button" onclick="switchTab(1)">Specifications</button>
+            </div>
+
+            <div class="tab-content active" id="tab-description">
+                <p id="full-description">Full product description will be loaded here...</p>
+            </div>
+
+            <div class="tab-content" id="tab-specifications">
+                <table class="specs-table" id="specs-table">
+                    <tr><td>Loading...</td><td>Please wait</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Về TechStore</h3>
+                <ul>
+                    <li><a href="about.html">Giới thiệu</a></li>
+                    <li><a href="#">Tuyển dụng</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Hỗ trợ khách hàng</h3>
+                <ul>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact-info">
+                <h3>Liên hệ</h3>
+                <p>📍 123 Nguyễn Văn Linh, Q7, TP.HCM</p>
+                <p>📞 Hotline: 1900 xxxx</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Tecknole. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/product-detail.js"></script>
 </body>
 </html>

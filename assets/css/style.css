@@ -125,7 +125,18 @@
      background: rgba(255, 255, 255, 0.2);
      transform: translateY(-2px);
    }
-   
+   .cart{
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: #ffffff ; 
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    color: var(--text-color-one);
+    
+   }
    .cart-badge {
      position: relative;
    }
@@ -205,7 +216,7 @@
      min-width: 250px;
      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
      border-radius: 8px;
-     overflow: visible;
+     overflow: visible; 
      z-index: 100;
      list-style: none;
      margin: 0;
@@ -382,7 +393,57 @@
    .autocomplete-suggestions li:hover {
      background: var(--color-three);
    }
-   
+   /* ===== AUTH AREA ===== */
+.auth-cart {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+#authArea {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-auth {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #ffffff ; 
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+.btn-signup {
+  background:  #ffffff;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.btn-logout {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #e74c3c;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.btn-logout:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+}
+
    
    /* ============================================================
       HERO SECTION
@@ -393,6 +454,8 @@
      color: var(--text-color-two);
      padding: 80px 20px;
      text-align: center;
+     position: relative;
+    z-index: 1;
    }
     
    .hero h1 {
@@ -812,3 +875,284 @@
        gap: 30px;
      }
    }
+  
+/* ==================== MODAL AUTH STYLES ==================== */
+
+.auth-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+.auth-modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+}
+
+.auth-modal-content {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 480px;
+  width: 90%;
+  max-height: auto;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+  z-index: 10000;
+  box-sizing: border-box;
+}
+
+.auth-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #7f8c8d;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.auth-modal-close:hover {
+  background: #f0f0f0;
+  color: #2c3e50;
+  transform: rotate(90deg);
+}
+
+.auth-modal-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-modal-header h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.auth-modal-header p {
+  color: #7f8c8d;
+  font-size: 1rem;
+}
+
+.auth-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.auth-modal-form .form-group {
+  position: relative;
+}
+
+.auth-modal-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #7f8c8d;
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.auth-modal-form input {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 3rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+.auth-modal-form input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  cursor: pointer;
+  font-size: 1.3rem;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+.password-toggle:hover {
+  transform: scale(1.1);
+}
+
+.error-msg {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  display: block;
+  min-height: 1.2rem;
+}
+
+.btn-auth-submit {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.btn-auth-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+.auth-modal-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+}
+
+.auth-modal-footer a {
+  color: #667eea;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.auth-modal-footer a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* Profile Modal Styles */
+.profile-avatar-small {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin: 0 auto 1rem;
+  color: white;
+}
+
+.profile-info-modal {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.profile-info-modal .info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.profile-info-modal .info-row:last-child {
+  border-bottom: none;
+}
+
+.profile-info-modal .info-label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.profile-info-modal .info-value {
+  color: #7f8c8d;
+  text-align: right;
+  word-break: break-word;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .auth-modal-content {
+    padding: 1.5rem;
+    width: 95%;
+  }
+
+  .auth-modal-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .auth-modal-form input {
+    padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+  }
+
+  .input-icon {
+    left: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .auth-modal-footer {
+    font-size: 0.9rem;
+  }
+}
