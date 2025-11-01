@@ -7,273 +7,59 @@
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        body {
-            background: #0a0e27;
-            color: white;
-        }
-
-        .product-detail-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .product-detail-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 60px;
-        }
-
-        .product-image-section {
-            background: #f5f5f5;
-            border-radius: 20px;
-            padding: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 500px;
-        }
-
-        .product-image-section img {
-            max-width: 100%;
-            max-height: 450px;
-            object-fit: contain;
-        }
-
-        .product-info-section {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 20px 0;
-        }
-
-        .product-title {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        .product-price {
-            font-size: 42px;
-            color: #ff5722;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .product-price .old-price {
-            font-size: 24px;
-            color: #999;
-            text-decoration: line-through;
-            margin-left: 15px;
-        }
-
-        .product-stock {
-            font-size: 16px;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .stock-label {
-            color: #aaa;
-        }
-
-        .stock-value {
-            color: #10b981;
-            font-weight: 600;
-        }
-
-        .product-description {
-            font-size: 18px;
-            line-height: 1.8;
-            color: #ddd;
-            margin-bottom: 40px;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .quantity-selector {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 10px;
-        }
-
-        .quantity-selector label {
-            font-weight: 600;
-            color: #ddd;
-        }
-
-        .quantity-selector input {
-            width: 80px;
-            padding: 12px;
-            text-align: center;
-            border: 2px solid #444;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
-            background: #1a1e3a;
-            color: white;
-        }
-
-        .btn-add-to-cart {
-            flex: 1;
-            padding: 18px 40px;
-            background: linear-gradient(135deg, #ff5722, #ff7043);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(255, 87, 34, 0.4);
-        }
-
-        .btn-add-to-cart:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 30px rgba(255, 87, 34, 0.6);
-        }
-
-        .product-tabs {
-            background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        .tab-buttons {
-            display: flex;
-            border-bottom: 2px solid rgba(255,255,255,0.1);
-        }
-
-        .tab-button {
-            flex: 1;
-            padding: 20px;
-            background: transparent;
-            border: none;
-            color: #aaa;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab-button.active {
-            color: white;
-            border-bottom-color: #ff5722;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 40px;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .specs-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .specs-table tr {
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .specs-table td {
-            padding: 15px;
-            font-size: 16px;
-        }
-
-        .specs-table td:first-child {
-            color: #aaa;
-            font-weight: 600;
-            width: 200px;
-        }
-
-        .specs-table td:last-child {
-            color: white;
-        }
-
-        @media (max-width: 768px) {
-            .product-detail-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .product-title {
-                font-size: 32px;
-            }
-
-            .product-price {
-                font-size: 32px;
-            }
-
-            .product-actions {
-                flex-direction: column;
-            }
-
-            .quantity-selector {
-                width: 100%;
-                justify-content: space-between;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/products-detail.css">
+   
 </head>
 <body>
-    <!-- HEADER -->
     <header class="header">
         <div class="header-top">
             <div class="inner-logo">
-                <a href="index.html">
+                <a href="/">
                     <img src="assets/images/logoteck.png" alt="logotecknole">
                     <span>Tecknole</span>
                 </a>
             </div>
             <div class="header-search">
-                <form method="get" action="/tim" class="clearfix search-form bg-white">
-                    <select name="scat_id">
+                <form method="get" action="/tim" enctype="multipart/form-data" class="clearfix search-form bg-white"
+                    role="search" aria-label="Tìm kiếm sản phẩm">
+                    <select name="scat_id" aria-label="Chọn danh mục">
                         <option value="">Tất cả danh mục</option>
                         <option value="1">Màn Hình</option>
-                        <option value="2">Bàn Phím</option>
+                        <option value="2">Bàn Phím </option>
                         <option value="3">Chuột</option>
-                        <option value="4">Tai Nghe</option>
+                        <option value="4">Tai Nghe </option>
                         <option value="5">Loa</option>
+                        <option value="6">Mic</option>
                     </select>
                     <div class="searh-form-container">
-                        <input type="text" id="js-search" class="text_search" name="q" placeholder="Tìm kiếm sản phẩm..." />
-                        <button type="submit" class="submit-search">
-                            <svg viewBox="0 0 24 24" fill="none">
-                                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2"/>
-                                <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"/>
+                        <input type="text" id="js-search" class="text_search" name="q"
+                            placeholder="Tìm kiếm sản phẩm..." autocomplete="off" aria-autocomplete="list"
+                            aria-controls="autocomplete-list" />
+                        <button type="submit" class="submit-search" aria-label="Tìm kiếm">
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             Tìm kiếm
                         </button>
+                        <div class="autocomplete-suggestions" id="autocomplete-list" role="listbox" aria-hidden="true">
+                            <ul></ul>
+                        </div>
                     </div>
                 </form>
             </div>
-            <div class="user-actions">
-                <a href="login.html" class="login">Đăng nhập</a>
-                <a href="register.html" class="register">Đăng ký</a>
-                <a href="cart.html" class="cart cart-badge">
-                    Giỏ hàng
-                    <span class="cart-count">0</span>
-                </a>
+            <div class="auth-cart">
+              <div id="authArea">
+                <button class="btn-auth" onclick="openLoginModal()">Đăng nhập</button>
+                <button class="btn-auth btn-signup" onclick="openRegisterModal()">
+                  Đăng ký
+                </button>
+                <a href="cart.html" class="cart cart-badge">Giỏ hàng <span>0</span></a>
+              </div>
             </div>
         </div>
-        
         <nav>
             <div class="nav-container">
                 <ul class="nav-menu">
@@ -282,40 +68,39 @@
                     <li class="dropdown">
                         <a href="products.html">Danh mục sản phẩm ▼</a>
                         <ul class="dropdown-menu">
-                            <li><a href="category.html?type=manhinh">Màn hình</a></li>
-                            <li><a href="category.html?type=banphim">Bàn Phím</a></li>
-                            <li><a href="category.html?type=chuot">Chuột</a></li>
-                            <li><a href="category.html?type=tainghe">Tai Nghe</a></li>
-                            <li><a href="category.html?type=loa">Loa</a></li>
-                        </ul>
+                            <li><a href="category.html?cat=laptop">Màn hình</a></li>
+                            </ul>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
-
-    <!-- PRODUCT DETAIL -->
     <div class="product-detail-container">
-        <div class="product-detail-grid">
-            <div class="product-image-section">
-                <img id="product-image" src="" alt="Product Image">
+        <div id="loading-state" style="text-align: center; padding: 50px;">Đang tải chi tiết sản phẩm...</div>
+        <div id="error-state" style="text-align: center; padding: 50px; display: none; color: #e74c3c; font-size: 20px;">
+            Không tìm thấy sản phẩm này!
+            <p style="margin-top: 15px;"><a href="products.html" class="btn-primary" style="text-decoration: none; padding: 10px 20px;">Quay lại danh sách sản phẩm</a></p>
+        </div>
+
+        <div id="product-display" class="product-detail-grid" style="display: none;">
+            <div class="product-image-section image-slider-container">
+                <button class="slider-btn prev-btn" id="prev-image-btn">❮</button>
+                
+                <img id="product-main-image" src="" alt="Product Main Image">
+
+                <button class="slider-btn next-btn" id="next-image-btn">❯</button>
             </div>
 
             <div class="product-info-section">
-                <h1 class="product-title" id="product-name">McLaren 750S</h1>
+                <h1 class="product-title" id="product-name"></h1>
+                <p id="product-short-desc" style="color: var(--text-color-one); margin-bottom: 20px;"></p>
                 
-                <div class="product-price">
-                    <span id="product-price">$142,000.00</span>
-                    <span class="old-price" id="product-old-price" style="display: none;">$160,000.00</span>
-                </div>
-
-                <div class="product-stock">
-                    <span class="stock-label">In Stock:</span>
-                    <span class="stock-value" id="product-stock">8</span>
-                </div>
-
-                <div class="product-description" id="product-description">
-                    Loading product description...
+                <div class="product-price-block">
+                    <div class="product-price">
+                        <span id="display-price"></span>
+                        <span class="old-price" id="display-old-price" style="display: none;"></span>
+                    </div>
+                    <div id="product-stock" style="font-size: 14px; color: #2ecc71; font-weight: 600;">Còn hàng: <span id="display-stock"></span></div>
                 </div>
 
                 <div class="product-actions">
@@ -323,59 +108,236 @@
                         <label for="quantity">Số lượng:</label>
                         <input type="number" id="quantity" value="1" min="1" max="100">
                     </div>
-                    <button class="btn-add-to-cart" onclick="addToCart()">Add to Cart</button>
+                    <button class="btn-add-to-cart-detail" id="btn-add-to-cart">🛒 Thêm vào giỏ hàng</button>
                 </div>
             </div>
         </div>
 
-        <!-- TABS -->
-        <div class="product-tabs">
-            <div class="tab-buttons">
-                <button class="tab-button active" onclick="switchTab(0)">Description</button>
-                <button class="tab-button" onclick="switchTab(1)">Specifications</button>
-            </div>
+        <div id="product-tabs" class="tabs-content" style="display: none;">
+            <h3 style="margin-top: 40px;">Mô tả & Thông số kỹ thuật</h3>
+            <div id="description-content">
+                </div>
 
-            <div class="tab-content active" id="tab-description">
-                <p id="full-description">Full product description will be loaded here...</p>
-            </div>
-
-            <div class="tab-content" id="tab-specifications">
-                <table class="specs-table" id="specs-table">
-                    <tr><td>Loading...</td><td>Please wait</td></tr>
+            <table id="specs-table">
                 </table>
-            </div>
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Về TechStore</h3>
-                <ul>
-                    <li><a href="about.html">Giới thiệu</a></li>
-                    <li><a href="#">Tuyển dụng</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Hỗ trợ khách hàng</h3>
-                <ul>
-                    <li><a href="#">Hướng dẫn mua hàng</a></li>
-                    <li><a href="#">Chính sách đổi trả</a></li>
-                </ul>
-            </div>
-            <div class="footer-section contact-info">
-                <h3>Liên hệ</h3>
-                <p>📍 123 Nguyễn Văn Linh, Q7, TP.HCM</p>
-                <p>📞 Hotline: 1900 xxxx</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Tecknole. All rights reserved.</p>
-        </div>
-    </footer>
+        </footer>
+<!-- Modal Đăng Nhập -->
+<div id="loginModal" class="auth-modal">
+    <div class="auth-modal-overlay" onclick="closeLoginModal()"></div>
+    <div class="auth-modal-content">
+      <button class="auth-modal-close" onclick="closeLoginModal()">
+        &times;
+      </button>
 
-    <script src="assets/js/auth.js"></script>
+      <div class="auth-modal-header">
+        <h2>Đăng Nhập</h2>
+        <p>Chào mừng bạn trở lại!</p>
+      </div>
+
+      <form id="login-form" class="auth-modal-form">
+        <div class="form-group">
+          <label for="login-username">Tài khoản</label>
+          <div class="input-with-icon">
+            <span class="input-icon">👤</span>
+            <input
+              type="text"
+              id="login-username"
+              placeholder="Nhập tài khoản"
+            />
+          </div>
+          <span id="error-login-username" class="error-msg"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Mật khẩu</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔐</span>
+            <input
+              type="password"
+              id="login-password"
+              placeholder="Nhập mật khẩu"
+            />
+            <span
+              class="password-toggle"
+              id="toggle-login-password"
+              onclick="togglePassword('login-password', 'toggle-login-password')"
+              >👁️‍🗨️</span
+            >
+          </div>
+          <span id="error-login-password" class="error-msg"></span>
+        </div>
+
+        <button type="submit" class="btn-auth-submit">Đăng Nhập</button>
+      </form>
+
+      <div class="auth-modal-footer">
+        Chưa có tài khoản?
+        <a href="#" onclick="switchToRegister()">Đăng ký ngay</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Đăng Ký -->
+  <div id="registerModal" class="auth-modal">
+    <div class="auth-modal-overlay" onclick="closeRegisterModal()"></div>
+    <div class="auth-modal-content">
+      <button class="auth-modal-close" onclick="closeRegisterModal()">
+        &times;
+      </button>
+
+      <div class="auth-modal-header">
+        <h2>Đăng Ký</h2>
+        <p>Tạo tài khoản mới của bạn</p>
+      </div>
+
+      <form
+        id="register-form"
+        class="auth-modal-form"
+        style="max-height: 450px; overflow-y: auto"
+      >
+        <div class="form-group">
+          <label for="reg-fullname">Họ và tên</label>
+          <div class="input-with-icon">
+            <span class="input-icon">👤</span>
+            <input type="text" id="reg-fullname" placeholder="Nhập họ và tên" />
+          </div>
+          <span id="error-fullname" class="error-msg"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-username">Tên tài khoản</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔑</span>
+            <input
+              type="text"
+              id="reg-username"
+placeholder="Nhập tên tài khoản"
+            />
+          </div>
+          <span id="error-username" class="error-msg"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password">Mật khẩu</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔐</span>
+            <input
+              type="password"
+              id="reg-password"
+              placeholder="Nhập mật khẩu"
+            />
+            <span
+              class="password-toggle"
+              id="toggle-reg-password"
+              onclick="togglePassword('reg-password', 'toggle-reg-password')"
+              >👁️‍🗨️</span
+            >
+          </div>
+          <span id="error-password" class="error-msg"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-confirm-password">Nhập lại mật khẩu</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔐</span>
+            <input
+              type="password"
+              id="reg-confirm-password"
+              placeholder="Nhập lại mật khẩu"
+            />
+            <span
+              class="password-toggle"
+              id="toggle-reg-confirm"
+              onclick="togglePassword('reg-confirm-password', 'toggle-reg-confirm')"
+              >👁️‍🗨️</span
+            >
+          </div>
+          <span id="error-confirm-password" class="error-msg"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-email">Email</label>
+          <div class="input-with-icon">
+            <span class="input-icon">📧</span>
+            <input type="email" id="reg-email" placeholder="Nhập email" />
+          </div>
+          <span id="error-email" class="error-msg"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-phone">Số điện thoại</label>
+          <div class="input-with-icon">
+            <span class="input-icon">📱</span>
+            <input type="tel" id="reg-phone" placeholder="Nhập số điện thoại" />
+          </div>
+          <span id="error-phone" class="error-msg"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-address">Địa chỉ</label>
+          <div class="input-with-icon">
+            <span class="input-icon">📍</span>
+            <input type="text" id="reg-address" placeholder="Nhập địa chỉ" />
+          </div>
+          <span id="error-address" class="error-msg"></span>
+        </div>
+
+        <button type="submit" class="btn-auth-submit">Đăng Ký</button>
+      </form>
+
+      <div class="auth-modal-footer">
+        Đã có tài khoản? <a href="#" onclick="switchToLogin()">Đăng nhập</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Profile (Hiển thị khi đã đăng nhập) -->
+  <div id="profileModal" class="auth-modal">
+    <div class="auth-modal-overlay" onclick="closeProfileModal()"></div>
+<div class="auth-modal-content">
+      <button class="auth-modal-close" onclick="closeProfileModal()">
+        &times;
+      </button>
+
+      <div class="auth-modal-header">
+        <div class="profile-avatar-small">👤</div>
+        <h2 id="profile-fullname">Xin chào!</h2>
+        <p>Thông tin tài khoản của bạn</p>
+      </div>
+
+      <div class="profile-info-modal">
+        <div class="info-row">
+          <span class="info-label">👤 Họ và tên:</span>
+          <span class="info-value" id="profile-name-value"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🔐 Tài khoản:</span>
+          <span class="info-value" id="profile-username-value"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">📧 Email:</span>
+          <span class="info-value" id="profile-email-value"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">📱 Số điện thoại:</span>
+          <span class="info-value" id="profile-phone-value"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">📍 Địa chỉ:</span>
+          <span class="info-value" id="profile-address-value"></span>
+        </div>
+      </div>
+
+      <button class="btn-logout-modal" onclick="handleLogoutModal()">
+        Đăng xuất
+      </button>
+    </div>
+  </div>    
+    <script src="assets/js/modal.js"></script>
     <script src="assets/js/product-detail.js"></script>
 </body>
 </html>

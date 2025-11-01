@@ -126,7 +126,7 @@
      transform: translateY(-2px);
    }
    .cart{
-    padding: 10px 20px;
+    padding: 13px 20px;
   border-radius: 10px;
   border: none;
   background: #fff; /* Màu nền nhạt hơn để phân biệt */
@@ -149,7 +149,7 @@
      background: #ff4757;
      color: var(--text-color-two);
      border-radius: 50%;
-     width: 20px;
+     width: 20px; 
      height: 20px;
      display: flex;
      align-items: center;
@@ -1122,6 +1122,7 @@
   text-align: right;
   word-break: break-word;
 }
+
 
 /* Animations */
 @keyframes fadeIn {
