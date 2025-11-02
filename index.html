@@ -1,522 +1,671 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phụ kiện công nghệ Tecknole</title>
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phụ kiện công nghệ Tecknole </title>
-    <link rel="stylesheet" href="assets/css/reset.css">
-    <link rel="stylesheet" href="assets/css/base.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-
-<body>
+  <body>
     <!-- HEADER  -->
     <header class="header">
-        <div class="header-top">
-            <div class="inner-logo">
-                <a href="/">
-                    <img src="assets/images/logoteck.png" alt="logotecknole">
-                    <span>Tecknole</span>
-                </a>
-            </div>
-            <div class="header-search">
-                <form method="get" action="/tim" enctype="multipart/form-data" class="clearfix search-form bg-white"
-                    role="search" aria-label="Tìm kiếm sản phẩm">
-                    <select name="scat_id" aria-label="Chọn danh mục">
-                        <option value="">Tất cả danh mục</option>
-                        <option value="1">Màn Hình</option>
-                        <option value="2">Bàn Phím </option>
-                        <option value="3">Chuột</option>
-                        <option value="4">Tai Nghe </option>
-                        <option value="5">Loa</option>
-                        <option value="6">Mic</option>
-                    </select>
+      <div class="header-top">
+        <div class="inner-logo">
+          <a href="/">
+            <img src="assets/images/logoteck.png" alt="logotecknole" />
+            <span>Tecknole</span>
+          </a>
+        </div>
+        <div class="header-search">
+          <form
+            method="get"
+            action="/tim"
+            enctype="multipart/form-data"
+            class="clearfix search-form bg-white"
+            role="search"
+            aria-label="Tìm kiếm sản phẩm"
+          >
+            <select name="scat_id" aria-label="Chọn danh mục">
+              <option value="">Tất cả danh mục</option>
+              <option value="1">Màn Hình</option>
+              <option value="2">Bàn Phím</option>
+              <option value="3">Chuột</option>
+              <option value="4">Tai Nghe</option>
+              <option value="5">Loa</option>
+              <option value="6">Mic</option>
+            </select>
 
-                    <div class="searh-form-container">
-                        <input type="text" id="js-search" class="text_search" name="q"
-                            placeholder="Tìm kiếm sản phẩm..." autocomplete="off" aria-autocomplete="list"
-                            aria-controls="autocomplete-list" />
-                        <button type="submit" class="submit-search" aria-label="Tìm kiếm">
-                            <!-- simple svg search icon -->
-                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            Tìm kiếm
-                        </button>
+            <div class="searh-form-container">
+              <input
+                type="text"
+                id="js-search"
+                class="text_search"
+                name="q"
+                placeholder="Tìm kiếm sản phẩm..."
+                autocomplete="off"
+                aria-autocomplete="list"
+                aria-controls="autocomplete-list"
+              />
+              <button type="submit" class="submit-search" aria-label="Tìm kiếm">
+                <!-- simple svg search icon -->
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    d="M21 21l-4.35-4.35"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <circle
+                    cx="11"
+                    cy="11"
+                    r="6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                Tìm kiếm
+              </button>
 
-                        <div class="autocomplete-suggestions" id="autocomplete-list" role="listbox" aria-hidden="true">
-                            <ul></ul>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="auth-cart">
-              <div id="authArea">
-                <button class="btn-auth" onclick="openLoginModal()">Đăng nhập</button>
-                <button class="btn-auth btn-signup" onclick="openRegisterModal()">
-                  Đăng ký
-                </button>
-                <a href="cart.html" class="cart cart-badge">Giỏ hàng <span>0</span></a>
+              <div
+                class="autocomplete-suggestions"
+                id="autocomplete-list"
+                role="listbox"
+                aria-hidden="true"
+              >
+                <ul></ul>
               </div>
             </div>
+          </form>
         </div>
-        <!-- THANH MENU -->
-        <nav>
-            <div class="nav-container">
-                <ul class="nav-menu">
-                    <li><a href="index.html">Trang chủ</a></li>
-                    <li><a href="about.html">Giới thiệu</a></li>
-                    <li class="dropdown">
-                        <a href="products.html">Danh mục sản phẩm ▼</a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <!-- MÀN HÌNH -->
-                                <a href="category.html?cat=laptop">Màn hình</a>
-                                <ul class="submenu">
-                                    <li><a href="category.html?cat=design"> Acer</a></li>
-                                    <li><a href="category.html?cat=design"> Asus</a></li>
-                                    <li><a href="category.html?cat=office">LG </a></li>
-                                    <li><a href="category.html?cat=design">Msi </a></li>
-                                    <li><a href="category.html?cat=office">Viewsonic</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <!-- BÀN PHÍM- -->
-                                <a href="category.html?cat=phone">Bàn Phím </a>
-                                <ul class="submenu">
-                                    <li><a href="category.html?cat=iphone">Aula</a></li>
-                                    <li><a href="category.html?cat=samsung">Akko</a></li>
-                                    <li><a href="category.html  ?cat=xiaomi">Razer</a></li>
-                                </ul> 
-                            </li>
-                            <li>
-                                <a href="category.html?cat=tablet">Chuột</a>
-                                <ul class="submenu">
-                                    <li><a href="category.html?cat=ipad">Razer</a></li>
-                                    <li><a href="category.html?cat=android">Corsair </a></li>
-                                    <li><a href="category.html?cat=android">Logitech</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="category.html?cat=accessories">Tai Nghe</a>
-                                <ul class="submenu">
-                                    <li><a href="category.html?cat=headphone">Apple</a></li>
-                                    <li><a href="category.html?cat=keyboard">Bose</a></li>
-                                    <li><a href="category.html?cat=keyboard">Marshall</a></li>
-                                    <li><a href="category.html?cat=mouse">Sony</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="category.html?cat=accessories">Loa</a>
-                                <ul class="submenu">
-                                    <li><a href="category.html?cat=mouse">Acnos</a></li>
-                                    <li><a href="category.html?cat=keyboard">Devialet</a></li>
-                                    <li><a href="category.html?cat=keyboard">Sony</a></li>
-                                    <li><a href="category.html?cat=headphone">JBL</a></li>
-
-                                </ul>
-                            </li>
-                        </ul>
+        <div class="auth-cart">
+          <div id="authArea">
+            <button class="btn-auth" onclick="openLoginModal()">
+              Đăng nhập
+            </button>
+            <button class="btn-auth btn-signup" onclick="openRegisterModal()">
+              Đăng ký
+            </button>
+            <a href="cart.html" class="cart cart-badge"
+              >Giỏ hàng <span>0</span></a
+            >
+          </div>
+        </div>
+      </div>
+      <!-- THANH MENU -->
+      <nav>
+        <div class="nav-container">
+          <ul class="nav-menu">
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="about.html">Giới thiệu</a></li>
+            <li class="dropdown">
+              <a href="products.html">Danh mục sản phẩm ▼</a>
+              <ul class="dropdown-menu">
+                <li>
+                  <!-- MÀN HÌNH -->
+                  <a href="category.html?type=manhinh">Màn hình</a>
+                  <ul class="submenu">
+                    <li>
+                      <a href="category.html?type=manhinh&brand=acer">Acer</a>
                     </li>
-                </ul>
-            </div>
-        </nav>
+                    <li>
+                      <a href="category.html?type=manhinh&brand=asus">Asus</a>
+                    </li>
+                    <li>
+                      <a href="category.html?type=manhinh&brand=lg">LG</a>
+                    </li>
+                    <li>
+                      <a href="category.html?type=manhinh&brand=msi">Msi</a>
+                    </li>
+                    <li>
+                      <a href="category.html?type=manhinh&brand=viewsonic"
+                        >Viewsonic</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <!-- BÀN PHÍM -->
+                  <a href="category.html?type=banphim">Bàn Phím</a>
+                  <ul class="submenu">
+                    <li>
+                      <a href="category.html?type=banphim&brand=aula">Aula</a>
+                    </li>
+                    <li>
+                      <a href="category.html?type=banphim&brand=akko">Akko</a>
+                    </li>
+                    <li>
+                      <a href="category.html?type=banphim&brand=razer">Razer</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <!-- CHUỘT -->
+                  <a href="category.html?type=chuot">Chuột</a>
+                  <ul class="submenu">
+                    <li>
+                      <a href="category.html?type=chuot&brand=razer">Razer</a>
+                    </li>
+                    <li>
+                      <a href="category.html?type=chuot&brand=corsair"
+                        >Corsair</a
+                      >
+                    </li>
+                    <li>
+                      <a href="category.html?type=chuot&brand=logitech"
+                        >Logitech</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <!-- TAI NGHE -->
+                  <a href="category.html?type=tainghe">Tai Nghe</a>
+                  <ul class="submenu">
+                    <li>
+                      <a href="category.html?type=tainghe&brand=apple">Apple</a>
+                    </li>
+                    <li>
+                      <a href="category.html?type=tainghe&brand=bose">Bose</a>
+                    </li>
+                    <li>
+                      <a href="category.html?type=tainghe&brand=marshall"
+                        >Marshall</a
+                      >
+                    </li>
+                    <li>
+                      <a href="category.html?type=tainghe&brand=sony">Sony</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <!-- LOA -->
+                  <a href="category.html?type=loa">Loa</a>
+                  <ul class="submenu">
+                    <li>
+                      <a href="category.html?type=loa&brand=acnos">Acnos</a>
+                    </li>
+                    <li>
+                      <a href="category.html?type=loa&brand=devialet"
+                        >Devialet</a
+                      >
+                    </li>
+                    <li>
+                      <a href="category.html?type=loa&brand=sony">Sony</a>
+                    </li>
+                    <li><a href="category.html?type=loa&brand=jbl">JBL</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
     </header>
     <!-- END HEADER  -->
 
     <!-- HERO -->
     <div class="hero-image-background">
-    
-      <img src="assets/images/banner.jpg" alt="hero_banner" class="hero-banner">
-      
+      <img
+        src="assets/images/banner.jpg"
+        alt="hero_banner"
+        class="hero-banner"
+      />
+
       <section class="hero-content-wrapper">
-          <h1>Chào mừng đến Tecknole Store</h1>
-          <p>Nơi bán phụ kiện công nghệ với giá tốt</p>
-          <a href="products.html" class="hero-btn">Khám phá ngay</a>
+        <h1>Chào mừng đến Tecknole Store</h1>
+        <p>Nơi bán phụ kiện công nghệ với giá tốt</p>
+        <a href="products.html" class="hero-btn">Khám phá ngay</a>
       </section>
-  </div>
+    </div>
 
     <!-- END HERO -->
     <div class="container">
-        <h2 class="section-title">Các hãng nổi bật phổ biến</h2>
-        <div class="categories">
-            <div class="category-card" >
-                <div class="category-icon"><img src="assets/images/logo_brand/Razer_snake_logo.png" alt="razer_logo">
-                </div>
-                <div class="category-name">Razer</div>
+      <h2 class="section-title">Các hãng nổi bật phổ biến</h2>
+      <div class="categories">
+        <div class="category-card">
+          <div class="category-icon">
+            <img
+              src="assets/images/logo_brand/Razer_snake_logo.png"
+              alt="razer_logo"
+            />
+          </div>
+          <div class="category-name">Razer</div>
+        </div>
+        <div class="category-card">
+          <div class="category-icon">
+            <img
+              src="assets/images/logo_brand/logitech_logo.png"
+              alt="logitech_logo"
+            />
+          </div>
+          <div class="category-name">Logitech</div>
+        </div>
+        <div class="category-card">
+          <div class="category-icon">
+            <img src="assets/images/logo_brand/jbl_logo.jpg" alt="Jbl_logo" />
+          </div>
+          <div class="category-name">JBL</div>
+        </div>
+        <div class="category-card">
+          <div class="category-icon">
+            <img src="assets/images/logo_brand/akko_logo.png" alt="akko_logo" />
+          </div>
+          <div class="category-name">Akko</div>
+        </div>
+        <div class="category-card">
+          <div class="category-icon">
+            <img
+              src="assets/images/logo_brand/apple_logo.png"
+              alt="apple_logo"
+            />
+          </div>
+          <div class="category-name">Apple</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Sản phẩm nổi bật</h2>
+      <div class="products-grid">
+        <div
+          class="product-card"
+          onclick="window.location='product-detail.html?id=1'"
+        >
+          <div class="product-image">
+            <img
+              src="assets/images/popular_items/aulaf75_vang.png"
+              alt="aula_f75"
+            />
+            <span class="product-badge">HOT</span>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Bàn phím Aula F75</div>
+            <div class="product-price">
+              750.000đ
+              <span class="old-price">899.000đ</span>
             </div>
-            <div class="category-card" >
-                <div class="category-icon"><img src="assets/images/logo_brand/logitech_logo.png" alt="logitech_logo">
-                </div>
-                <div class="category-name">Logitech</div>
-            </div>
-            <div class="category-card">
-                <div class="category-icon"><img src="assets/images/logo_brand/jbl_logo.jpg" alt="Jbl_logo"></div>
-                <div class="category-name">JBL</div>
-            </div>
-            <div class="category-card" >
-                <div class="category-icon"><img src="assets/images/logo_brand/akko_logo.png" alt="akko_logo"></div>
-                <div class="category-name">Akko</div>
-            </div>
-            <div class="category-card" >
-                <div class="category-icon"><img src="assets/images/logo_brand/apple_logo.png" alt="apple_logo"></div>
-                <div class="category-name">Apple</div>
-            </div>
+            <button class="add-to-cart">Thêm vào giỏ</button>
+          </div>
         </div>
 
-        <h2 class="section-title">Sản phẩm nổi bật</h2>
-        <div class="products-grid">
-            <div class="product-card" onclick="window.location='product-detail.html?id=1'">
-                <div class="product-image">
-                    <img src="assets/images/popular_items/aulaf75_vang.png" alt="aula_f75">
-                    <span class="product-badge">HOT</span>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Bàn phím Aula F75 </div>
-                    <div class="product-price">
-                        750.000đ
-                        <span class="old-price">899.000đ</span>
-                    </div>
-                    <button class="add-to-cart">Thêm vào giỏ</button>
-                </div>
-            </div>
-
-            <div class="product-card" onclick="window.location='product-detail.html?id=2'">
-                <div class="product-image">
-                    <img src="assets/images/popular_items/msi_mag_274qf_x24_gearvn_d23c9ec1aab847818a2b31d35a3d25e8_1024x1024.jpg"
-                        alt="man-hinh-gaming-msi-mag-274qf-x24">
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Màn hình MSI MAG 274QF X24 27"</div>
-                    <div class="product-price">5.590.000đ</div>
-                    <button class="add-to-cart">Thêm vào giỏ</button>
-                </div>
-            </div>
-
-            <div class="product-card" onclick="window.location='product-detail.html?id=3'">
-                <div class="product-image">
-                    <img src="assets/images/popular_items/loa_marshal3.webp" alt="loa_marshall_stanmore_3">
-                    <span class="product-badge">NEW</span>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Loa Marshall Stanmore 3</div>
-                    <div class="product-price">9.550.000đ
-                        <span class="old-price">10.000.000đ</span>
-                    </div>
-                    <button class="add-to-cart">Thêm vào giỏ</button>
-                </div>
-            </div>
-
-            <div class="product-card" onclick="window.location='product-detail.html?id=4'">
-                <div class="product-image">
-                    <img src="assets/images/popular_items/death_adder_v3pro.webp" alt="">
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Chuột Razer Deathadder V3 Pro</div>
-                    <div class="product-price">
-                        5.990.000đ
-                        <span class="old-price">6.990.000đ</span>
-                    </div>
-                    <button class="add-to-cart">Thêm vào giỏ</button>
-                </div>
-            </div>
-
-            <div class="product-card" onclick="window.location='product-detail.html?id=5'">
-                <div class="product-image">
-                    <img src="assets/images/popular_items/airpods-pro-gen-2-magsafe-charge-usb-c.jpg" alt="airpod_pro2">
-                </div>
-                <div class="product-info">
-                    <div class="product-name"> Apple Airpod Pro Gen 2</div>
-                    <div class="product-price">5.090.000đ</div>
-                    <button class="add-to-cart">Thêm vào giỏ</button>
-                </div>
-            </div>
-
-            <div class="product-card" onclick="window.location='product-detail.html?id=6'">
-                <div class="product-image">
-                    <img src="assets/images/popular_items/G502_hero.jpg" alt="G502_logitech">
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Chuột G502 Hero Logitech</div>
-                    <div class="product-price">
-                        1.490.000đ
-                        <span class="old-price">1.990.000đ</span>
-                    </div>
-                    <button class="add-to-cart">Thêm vào giỏ</button>
-                </div>
-            </div>
+        <div
+          class="product-card"
+          onclick="window.location='product-detail.html?id=2'"
+        >
+          <div class="product-image">
+            <img
+              src="assets/images/popular_items/msi_mag_274qf_x24_gearvn_d23c9ec1aab847818a2b31d35a3d25e8_1024x1024.jpg"
+              alt="man-hinh-gaming-msi-mag-274qf-x24"
+            />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Màn hình MSI MAG 274QF X24 27"</div>
+            <div class="product-price">5.590.000đ</div>
+            <button class="add-to-cart">Thêm vào giỏ</button>
+          </div>
         </div>
+
+        <div
+          class="product-card"
+          onclick="window.location='product-detail.html?id=3'"
+        >
+          <div class="product-image">
+            <img
+              src="assets/images/popular_items/loa_marshal3.webp"
+              alt="loa_marshall_stanmore_3"
+            />
+            <span class="product-badge">NEW</span>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Loa Marshall Stanmore 3</div>
+            <div class="product-price">
+              9.550.000đ
+              <span class="old-price">10.000.000đ</span>
+            </div>
+            <button class="add-to-cart">Thêm vào giỏ</button>
+          </div>
+        </div>
+
+        <div
+          class="product-card"
+          onclick="window.location='product-detail.html?id=4'"
+        >
+          <div class="product-image">
+            <img
+              src="assets/images/popular_items/death_adder_v3pro.webp"
+              alt=""
+            />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Chuột Razer Deathadder V3 Pro</div>
+            <div class="product-price">
+              5.990.000đ
+              <span class="old-price">6.990.000đ</span>
+            </div>
+            <button class="add-to-cart">Thêm vào giỏ</button>
+          </div>
+        </div>
+
+        <div
+          class="product-card"
+          onclick="window.location='product-detail.html?id=5'"
+        >
+          <div class="product-image">
+            <img
+              src="assets/images/popular_items/airpods-pro-gen-2-magsafe-charge-usb-c.jpg"
+              alt="airpod_pro2"
+            />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Apple Airpod Pro Gen 2</div>
+            <div class="product-price">5.090.000đ</div>
+            <button class="add-to-cart">Thêm vào giỏ</button>
+          </div>
+        </div>
+
+        <div
+          class="product-card"
+          onclick="window.location='product-detail.html?id=6'"
+        >
+          <div class="product-image">
+            <img
+              src="assets/images/popular_items/G502_hero.jpg"
+              alt="G502_logitech"
+            />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Chuột G502 Hero Logitech</div>
+            <div class="product-price">
+              1.490.000đ
+              <span class="old-price">1.990.000đ</span>
+            </div>
+            <button class="add-to-cart">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Về TechStore</h3>
-                <ul>
-                    <li><a href="about.html">Giới thiệu</a></li>
-                    <li><a href="#">Tuyển dụng</a></li>
-                    <li><a href="#">Chính sách bảo mật</a></li>
-                    <li><a href="#">Điều khoản sử dụng</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h3>Hỗ trợ khách hàng</h3>
-                <ul>
-                    <li><a href="#">Hướng dẫn mua hàng</a></li>
-                    <li><a href="#">Chính sách đổi trả</a></li>
-                    <li><a href="#">Bảo hành</a></li>
-                    <li><a href="#">Câu hỏi thường gặp</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h3>Chính sách</h3>
-                <ul>
-                    <li><a href="#">Chính sách thanh toán</a></li>
-                    <li><a href="#">Chính sách vận chuyển</a></li>
-                    <li><a href="#">Chính sách bảo hành</a></li>
-                    <li><a href="#">Chính sách đổi trả</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section contact-info">
-                <h3>Liên hệ</h3>
-                <p>📍 123 Nguyễn Văn Linh, Q7, TP.HCM</p>
-                <p>📞 Hotline: 1900 xxxx</p>
-                <p>✉️ Email: support@techstore.vn</p>
-                <p>🕐 Giờ làm việc: 8:00 - 22:00</p>
-                <div class="social-links">
-                    <a href="#">f</a>
-                    <a href="#">📷</a>
-                    <a href="#">▶️</a>
-                    <a href="#">💼</a>
-                </div>
-            </div>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Về TechStore</h3>
+          <ul>
+            <li><a href="about.html">Giới thiệu</a></li>
+            <li><a href="#">Tuyển dụng</a></li>
+            <li><a href="#">Chính sách bảo mật</a></li>
+            <li><a href="#">Điều khoản sử dụng</a></li>
+          </ul>
         </div>
 
-        <div class="footer-bottom">
-            <p>&copy; 2025 Tecknole. All rights reserved.</p>
+        <div class="footer-section">
+          <h3>Hỗ trợ khách hàng</h3>
+          <ul>
+            <li><a href="#">Hướng dẫn mua hàng</a></li>
+            <li><a href="#">Chính sách đổi trả</a></li>
+            <li><a href="#">Bảo hành</a></li>
+            <li><a href="#">Câu hỏi thường gặp</a></li>
+          </ul>
         </div>
+
+        <div class="footer-section">
+          <h3>Chính sách</h3>
+          <ul>
+            <li><a href="#">Chính sách thanh toán</a></li>
+            <li><a href="#">Chính sách vận chuyển</a></li>
+            <li><a href="#">Chính sách bảo hành</a></li>
+            <li><a href="#">Chính sách đổi trả</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section contact-info">
+          <h3>Liên hệ</h3>
+          <p>📍 123 Nguyễn Văn Linh, Q7, TP.HCM</p>
+          <p>📞 Hotline: 1900 xxxx</p>
+          <p>✉️ Email: support@techstore.vn</p>
+          <p>🕐 Giờ làm việc: 8:00 - 22:00</p>
+          <div class="social-links">
+            <a href="#">f</a>
+            <a href="#">📷</a>
+            <a href="#">▶️</a>
+            <a href="#">💼</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Tecknole. All rights reserved.</p>
+      </div>
     </footer>
     <!-- Modal Đăng Nhập -->
-  <div id="loginModal" class="auth-modal">
-    <div class="auth-modal-overlay" onclick="closeLoginModal()"></div>
-    <div class="auth-modal-content">
-      <button class="auth-modal-close" onclick="closeLoginModal()">
-        &times;
-      </button>
+    <div id="loginModal" class="auth-modal">
+      <div class="auth-modal-overlay" onclick="closeLoginModal()"></div>
+      <div class="auth-modal-content">
+        <button class="auth-modal-close" onclick="closeLoginModal()">
+          &times;
+        </button>
 
-      <div class="auth-modal-header">
-        <h2>Đăng Nhập</h2>
-        <p>Chào mừng bạn trở lại!</p>
-      </div>
-
-      <form id="login-form" class="auth-modal-form">
-        <div class="form-group">
-          <label for="login-username">Tài khoản</label>
-          <div class="input-with-icon">
-            <span class="input-icon">👤</span>
-            <input
-              type="text"
-              id="login-username"
-              placeholder="Nhập tài khoản"
-            />
-          </div>
-          <span id="error-login-username" class="error-msg"></span>
+        <div class="auth-modal-header">
+          <h2>Đăng Nhập</h2>
+          <p>Chào mừng bạn trở lại!</p>
         </div>
 
-        <div class="form-group">
-          <label for="login-password">Mật khẩu</label>
-          <div class="input-with-icon">
-            <span class="input-icon">🔐</span>
-            <input
-              type="password"
-              id="login-password"
-              placeholder="Nhập mật khẩu"
-            />
-            <span
-              class="password-toggle"
-              id="toggle-login-password"
-              onclick="togglePassword('login-password', 'toggle-login-password')"
-              >👁️‍🗨️</span
-            >
+        <form id="login-form" class="auth-modal-form">
+          <div class="form-group">
+            <label for="login-username">Tài khoản</label>
+            <div class="input-with-icon">
+              <span class="input-icon">👤</span>
+              <input
+                type="text"
+                id="login-username"
+                placeholder="Nhập tài khoản"
+              />
+            </div>
+            <span id="error-login-username" class="error-msg"></span>
           </div>
-          <span id="error-login-password" class="error-msg"></span>
-        </div>
 
-        <button type="submit" class="btn-auth-submit">Đăng Nhập</button>
-      </form>
-
-      <div class="auth-modal-footer">
-        Chưa có tài khoản?
-        <a href="#" onclick="switchToRegister()">Đăng ký ngay</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Đăng Ký -->
-  <div id="registerModal" class="auth-modal">
-    <div class="auth-modal-overlay" onclick="closeRegisterModal()"></div>
-    <div class="auth-modal-content">
-      <button class="auth-modal-close" onclick="closeRegisterModal()">
-        &times;
-      </button>
-
-      <div class="auth-modal-header">
-        <h2>Đăng Ký</h2>
-        <p>Tạo tài khoản mới của bạn</p>
-      </div>
-
-      <form
-        id="register-form"
-        class="auth-modal-form"
-        style="max-height: 450px; overflow-y: auto"
-      >
-        <div class="form-group">
-          <label for="reg-fullname">Họ và tên</label>
-          <div class="input-with-icon">
-            <span class="input-icon">👤</span>
-            <input type="text" id="reg-fullname" placeholder="Nhập họ và tên" />
+          <div class="form-group">
+            <label for="login-password">Mật khẩu</label>
+            <div class="input-with-icon">
+              <span class="input-icon">🔐</span>
+              <input
+                type="password"
+                id="login-password"
+                placeholder="Nhập mật khẩu"
+              />
+              <span
+                class="password-toggle"
+                id="toggle-login-password"
+                onclick="togglePassword('login-password', 'toggle-login-password')"
+                >👁️‍🗨️</span
+              >
+            </div>
+            <span id="error-login-password" class="error-msg"></span>
           </div>
-          <span id="error-fullname" class="error-msg"></span>
+
+          <button type="submit" class="btn-auth-submit">Đăng Nhập</button>
+        </form>
+
+        <div class="auth-modal-footer">
+          Chưa có tài khoản?
+          <a href="#" onclick="switchToRegister()">Đăng ký ngay</a>
         </div>
-
-        <div class="form-group">
-          <label for="reg-username">Tên tài khoản</label>
-          <div class="input-with-icon">
-            <span class="input-icon">🔑</span>
-            <input
-              type="text"
-              id="reg-username"
-placeholder="Nhập tên tài khoản"
-            />
-          </div>
-          <span id="error-username" class="error-msg"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="reg-password">Mật khẩu</label>
-          <div class="input-with-icon">
-            <span class="input-icon">🔐</span>
-            <input
-              type="password"
-              id="reg-password"
-              placeholder="Nhập mật khẩu"
-            />
-            <span
-              class="password-toggle"
-              id="toggle-reg-password"
-              onclick="togglePassword('reg-password', 'toggle-reg-password')"
-              >👁️‍🗨️</span
-            >
-          </div>
-          <span id="error-password" class="error-msg"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="reg-confirm-password">Nhập lại mật khẩu</label>
-          <div class="input-with-icon">
-            <span class="input-icon">🔐</span>
-            <input
-              type="password"
-              id="reg-confirm-password"
-              placeholder="Nhập lại mật khẩu"
-            />
-            <span
-              class="password-toggle"
-              id="toggle-reg-confirm"
-              onclick="togglePassword('reg-confirm-password', 'toggle-reg-confirm')"
-              >👁️‍🗨️</span
-            >
-          </div>
-          <span id="error-confirm-password" class="error-msg"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="reg-email">Email</label>
-          <div class="input-with-icon">
-            <span class="input-icon">📧</span>
-            <input type="email" id="reg-email" placeholder="Nhập email" />
-          </div>
-          <span id="error-email" class="error-msg"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="reg-phone">Số điện thoại</label>
-          <div class="input-with-icon">
-            <span class="input-icon">📱</span>
-            <input type="tel" id="reg-phone" placeholder="Nhập số điện thoại" />
-          </div>
-          <span id="error-phone" class="error-msg"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="reg-address">Địa chỉ</label>
-          <div class="input-with-icon">
-            <span class="input-icon">📍</span>
-            <input type="text" id="reg-address" placeholder="Nhập địa chỉ" />
-          </div>
-          <span id="error-address" class="error-msg"></span>
-        </div>
-
-        <button type="submit" class="btn-auth-submit">Đăng Ký</button>
-      </form>
-
-      <div class="auth-modal-footer">
-        Đã có tài khoản? <a href="#" onclick="switchToLogin()">Đăng nhập</a>
       </div>
     </div>
-  </div>
 
-  <!-- Modal Profile (Hiển thị khi đã đăng nhập) -->
-  <div id="profileModal" class="auth-modal">
-    <div class="auth-modal-overlay" onclick="closeProfileModal()"></div>
-<div class="auth-modal-content">
-      <button class="auth-modal-close" onclick="closeProfileModal()">
-        &times;
-      </button>
+    <!-- Modal Đăng Ký -->
+    <div id="registerModal" class="auth-modal">
+      <div class="auth-modal-overlay" onclick="closeRegisterModal()"></div>
+      <div class="auth-modal-content">
+        <button class="auth-modal-close" onclick="closeRegisterModal()">
+          &times;
+        </button>
 
-      <div class="auth-modal-header">
-        <div class="profile-avatar-small">👤</div>
-        <h2 id="profile-fullname">Xin chào!</h2>
-        <p>Thông tin tài khoản của bạn</p>
+        <div class="auth-modal-header">
+          <h2>Đăng Ký</h2>
+          <p>Tạo tài khoản mới của bạn</p>
+        </div>
+
+        <form
+          id="register-form"
+          class="auth-modal-form"
+          style="max-height: 450px; overflow-y: auto"
+        >
+          <div class="form-group">
+            <label for="reg-fullname">Họ và tên</label>
+            <div class="input-with-icon">
+              <span class="input-icon">👤</span>
+              <input
+                type="text"
+                id="reg-fullname"
+                placeholder="Nhập họ và tên"
+              />
+            </div>
+            <span id="error-fullname" class="error-msg"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-username">Tên tài khoản</label>
+            <div class="input-with-icon">
+              <span class="input-icon">🔑</span>
+              <input
+                type="text"
+                id="reg-username"
+                placeholder="Nhập tên tài khoản"
+              />
+            </div>
+            <span id="error-username" class="error-msg"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-password">Mật khẩu</label>
+            <div class="input-with-icon">
+              <span class="input-icon">🔐</span>
+              <input
+                type="password"
+                id="reg-password"
+                placeholder="Nhập mật khẩu"
+              />
+              <span
+                class="password-toggle"
+                id="toggle-reg-password"
+                onclick="togglePassword('reg-password', 'toggle-reg-password')"
+                >👁️‍🗨️</span
+              >
+            </div>
+            <span id="error-password" class="error-msg"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-confirm-password">Nhập lại mật khẩu</label>
+            <div class="input-with-icon">
+              <span class="input-icon">🔐</span>
+              <input
+                type="password"
+                id="reg-confirm-password"
+                placeholder="Nhập lại mật khẩu"
+              />
+              <span
+                class="password-toggle"
+                id="toggle-reg-confirm"
+                onclick="togglePassword('reg-confirm-password', 'toggle-reg-confirm')"
+                >👁️‍🗨️</span
+              >
+            </div>
+            <span id="error-confirm-password" class="error-msg"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-email">Email</label>
+            <div class="input-with-icon">
+              <span class="input-icon">📧</span>
+              <input type="email" id="reg-email" placeholder="Nhập email" />
+            </div>
+            <span id="error-email" class="error-msg"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-phone">Số điện thoại</label>
+            <div class="input-with-icon">
+              <span class="input-icon">📱</span>
+              <input
+                type="tel"
+                id="reg-phone"
+                placeholder="Nhập số điện thoại"
+              />
+            </div>
+            <span id="error-phone" class="error-msg"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-address">Địa chỉ</label>
+            <div class="input-with-icon">
+              <span class="input-icon">📍</span>
+              <input type="text" id="reg-address" placeholder="Nhập địa chỉ" />
+            </div>
+            <span id="error-address" class="error-msg"></span>
+          </div>
+
+          <button type="submit" class="btn-auth-submit">Đăng Ký</button>
+        </form>
+
+        <div class="auth-modal-footer">
+          Đã có tài khoản? <a href="#" onclick="switchToLogin()">Đăng nhập</a>
+        </div>
       </div>
-
-      <div class="profile-info-modal">
-        <div class="info-row">
-          <span class="info-label">👤 Họ và tên:</span>
-          <span class="info-value" id="profile-name-value"></span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">🔐 Tài khoản:</span>
-          <span class="info-value" id="profile-username-value"></span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">📧 Email:</span>
-          <span class="info-value" id="profile-email-value"></span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">📱 Số điện thoại:</span>
-          <span class="info-value" id="profile-phone-value"></span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">📍 Địa chỉ:</span>
-          <span class="info-value" id="profile-address-value"></span>
-        </div>
-      </div>
-
-      <button class="btn-logout-modal" onclick="handleLogoutModal()">
-        Đăng xuất
-      </button>
     </div>
-  </div>    
-    <script src="assets/js/modal.js"></script> 
-    <script src="assets/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script> 
 
-</body>
+    <!-- Modal Profile (Hiển thị khi đã đăng nhập) -->
+    <div id="profileModal" class="auth-modal">
+      <div class="auth-modal-overlay" onclick="closeProfileModal()"></div>
+      <div class="auth-modal-content">
+        <button class="auth-modal-close" onclick="closeProfileModal()">
+          &times;
+        </button>
+
+        <div class="auth-modal-header">
+          <div class="profile-avatar-small">👤</div>
+          <h2 id="profile-fullname">Xin chào!</h2>
+          <p>Thông tin tài khoản của bạn</p>
+        </div>
+
+        <div class="profile-info-modal">
+          <div class="info-row">
+            <span class="info-label">👤 Họ và tên:</span>
+            <span class="info-value" id="profile-name-value"></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">🔐 Tài khoản:</span>
+            <span class="info-value" id="profile-username-value"></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">📧 Email:</span>
+            <span class="info-value" id="profile-email-value"></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">📱 Số điện thoại:</span>
+            <span class="info-value" id="profile-phone-value"></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">📍 Địa chỉ:</span>
+            <span class="info-value" id="profile-address-value"></span>
+          </div>
+        </div>
+
+        <button class="btn-logout-modal" onclick="handleLogoutModal()">
+          Đăng xuất
+        </button>
+      </div>
+    </div>
+    <script src="assets/js/modal.js"></script>
+    <script src="assets/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

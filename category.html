@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh mục sản phẩm - Tecknole</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .category-header {
+            background: linear-gradient(135deg, var(--color-one) 0%, var(--color-two) 100%);
+            color: var(--text-color-two);
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .category-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .category-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .filter-section {
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color-one);
+            font-size: 14px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+            color: var(--text-color-one);
+        }
+
+        .filter-group select:focus {
+            border-color: var(--color-one);
+        }
+
+        .products-count {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            display: none;
+        }
+
+        .no-products h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--text-color-one);
+        }
+
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .category-header h1 {
+                font-size: 28px;
+            }
+            .filter-row {
+                flex-direction: column;
+            }
+            .filter-group {
+                width: 100%;
+            }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-top">
+            <div class="inner-logo">
+                <a href="index.html">        
+                    <img src="assets/images/logoteck.png" alt="logotecknole">
+                    <span>Tecknole</span>
+                </a>
+            </div>
+            <div class="header-search">
+                <form method="get" action="/tim" enctype="multipart/form-data" class="clearfix search-form bg-white" role="search" aria-label="Tìm kiếm sản phẩm">
+                    <select name="scat_id" aria-label="Chọn danh mục">
+                        <option value="">Tất cả danh mục</option>
+                        <option value="1">Màn Hình</option>
+                        <option value="2">Bàn Phím</option>
+                        <option value="3">Chuột</option>
+                        <option value="4">Tai Nghe</option>
+                        <option value="5">Loa</option>
+                        <option value="6">Mic</option>
+                    </select>
+            
+                    <div class="searh-form-container">
+                        <input type="text" id="js-search" class="text_search" name="q" placeholder="Tìm kiếm sản phẩm..." autocomplete="off" aria-autocomplete="list" aria-controls="autocomplete-list" />
+                        <button type="submit" class="submit-search" aria-label="Tìm kiếm">
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Tìm kiếm
+                        </button>
+            
+                        <div class="autocomplete-suggestions" id="autocomplete-list" role="listbox" aria-hidden="true">
+                            <ul></ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="user-actions">
+                <a href="login.html" class="login">Đăng nhập</a>
+                <a href="register.html" class="register">Đăng ký</a>
+                <a href="cart.html" class="cart cart-badge">
+                    Giỏ hàng
+                    <span>0</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- THANH MENU -->
+        <nav>
+            <div class="nav-container">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="about.html">Giới thiệu</a></li>
+                    <li class="dropdown">
+                        <a href="products.html">Danh mục sản phẩm ▼</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="category.html?type=manhinh">Màn hình</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html?type=manhinh&brand=acer">Acer</a></li>
+                                    <li><a href="category.html?type=manhinh&brand=asus">Asus</a></li>
+                                    <li><a href="category.html?type=manhinh&brand=lg">LG</a></li>
+                                    <li><a href="category.html?type=manhinh&brand=msi">Msi</a></li>
+                                    <li><a href="category.html?type=manhinh&brand=viewsonic">Viewsonic</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="category.html?type=banphim">Bàn Phím</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html?type=banphim&brand=aula">Aula</a></li>
+                                    <li><a href="category.html?type=banphim&brand=akko">Akko</a></li>
+                                    <li><a href="category.html?type=banphim&brand=razer">Razer</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="category.html?type=chuot">Chuột</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html?type=chuot&brand=razer">Razer</a></li>
+                                    <li><a href="category.html?type=chuot&brand=corsair">Corsair</a></li>
+                                    <li><a href="category.html?type=chuot&brand=logitech">Logitech</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="category.html?type=tainghe">Tai Nghe</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html?type=tainghe&brand=apple">Apple</a></li>
+                                    <li><a href="category.html?type=tainghe&brand=bose">Bose</a></li>
+                                    <li><a href="category.html?type=tainghe&brand=marshall">Marshall</a></li>
+                                    <li><a href="category.html?type=tainghe&brand=sony">Sony</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="category.html?type=loa">Loa</a>
+                                <ul class="submenu">
+                                    <li><a href="category.html?type=loa&brand=acnos">Acnos</a></li>
+                                    <li><a href="category.html?type=loa&brand=devialet">Devialet</a></li>
+                                    <li><a href="category.html?type=loa&brand=sony">Sony</a></li>
+                                    <li><a href="category.html?type=loa&brand=jbl">JBL</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- END HEADER -->
+
+    <!-- CATEGORY HEADER -->
+    <div class="category-header">
+        <h1 id="category-title">Danh mục sản phẩm</h1>
+        <p id="category-desc">Khám phá các sản phẩm chất lượng cao</p>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <!-- FILTER SECTION -->
+        <div class="filter-section">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="filter-type">Loại sản phẩm</label>
+                    <select id="filter-type">
+                        <option value="">Tất cả loại</option>
+                        <option value="manhinh">Màn hình</option>
+                        <option value="banphim">Bàn phím</option>
+                        <option value="chuot">Chuột</option>
+                        <option value="tainghe">Tai nghe</option>
+                        <option value="loa">Loa</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-brand">Thương hiệu</label>
+                    <select id="filter-brand">
+                        <option value="">Tất cả thương hiệu</option>
+                        <option value="acer">Acer</option>
+                        <option value="asus">Asus</option>
+                        <option value="lg">LG</option>
+                        <option value="msi">MSI</option>
+                        <option value="viewsonic">Viewsonic</option>
+                        <option value="aula">Aula</option>
+                        <option value="akko">Akko</option>
+                        <option value="razer">Razer</option>
+                        <option value="corsair">Corsair</option>
+                        <option value="logitech">Logitech</option>
+                        <option value="steelseries">SteelSeries</option>
+                        <option value="apple">Apple</option>
+                        <option value="bose">Bose</option>
+                        <option value="marshall">Marshall</option>
+                        <option value="sony">Sony</option>
+                        <option value="acnos">Acnos</option>
+                        <option value="devialet">Devialet</option>
+                        <option value="jbl">JBL</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-sort">Sắp xếp</label>
+                    <select id="filter-sort">
+                        <option value="default">Mặc định</option>
+                        <option value="price-asc">Giá tăng dần</option>
+                        <option value="price-desc">Giá giảm dần</option>
+                        <option value="name-asc">Tên A-Z</option>
+                        <option value="name-desc">Tên Z-A</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="products-count" id="products-count">
+            Hiển thị <strong id="count-number">...</strong> sản phẩm
+        </div>
+
+        <!-- PRODUCTS GRID -->
+        <div class="products-grid" id="products-container">
+            <!-- Products will be loaded here -->
+        </div>
+
+        <!-- NO PRODUCTS MESSAGE -->
+        <div class="no-products" id="no-products">
+            <h3>Không tìm thấy sản phẩm</h3>
+            <p>Vui lòng thử lại với bộ lọc khác</p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Về TechStore</h3>
+                <ul>
+                    <li><a href="about.html">Giới thiệu</a></li>
+                    <li><a href="#">Tuyển dụng</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                    <li><a href="#">Điều khoản sử dụng</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Hỗ trợ khách hàng</h3>
+                <ul>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Bảo hành</a></li>
+                    <li><a href="#">Câu hỏi thường gặp</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Chính sách</h3>
+                <ul>
+                    <li><a href="#">Chính sách thanh toán</a></li>
+                    <li><a href="#">Chính sách vận chuyển</a></li>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section contact-info">
+                <h3>Liên hệ</h3>
+                <p>📍 123 Nguyễn Văn Linh, Q7, TP.HCM</p>
+                <p>📞 Hotline: 1900 xxxx</p>
+                <p>✉️ Email: support@techstore.vn</p>
+                <p>🕐 Giờ làm việc: 8:00 - 22:00</p>
+                <div class="social-links">
+                    <a href="#">f</a>
+                    <a href="#">📷</a>
+                    <a href="#">▶️</a>
+                    <a href="#">💼</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Tecknole. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dữ liệu sản phẩm
+        const allProducts = [
+            { id: 1, name: "Bàn phím Aula F75", type: "banphim", brand: "aula", price: 1050000, oldPrice: 1380000, image: "assets/images/popular_items/aulaf75_vang.png", badge: "" },
+            { id: 2, name: "Màn hình MSI MAG 274QF X24 27\"", type: "manhinh", brand: "msi", price: 6690000, oldPrice: 0, image: "assets/images/popular_items/msi_mag_274qf_x24_gearvn_d23c9ec1aab847818a2b31d35a3d25e8_1024x1024.jpg", badge: "HOT" },
+            { id: 3, name: "Loa Marshall Stanmore 3", type: "loa", brand: "marshall", price: 7500000, oldPrice: 7990000, image: "assets/images/popular_items/loa_marshal3.webp", badge: "NEW" },
+            { id: 4, name: "Chuột Razer Deathadder V3 Pro", type: "chuot", brand: "razer", price: 5990000, oldPrice: 6990000, image: "assets/images/popular_items/death_adder_v3pro.webp", badge: "" },
+            { id: 5, name: "Apple Airpod Pro Gen 2", type: "tainghe", brand: "apple", price: 6090000, oldPrice: 0, image: "assets/images/popular_items/airpods-pro-gen-2-magsafe-charge-usb-c.jpg", badge: "" },
+            { id: 6, name: "Chuột G502 Hero Logitech", type: "chuot", brand: "logitech", price: 1490000, oldPrice: 0, image: "assets/images/popular_items/G502_hero.jpg", badge: "NEW" },
+            { id: 7, name: "Tai nghe Marshall Major V", type: "tainghe", brand: "marshall", price: 4290000, oldPrice: 4990000, image: "assets/images/popular_items/major5.jpg", badge: "SALE" },
+            { id: 8, name: "Bàn phím Asus ROG Falchion RX Low Profile", type: "banphim", brand: "asus", price: 4090000, oldPrice: 0, image: "assets/images/img/banphim/asus_anhtrungbay2.jpg", badge: "HOT" },
+            { id: 9, name: "Chuột Corsair Katar Pro Wireless", type: "chuot", brand: "corsair", price: 890000, oldPrice: 990000, image: "assets/images/img/chuot/corsar_trungbay1.jpg", badge: "" },
+            { id: 10, name: "Loa xách tay Acnos QUAD 64 Vẻ2", type: "loa", brand: "acnos", price: 7590000, oldPrice: 8890000, image: "assets/images/img/loa/Acnos_trungbay1.webp", badge: "NEW" },
+            { id: 11, name: "Bàn phím AuLa S98 PRO TM", type: "banphim", brand: "aula", price: 1849000, oldPrice: 2499000, image: "assets/images/img/banphim/aula-trungbay_2.png", badge: "SALE" },
+            { id: 12, name: "Loa Devialet Phantom Ultimate 98dB", type: "loa", brand: "devialet", price: 47990000, oldPrice: 0, image: "assets/images/img/loa/devialet_trungbay1.webp", badge: "HOT" },
+            { id: 13, name: "Bàn phím AKKO 5075B Plus", type: "banphim", brand: "akko", price: 1750000, oldPrice: 0, image: "assets/images/img/banphim/akko_anhtrungbay1.jpg", badge: "" },
+            { id: 14, name: "Tai nghe Apple Beats Solo Pro", type: "tainghe", brand: "apple", price: 5790000, oldPrice: 6000000, image: "assets/images/img/tainghe/apple_trungbay1.jpg", badge: "" },
+            { id: 15, name: "Chuột Logitech G203 Lightsync", type: "chuot", brand: "logitech", price: 590000, oldPrice: 0, image: "assets/images/img/chuot/logitech_trungbay1.jpg", badge: "" },
+            { id: 16, name: "Loa Karaoke JBL CV1852T", type: "loa", brand: "jbl", price: 11590000, oldPrice: 0, image: "assets/images/img/loa/jbl_trungbay1.webp", badge: "NEW" },
+            { id: 17, name: "Màn hình Acer KG270-X1 27", type: "manhinh", brand: "acer", price: 4290000, oldPrice: 0, image: "assets/images/img/manhinh/Acer_anhtrungbay.png", badge: "HOT" },
+            { id: 18, name: "Tai nghe Bose QuietComfort Ultra", type: "tainghe", brand: "bose", price: 9690000, oldPrice: 10990000, image: "assets/images/img/tainghe/bose_trungbay1.jpg", badge: "SALE" },
+            { id: 19, name: "Bàn phím AuLa F75 Pro", type: "banphim", brand: "aula", price: 1860000, oldPrice: 0, image: "assets/images/img/banphim/aula_trungbay1.png", badge: "" },
+            { id: 20, name: "Màn hình Asus ROG Strix XG259CMS", type: "manhinh", brand: "asus", price: 7799000, oldPrice: 8999000, image: "assets/images/img/manhinh/asus_anhtrungbay1.jpg", badge: "" },
+            { id: 21, name: "Chuột Razer Basilisk V3 Pro", type: "chuot", brand: "razer", price: 4290000, oldPrice: 0, image: "assets/images/img/chuot/razer_trungbay1.jpg", badge: "HOT" },
+            { id: 22, name: "Tai nghe Marshall Mode II", type: "tainghe", brand: "marshall", price: 3360000, oldPrice: 0, image: "assets/images/img/tainghe/marshall_trungbay.jpg", badge: "" },
+            { id: 23, name: "Loa Marshall Middleton", type: "loa", brand: "marshall", price: 6650000, oldPrice: 7790000, image: "assets/images/img/loa/marshall_trungbay1.webp", badge: "" },
+            { id: 24, name: "Màn hình Asus TUF Gaming VG27AQ5A", type: "manhinh", brand: "asus", price: 5999000, oldPrice: 0, image: "assets/images/img/manhinh/asus_anhtrungbay2.jpg", badge: "NEW" },
+            { id: 25, name: "Bàn phím Razer Huntsman V3 Pro", type: "banphim", brand: "razer", price: 5999000, oldPrice: 0, image: "assets/images/img/banphim/razer_trungbay2.jpg", badge: "NEW" },
+            { id: 26, name: "Màn hình LG 27G850A-B", type: "manhinh", brand: "lg", price: 20390000, oldPrice: 0, image: "assets/images/img/manhinh/lg_anhtrungbay1.jpg", badge: "" },
+            { id: 27, name: "Chuột SteelSeries Aerox 5 Wireless", type: "chuot", brand: "steelseries", price: 4090000, oldPrice: 4590000, image: "assets/images/img/chuot/Steelseries_trungbay1.jpg", badge: "" },
+            { id: 28, name: "Tai nghe Sony WH‑CH520", type: "tainghe", brand: "sony", price: 1590000, oldPrice: 0, image: "assets/images/img/tainghe/sony_trungbay.jpg", badge: "NEW" },
+            { id: 29, name: "Loa Sony ULT Field 5", type: "loa", brand: "sony", price: 7690000, oldPrice: 8090000, image: "assets/images/img/loa/sony_trungbay1.webp", badge: "" },
+            { id: 30, name: "Màn hình Viewsonic VX2428AJ-BL", type: "manhinh", brand: "viewsonic", price: 3890000, oldPrice: 0, image: "assets/images/img/manhinh/viewsonic_anhtrungbay1.jpg", badge: "" }
+        ];
+
+        console.log('Tổng số sản phẩm:', allProducts.length);
+
+        // Tên danh mục và thương hiệu
+        const categoryNames = {
+            'manhinh': 'Màn hình',
+            'banphim': 'Bàn phím',
+            'chuot': 'Chuột',
+            'tainghe': 'Tai nghe',
+            'loa': 'Loa'
+        };
+
+        const brandNames = {
+            'acer': 'Acer', 'asus': 'Asus', 'lg': 'LG', 'msi': 'MSI', 'viewsonic': 'Viewsonic',
+            'aula': 'Aula', 'akko': 'Akko', 'razer': 'Razer',
+            'corsair': 'Corsair', 'logitech': 'Logitech', 'steelseries': 'SteelSeries',
+            'apple': 'Apple', 'bose': 'Bose', 'marshall': 'Marshall', 'sony': 'Sony',
+            'acnos': 'Acnos', 'devialet': 'Devialet', 'jbl': 'JBL'
+        };
+
+        // Map thương hiệu với loại sản phẩm chính
+        const brandPrimaryCategory = {
+            'acer': 'manhinh',
+            'asus': 'manhinh', 
+            'lg': 'manhinh',
+            'msi': 'manhinh',
+            'viewsonic': 'manhinh',
+            'aula': 'banphim',
+            'akko': 'banphim',
+            'corsair': 'chuot',
+            'logitech': 'chuot',
+            'steelseries': 'chuot',
+            'apple': 'tainghe',
+            'bose': 'tainghe',
+            'marshall': 'tainghe',
+            'sony': 'tainghe',
+            'acnos': 'loa',
+            'devialet': 'loa',
+            'jbl': 'loa'
+        };
+
+        // Tự động detect type từ brand
+        function smartDetectType(brand) {
+            if (!brand) return null;
+            if (brandPrimaryCategory[brand]) {
+                console.log('Tự động detect:', brand, '→', brandPrimaryCategory[brand]);
+                return brandPrimaryCategory[brand];
+            }
+            return null;
+        }
+
+        // Lấy tham số URL
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Format giá
+        function formatPrice(price) {
+            return price.toLocaleString('vi-VN') + 'đ';
+        }
+
+        // Tạo HTML cho thẻ sản phẩm
+        function createProductCard(product) {
+            const oldPriceHTML = product.oldPrice > 0 
+                ? '<span class="old-price">' + formatPrice(product.oldPrice) + '</span>' 
+                : '';
+            
+            const badgeHTML = product.badge 
+                ? '<span class="product-badge">' + product.badge + '</span>' 
+                : '';
+
+            return '<div class="product-card" onclick="window.location=\'product-detail.html?id=' + product.id + '\'">' +
+                '<div class="product-image">' +
+                    '<img src="' + product.image + '" alt="' + product.name + '">' +
+                    badgeHTML +
+                '</div>' +
+                '<div class="product-info">' +
+                    '<div class="product-name">' + product.name + '</div>' +
+                    '<div class="product-price">' +
+                        formatPrice(product.price) +
+                        oldPriceHTML +
+                    '</div>' +
+                    '<button class="add-to-cart">Thêm vào giỏ</button>' +
+                '</div>' +
+            '</div>';
+        }
+
+        // Lọc và hiển thị sản phẩm
+        function displayProducts(autoDetect) {
+            let typeFilter = document.getElementById('filter-type').value;
+            let brandFilter = document.getElementById('filter-brand').value;
+            const sortFilter = document.getElementById('filter-sort').value;
+
+            // CHỈ tự động detect khi autoDetect = true (lần đầu load trang)
+            // KHÔNG auto-detect khi user thay đổi dropdown
+            if (autoDetect && !typeFilter && brandFilter) {
+                const detectedType = smartDetectType(brandFilter);
+                if (detectedType) {
+                    typeFilter = detectedType;
+                    document.getElementById('filter-type').value = detectedType;
+                }
+            }
+
+            console.log('Bộ lọc:', { type: typeFilter, brand: brandFilter, sort: sortFilter });
+
+            // Lọc sản phẩm
+            let filteredProducts = allProducts.filter(function(product) {
+                const matchType = !typeFilter || product.type === typeFilter;
+                const matchBrand = !brandFilter || product.brand === brandFilter;
+                return matchType && matchBrand;
+            });
+
+            console.log('Số sản phẩm sau khi lọc:', filteredProducts.length);
+
+            // Sắp xếp sản phẩm
+            if (sortFilter === 'price-asc') {
+                filteredProducts.sort(function(a, b) { return a.price - b.price; });
+            } else if (sortFilter === 'price-desc') {
+                filteredProducts.sort(function(a, b) { return b.price - a.price; });
+            } else if (sortFilter === 'name-asc') {
+                filteredProducts.sort(function(a, b) { return a.name.localeCompare(b.name, 'vi'); });
+            } else if (sortFilter === 'name-desc') {
+                filteredProducts.sort(function(a, b) { return b.name.localeCompare(a.name, 'vi'); });
+            }
+
+            // Hiển thị sản phẩm
+            const container = document.getElementById('products-container');
+            const noProducts = document.getElementById('no-products');
+            const countNumber = document.getElementById('count-number');
+
+            if (filteredProducts.length === 0) {
+                container.innerHTML = '';
+                noProducts.style.display = 'block';
+                countNumber.textContent = '0';
+                console.log('Không có sản phẩm nào phù hợp');
+            } else {
+                const productsHTML = filteredProducts.map(function(product) {
+                    return createProductCard(product);
+                }).join('');
+                container.innerHTML = productsHTML;
+                noProducts.style.display = 'none';
+                countNumber.textContent = filteredProducts.length;
+                console.log('Đã hiển thị', filteredProducts.length, 'sản phẩm');
+            }
+        }
+
+        // Cập nhật tiêu đề trang
+        function updatePageTitle() {
+            let type = getUrlParameter('type');
+            const brand = getUrlParameter('brand');
+
+            // Tự động detect type nếu chỉ có brand
+            if (!type && brand) {
+                type = smartDetectType(brand);
+            }
+
+            let title = 'Danh mục sản phẩm';
+            let description = 'Khám phá các sản phẩm chất lượng cao';
+
+            if (type && brand) {
+                title = categoryNames[type] + ' ' + brandNames[brand];
+                description = 'Các sản phẩm ' + categoryNames[type] + ' của thương hiệu ' + brandNames[brand];
+            } else if (type) {
+                title = categoryNames[type];
+                description = 'Tất cả sản phẩm ' + categoryNames[type];
+            } else if (brand) {
+                title = 'Thương hiệu ' + brandNames[brand];
+                description = 'Tất cả sản phẩm của ' + brandNames[brand];
+            }
+
+            document.getElementById('category-title').textContent = title;
+            document.getElementById('category-desc').textContent = description;
+            document.title = title + ' - Tecknole';
+            
+            console.log('Tiêu đề trang:', title);
+        }
+
+        // Khởi tạo bộ lọc từ URL
+        function initializeFilters() {
+            let type = getUrlParameter('type');
+            const brand = getUrlParameter('brand');
+
+            // Tự động detect type nếu chỉ có brand
+            if (!type && brand) {
+                type = smartDetectType(brand);
+            }
+
+            if (type) {
+                document.getElementById('filter-type').value = type;
+                console.log('Đã set filter type:', type);
+            }
+            if (brand) {
+                document.getElementById('filter-brand').value = brand;
+                console.log('Đã set filter brand:', brand);
+            }
+        }
+
+        // Gắn sự kiện cho các bộ lọc
+        document.getElementById('filter-type').addEventListener('change', function() {
+            console.log('Đã thay đổi loại sản phẩm');
+            displayProducts();
+        });
+        
+        document.getElementById('filter-brand').addEventListener('change', function() {
+            console.log('Đã thay đổi thương hiệu');
+            displayProducts();
+        });
+        
+        document.getElementById('filter-sort').addEventListener('change', function() {
+            console.log('Đã thay đổi cách sắp xếp');
+            displayProducts();
+        });
+
+        // Khởi tạo trang khi DOM đã load xong
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('=== BẮT ĐẦU KHỞI TẠO TRANG ===');
+            updatePageTitle();
+            initializeFilters();
+            displayProducts();
+            console.log('=== HOÀN THÀNH KHỞI TẠO ===');
+        });
+    </script>
+
+</body>
+</html>
