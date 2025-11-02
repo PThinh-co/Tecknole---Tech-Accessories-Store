@@ -18,6 +18,9 @@ const PRODUCTS_DATA = [
         oldPrice: 899000,
         stock: 12,
         image: 'assets/images/popular_items/aulaf75_vang.png',
+        type: 'banphim',
+        brand: 'aula',
+        badge: null,
         galleryImages: [
             'assets/images/popular_items/aulaf75_vang.png',
             'assets/images/products/Ban-Phim/AULA/aula_f75pro/aula_trungbay1.png',
@@ -42,7 +45,10 @@ const PRODUCTS_DATA = [
         price: 6690000,
         oldPrice: null,
         stock: 5,
-        image: 'assets/images/popular_items/msi_mag_274qf_x24_gearvn_d23c9ec1aab8477818a2b31d35a3d25e8_1024x1024.jpg',
+        image: 'assets/images/popular_items/msi_mag_274qf_x24_gearvn_d23c9ec1aab847818a2b31d35a3d25e8_1024x1024.jpg',
+        type: 'manhinh',
+        brand: 'msi',
+        badge: 'HOT',
         galleryImages: [
             'assets/images/popular_items/msi_mag_274qf_x24_gearvn_d23c9ec1aab847818a2b31d35a3d25e8_1024x1024.jpg',
             'assets/images/products/Man-Hinh/MSI/man_msi(1).png',
@@ -69,6 +75,9 @@ const PRODUCTS_DATA = [
         oldPrice: 7990000,
         stock: 12,
         image: 'assets/images/popular_items/loa_marshal3.webp',
+        type: 'loa',
+        brand: 'marshall',
+        badge: 'NEW',
         galleryImages: [
             'assets/images/products/Loa/Marshall/stanmor/stan(1).webp',
             'assets/images/products/Loa/Marshall/stanmor/stan(2).webp',
@@ -95,6 +104,9 @@ const PRODUCTS_DATA = [
         oldPrice: 6990000,
         stock: 8,
         image: 'assets/images/popular_items/death_adder_v3pro.webp',
+        type: 'chuot',
+        brand: 'razer',
+        badge: null,
         galleryImages: [
             'assets/images/popular_items/death_adder_v3pro.webp',
             'assets/images/img/chuot/razer_trungbay1.jpg',
@@ -118,6 +130,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 22,
         image: 'assets/images/popular_items/airpods-pro-gen-2-magsafe-charge-usb-c.jpg',
+        type: 'tainghe',
+        brand: 'apple',
+        badge: null,
         galleryImages: [
             'assets/images/popular_items/airpods-pro-gen-2-magsafe-charge-usb-c.jpg',
             'assets/images/img/tainghe/apple_trungbay1.jpg',
@@ -142,6 +157,9 @@ const PRODUCTS_DATA = [
         oldPrice: 1990000,
         stock: 10,
         image: 'assets/images/popular_items/G502_hero.jpg',
+        type: 'chuot',
+        brand: 'logitech',
+        badge: 'NEW',
         galleryImages: [
             'assets/images/popular_items/G502_hero.jpg',
             'assets/images/products/Chuot/Logitech/g502/g502_1.jpg',
@@ -165,6 +183,9 @@ const PRODUCTS_DATA = [
         oldPrice: 4990000,
         stock: 18,
         image: 'assets/images/popular_items/major5.jpg',
+        type: 'tainghe',
+        brand: 'marshall',
+        badge: 'SALE',
         galleryImages: [
             'assets/images/popular_items/major5.jpg',
             'assets/images/img/tainghe/marshall_trungbay.jpg',
@@ -189,6 +210,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 7,
         image: 'assets/images/img/banphim/asus_anhtrungbay2.jpg',
+        type: 'banphim',
+        brand: 'asus',
+        badge: 'HOT',
         galleryImages: [
             'assets/images/products/Ban-Phim/ASUS/asus_trungbay1.jpg',
             'assets/images/products/Ban-Phim/ASUS/asus_trungbay2.jpg',
@@ -214,6 +238,9 @@ const PRODUCTS_DATA = [
         oldPrice: 990000,
         stock: 35,
         image: 'assets/images/img/chuot/corsar_trungbay1.jpg',
+        type: 'chuot',
+        brand: 'corsair',
+        badge: null,
         galleryImages: [
             'assets/images/img/chuot/corsar_trungbay1.jpg',
             'assets/images/products/Chuot/Corsair/katar_1.jpg',
@@ -237,6 +264,9 @@ const PRODUCTS_DATA = [
         oldPrice: 8890000,
         stock: 14,
         image: 'assets/images/img/loa/Acnos_trungbay1.webp',
+        type: 'loa',
+        brand: 'acnos',
+        badge: 'NEW',
         galleryImages: [
             'assets/images/img/loa/Acnos_trungbay1.webp',
             'assets/images/products/Loa/Acnos/acnos_1.webp',
@@ -266,6 +296,9 @@ const PRODUCTS_DATA = [
         oldPrice: 2499000,
         stock: 9,
         image: 'assets/images/img/banphim/aula-trungbay_2.png',
+        type: 'banphim',
+        brand: 'aula',
+        badge: 'SALE',
         galleryImages: [
             'assets/images/img/banphim/aula-trungbay_2.png',
             'assets/images/products/Ban-Phim/AULA/aula_f98/aula_trungbay1.png',
@@ -292,6 +325,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 3,
         image: 'assets/images/img/loa/devialet_trungbay1.webp',
+        type: 'loa',
+        brand: 'devialet',
+        badge: 'HOT',
         galleryImages: [
             'assets/images/img/loa/devialet_trungbay1.webp',
             'assets/images/products/Loa/Devialet/dev1.webp',
@@ -320,6 +356,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 17,
         image: 'assets/images/img/banphim/akko_anhtrungbay1.jpg',
+        type: 'banphim',
+        brand: 'akko',
+        badge: null,
         galleryImages: [
             'assets/images/img/banphim/akko_anhtrungbay1.jpg',  
             'assets/images/products/Ban-Phim/AKKO/akko2.jpg',
@@ -342,6 +381,9 @@ const PRODUCTS_DATA = [
         oldPrice: 6000000,
         stock: 11,
         image: 'assets/images/img/tainghe/apple_trungbay1.jpg',
+        type: 'tainghe',
+        brand: 'apple',
+        badge: null,
         galleryImages: [
             'assets/images/img/tainghe/apple_trungbay1.jpg',
             'assets/images/products/Tai-nghe/Apple/beatsolo/solo1.jpg',
@@ -365,6 +407,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 40,
         image: 'assets/images/img/chuot/logitech_trungbay1.jpg',
+        type: 'chuot',
+        brand: 'logitech',
+        badge: null,
         galleryImages: [
             'assets/images/img/chuot/logitech_trungbay1.jpg',
             'assets/images/products/Chuot/Logitech/g203/g203_1.jpg',
@@ -388,6 +433,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 6,
         image: 'assets/images/img/loa/jbl_trungbay1.webp',
+        type: 'loa',
+        brand: 'jbl',
+        badge: 'NEW',
         galleryImages: [
             'assets/images/img/loa/jbl_trungbay1.webp',
             'assets/images/products/Loa/JBL/jbl1.webp',
@@ -412,6 +460,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 13,
         image: 'assets/images/img/manhinh/Acer_anhtrungbay.png',
+        type: 'manhinh',
+        brand: 'acer',
+        badge: 'HOT',
         galleryImages: [
             'assets/images/img/manhinh/Acer_anhtrungbay.png',
             'assets/images/products/Man-Hinh/ACER/ac1.jpg',
@@ -439,6 +490,9 @@ const PRODUCTS_DATA = [
         oldPrice: 10990000,
         stock: 10,
         image: 'assets/images/img/tainghe/bose_trungbay1.jpg',
+        type: 'tainghe',
+        brand: 'bose',
+        badge: 'SALE',
         galleryImages: [
             'assets/images/img/tainghe/bose_trungbay1.jpg',
             'assets/images/products/Tai-nghe/Bose/bose1.webp',
@@ -462,6 +516,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 11,
         image: 'assets/images/img/banphim/aula_trungbay1.png',
+        type: 'banphim',
+        brand: 'aula',
+        badge: null,
         galleryImages: [
             'assets/images/img/banphim/aula_trungbay1.png',
             'assets/images/popular_items/aulaf75_vang.png',
@@ -483,6 +540,9 @@ const PRODUCTS_DATA = [
         oldPrice: 8999000,
         stock: 4,
         image: 'assets/images/img/manhinh/asus_anhtrungbay1.jpg',
+        type: 'manhinh',
+        brand: 'asus',
+        badge: null,
         galleryImages: [
             'assets/images/img/manhinh/asus_anhtrungbay1.jpg',
             'assets/images/products/Man-Hinh/ASUS/strix/strix(1).png',
@@ -508,6 +568,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 12,
         image: 'assets/images/img/chuot/razer_trungbay1.jpg',
+        type: 'chuot',
+        brand: 'razer',
+        badge: 'HOT',
         galleryImages: [
             'assets/images/img/chuot/razer_trungbay1.jpg',
             'assets/images/products/Chuot/Razer/basilik/razer_trungbay1.jpg',
@@ -530,6 +593,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 28,
         image: 'assets/images/img/tainghe/marshall_trungbay.jpg',
+        type: 'tainghe',
+        brand: 'marshall',
+        badge: null,
         galleryImages: [
             'assets/images/img/tainghe/marshall_trungbay.jpg',
             'assets/images/products/Tai-nghe/Marshall/mode/mode2(1).jpg',
@@ -553,6 +619,9 @@ const PRODUCTS_DATA = [
         oldPrice: 7790000,
         stock: 16,
         image: 'assets/images/img/loa/marshall_trungbay1.webp',
+        type: 'loa',
+        brand: 'marshall',
+        badge: null,
         galleryImages: [
             'assets/images/img/loa/marshall_trungbay1.webp',
             'assets/images/products/Loa/Marshall/middleton/marshal(1).webp',
@@ -579,6 +648,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 8,
         image: 'assets/images/img/manhinh/asus_anhtrungbay2.jpg',
+        type: 'manhinh',
+        brand: 'asus',
+        badge: 'NEW',
         galleryImages: [
             'assets/images/img/manhinh/asus_anhtrungbay2.jpg',
             'assets/images/products/Man-Hinh/ASUS/tuf/tuf(1).jpg',
@@ -605,6 +677,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 10,
         image: 'assets/images/products/Ban-Phim/RAZER/razer_trungbay1.jpg]]]]',
+        type: 'banphim',
+        brand: 'razer',
+        badge: 'NEW',
         galleryImages: [
             'assets/images/products/Ban-Phim/RAZER/razer_trungbay1.jpg',
             'assets/images/products/Ban-Phim/RAZER/razer_trungbay2.jpg',
@@ -630,6 +705,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 3,
         image: 'assets/images/img/manhinh/lg_anhtrungbay1.jpg',
+        type: 'manhinh',
+        brand: 'lg',
+        badge: null,
         galleryImages: [
             'assets/images/img/manhinh/lg_anhtrungbay1.jpg',
             'assets/images/products/Man-Hinh/LG/lg(1).png',
@@ -656,6 +734,9 @@ const PRODUCTS_DATA = [
         oldPrice: 4590000,
         stock: 14,
         image: 'assets/images/img/chuot/Steelseries_trungbay1.jpg',
+        type: 'chuot',
+        brand: 'steelseries',
+        badge: null,
         galleryImages: [
             'assets/images/img/chuot/Steelseries_trungbay1.jpg',
             'assets/images/products/Chuot/SteelSeries/ssa_1.png',
@@ -680,6 +761,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 30,
         image: 'assets/images/img/tainghe/sony_trungbay.jpg',
+        type: 'tainghe',
+        brand: 'sony',
+        badge: 'NEW',
         galleryImages: [
             'assets/images/img/tainghe/sony_trungbay.jpg',
             'assets/images/products/Tai-nghe/Sony/sony(1).jpg',
@@ -703,6 +787,9 @@ const PRODUCTS_DATA = [
         oldPrice: 8090000,
         stock: 10,
         image: 'assets/images/img/loa/sony_trungbay1.webp',
+        type: 'loa',
+        brand: 'sony',
+        badge: null,
         galleryImages: [
             'assets/images/img/loa/sony_trungbay1.webp',
             'assets/images/products/Loa/SONY/sony(1).webp',
@@ -728,6 +815,9 @@ const PRODUCTS_DATA = [
         oldPrice: null,
         stock: 9,
         image: 'assets/images/img/manhinh/viewsonic_anhtrungbay1.jpg',
+        type: 'manhinh',
+        brand: 'viewsonic',
+        badge: null,
         galleryImages: [
             'assets/images/img/manhinh/viewsonic_anhtrungbay1.jpg',
             'assets/images/products/Man-Hinh/VIEWSONIC/sonic(1).jpg',
@@ -961,4 +1051,226 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof updateAuthUI === 'function') {
         updateAuthUI();
     }
+});
+
+console.log('Tổng số sản phẩm:', PRODUCTS_DATA.length);
+
+// Tên danh mục và thương hiệu
+const categoryNames = {
+    'manhinh': 'Màn hình',
+    'banphim': 'Bàn phím',
+    'chuot': 'Chuột',
+    'tainghe': 'Tai nghe',
+    'loa': 'Loa'
+};
+
+const brandNames = {
+    'acer': 'Acer', 'asus': 'Asus', 'lg': 'LG', 'msi': 'MSI', 'viewsonic': 'Viewsonic',
+    'aula': 'Aula', 'akko': 'Akko', 'razer': 'Razer',
+    'corsair': 'Corsair', 'logitech': 'Logitech', 'steelseries': 'SteelSeries',
+    'apple': 'Apple', 'bose': 'Bose', 'marshall': 'Marshall', 'sony': 'Sony',
+    'acnos': 'Acnos', 'devialet': 'Devialet', 'jbl': 'JBL'
+};
+
+// Map thương hiệu với loại sản phẩm chính
+const brandPrimaryCategory = {
+    'acer': 'manhinh',
+    'asus': 'manhinh', 
+    'lg': 'manhinh',
+    'msi': 'manhinh',
+    'viewsonic': 'manhinh',
+    'aula': 'banphim',
+    'akko': 'banphim',
+    'corsair': 'chuot',
+    'logitech': 'chuot',
+    'steelseries': 'chuot',
+    'apple': 'tainghe',
+    'bose': 'tainghe',
+    'marshall': 'tainghe',
+    'sony': 'tainghe',
+    'acnos': 'loa',
+    'devialet': 'loa',
+    'jbl': 'loa'
+};
+
+// Tự động detect type từ brand
+function smartDetectType(brand) {
+    if (!brand) return null;
+    if (brandPrimaryCategory[brand]) {
+        console.log('Tự động detect:', brand, '→', brandPrimaryCategory[brand]);
+        return brandPrimaryCategory[brand];
+    }
+    return null;
+}
+
+// Lấy tham số URL
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Format giá
+function formatPrice(price) {
+    return price.toLocaleString('vi-VN') + 'đ';
+}
+
+// Tạo HTML cho thẻ sản phẩm
+function createProductCard(product) {
+    const oldPriceHTML = product.oldPrice > 0 
+        ? '<span class="old-price">' + formatPrice(product.oldPrice) + '</span>' 
+        : '';
+    
+    const badgeHTML = product.badge 
+        ? '<span class="product-badge">' + product.badge + '</span>' 
+        : '';
+
+    return '<div class="product-card" onclick="window.location=\'product-detail.html?id=' + product.id + '\'">' +
+        '<div class="product-image">' +
+            '<img src="' + product.image + '" alt="' + product.name + '">' +
+            badgeHTML +
+        '</div>' +
+        '<div class="product-info">' +
+            '<div class="product-name">' + product.name + '</div>' +
+            '<div class="product-price">' +
+                formatPrice(product.price) +
+                oldPriceHTML +
+            '</div>' +
+            '<button class="add-to-cart">Thêm vào giỏ</button>' +
+        '</div>' +
+    '</div>';
+}
+
+// Lọc và hiển thị sản phẩm
+function displayProducts(autoDetect) {
+    let typeFilter = document.getElementById('filter-type').value;
+    let brandFilter = document.getElementById('filter-brand').value;
+    const sortFilter = document.getElementById('filter-sort').value;
+
+    // CHỈ tự động detect khi autoDetect = true (lần đầu load trang)
+    // KHÔNG auto-detect khi user thay đổi dropdown
+    if (autoDetect && !typeFilter && brandFilter) {
+        const detectedType = smartDetectType(brandFilter);
+        if (detectedType) {
+            typeFilter = detectedType;
+            document.getElementById('filter-type').value = detectedType;
+        }
+    }
+
+    console.log('Bộ lọc:', { type: typeFilter, brand: brandFilter, sort: sortFilter });
+
+    // Lọc sản phẩm
+    let filteredProducts = PRODUCTS_DATA.filter(function(product) {
+        const matchType = !typeFilter || product.type === typeFilter;
+        const matchBrand = !brandFilter || product.brand === brandFilter;
+        return matchType && matchBrand;
+    });
+
+    console.log('Số sản phẩm sau khi lọc:', filteredProducts.length);
+
+    // Sắp xếp sản phẩm
+    if (sortFilter === 'price-asc') {
+        filteredProducts.sort(function(a, b) { return a.price - b.price; });
+    } else if (sortFilter === 'price-desc') {
+        filteredProducts.sort(function(a, b) { return b.price - a.price; });
+    } else if (sortFilter === 'name-asc') {
+        filteredProducts.sort(function(a, b) { return a.name.localeCompare(b.name, 'vi'); });
+    } else if (sortFilter === 'name-desc') {
+        filteredProducts.sort(function(a, b) { return b.name.localeCompare(a.name, 'vi'); });
+    }
+
+    // Hiển thị sản phẩm
+    const container = document.getElementById('products-container');
+    const noProducts = document.getElementById('no-products');
+    const countNumber = document.getElementById('count-number');
+
+    if (filteredProducts.length === 0) {
+        container.innerHTML = '';
+        noProducts.style.display = 'block';
+        countNumber.textContent = '0';
+        console.log('Không có sản phẩm nào phù hợp');
+    } else {
+        const productsHTML = filteredProducts.map(function(product) {
+            return createProductCard(product);
+        }).join('');
+        container.innerHTML = productsHTML;
+        noProducts.style.display = 'none';
+        countNumber.textContent = filteredProducts.length;
+        console.log('Đã hiển thị', filteredProducts.length, 'sản phẩm');
+    }
+}
+
+// Cập nhật tiêu đề trang
+function updatePageTitle() {
+    let type = getUrlParameter('type');
+    const brand = getUrlParameter('brand');
+
+    // Tự động detect type nếu chỉ có brand
+    if (!type && brand) {
+        type = smartDetectType(brand);
+    }
+
+    let title = 'Danh mục sản phẩm';
+    let description = 'Khám phá các sản phẩm chất lượng cao';
+
+    if (type && brand) {
+        title = categoryNames[type] + ' ' + brandNames[brand];
+        description = 'Các sản phẩm ' + categoryNames[type] + ' của thương hiệu ' + brandNames[brand];
+    } else if (type) {
+        title = categoryNames[type];
+        description = 'Tất cả sản phẩm ' + categoryNames[type];
+    } else if (brand) {
+        title = 'Thương hiệu ' + brandNames[brand];
+        description = 'Tất cả sản phẩm của ' + brandNames[brand];
+    }
+
+    document.getElementById('category-title').textContent = title;
+    document.getElementById('category-desc').textContent = description;
+    document.title = title + ' - Tecknole';
+    
+    console.log('Tiêu đề trang:', title);
+}
+
+// Khởi tạo bộ lọc từ URL
+function initializeFilters() {
+    let type = getUrlParameter('type');
+    const brand = getUrlParameter('brand');
+
+    // Tự động detect type nếu chỉ có brand
+    if (!type && brand) {
+        type = smartDetectType(brand);
+    }
+
+    if (type) {
+        document.getElementById('filter-type').value = type;
+        console.log('Đã set filter type:', type);
+    }
+    if (brand) {
+        document.getElementById('filter-brand').value = brand;
+        console.log('Đã set filter brand:', brand);
+    }
+}
+
+// Gắn sự kiện cho các bộ lọc
+document.getElementById('filter-type').addEventListener('change', function() {
+    console.log('Đã thay đổi loại sản phẩm');
+    displayProducts();
+});
+
+document.getElementById('filter-brand').addEventListener('change', function() {
+    console.log('Đã thay đổi thương hiệu');
+    displayProducts();
+});
+
+document.getElementById('filter-sort').addEventListener('change', function() {
+    console.log('Đã thay đổi cách sắp xếp');
+    displayProducts();
+});
+
+// Khởi tạo trang khi DOM đã load xong
+window.addEventListener('DOMContentLoaded', function() {
+    console.log('=== BẮT ĐẦU KHỞI TẠO TRANG ===');
+    updatePageTitle();
+    initializeFilters();
+    displayProducts();
+    console.log('=== HOÀN THÀNH KHỞI TẠO ===');
 });

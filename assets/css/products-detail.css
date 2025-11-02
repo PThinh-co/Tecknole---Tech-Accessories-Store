@@ -1,3 +1,121 @@
+.category-header {
+    background: linear-gradient(135deg, var(--color-one) 0%, var(--color-two) 100%);
+    color: var(--text-color-two);
+    padding: 40px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.category-header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.category-header p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.filter-section {
+    background: var(--bg);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.filter-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color-one);
+    font-size: 14px;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    color: var(--text-color-one);
+}
+
+.filter-group select:focus {
+    border-color: var(--color-one);
+}
+
+.products-count {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.no-products {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    display: none;
+}
+
+.no-products h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--text-color-one);
+}
+
+@media (max-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .category-header h1 {
+        font-size: 28px;
+    }
+    .filter-row {
+        flex-direction: column;
+    }
+    .filter-group {
+        width: 100%;
+    }
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
 .product-detail-container {
     max-width: 1200px;
     margin: 40px auto;
