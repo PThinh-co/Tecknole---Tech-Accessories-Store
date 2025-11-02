@@ -1,0 +1,206 @@
+.introduce-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.intro-hero {
+    background: linear-gradient(135deg, var(--color-one) 0%, var(--color-two) 100%);
+    color: var(--text-color-two);
+    padding: 60px 40px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 60px;
+    box-shadow: 0 10px 40px rgba(81, 112, 255, 0.3);
+}
+
+.intro-hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.intro-hero p {
+    font-size: 20px;
+    opacity: 0.95;
+    line-height: 1.6;
+}
+
+.about-section {
+    background: var(--bg);
+    padding: 50px 40px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.about-section h2 {
+    font-size: 36px;
+    color: var(--text-color-one);
+    margin-bottom: 25px;
+    font-weight: 700;
+    border-bottom: 3px solid var(--color-one);
+    padding-bottom: 15px;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.about-text {
+    line-height: 1.8;
+    font-size: 16px;
+    color: #555;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+}
+
+.about-features {
+    display: grid;
+    gap: 20px;
+}
+
+.feature-card {
+    background: var(--color-three);
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 4px solid var(--color-one);
+    transition: all 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateX(10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+    font-size: 20px;
+    color: var(--text-color-one);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.feature-card p {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.policies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.policy-card {
+    background: var(--bg);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.policy-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.policy-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.policy-card h3 {
+    font-size: 24px;
+    color: var(--text-color-one);
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.policy-content {
+    color: #555;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.policy-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.policy-content li {
+    padding: 10px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.policy-content li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-one);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.contact-cta {
+    background: linear-gradient(135deg, var(--color-one) 0%, var(--color-two) 100%);
+    color: var(--text-color-two);
+    padding: 50px 40px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.contact-cta h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.contact-cta p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    opacity: 0.95;
+}
+
+.contact-cta p {
+    display: inline-block;
+    padding: 15px 40px;
+    background: var(--text-color-two);
+    color: var(--color-one);
+    border-radius: 30px;
+    font-weight: 700;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.contact-cta a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .intro-hero h1 {
+        font-size: 32px;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .policies-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-section h2,
+    .faq-section h2 {
+        font-size: 28px;
+    }
+}

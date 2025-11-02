@@ -455,50 +455,64 @@
   background: #c0392b;
   transform: translateY(-2px);
 }
+/* ------------------------- Hero Section -------------------------  */
+   
+.hero-image-background {
+  position: relative;
+  height: 450px; 
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-   
-   /* ============================================================
-      HERO SECTION
-      ============================================================ */
-   
-   .hero {
-     background:  var(--color-two) ;
-     color: var(--text-color-two);
-     padding: 80px 20px;
-     text-align: center;
-     position: relative;
-    z-index: 1;
-   }
-    
-   .hero h1 {
-     font-size: 48px;
-     font-weight: 700;
-     margin-bottom: 20px;
-     animation: fadeInUp 0.8s;
-   }
-   
-   .hero p {
-     font-size: 20px;
-     margin-bottom: 30px;
-     opacity: 0.95;
-   }
-   
-   .hero-btn {
-     display: inline-block;
-     padding: 15px 40px;
-     background: var(--text-color-two);
-     color: var(--color-one);
-     border-radius: 30px;
-     font-weight: 700;
-     transition: all 0.3s;
-     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-   }
-   
-   .hero-btn:hover {
-     transform: translateY(-3px);
-     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-   }
-   
+.hero-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  z-index: 0;
+  filter: brightness(0.5) saturate(1.2); 
+}
+
+.hero-content-wrapper {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: var(--text-color-two);
+  padding: 20px;
+}
+
+.hero-content-wrapper h1 {
+  font-size: 48px;
+  font-weight:bold;
+  margin-bottom: 20px;
+  color: white; 
+}
+.hero-content-wrapper p {
+  font-size: 20px;
+  font-weight: lighter;
+  margin-bottom: 30px;
+  opacity: 0.95;
+  color: white;
+}
+.hero-btn {
+  display: inline-block;
+  padding: 15px 40px;
+  background: var(--text-color-two);
+  color: var(--color-one);
+  border-radius: 30px;
+  font-weight: 700;
+  transition: all 0.3s;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
    
    /* ============================================================
       MAIN CONTENT SECTION
