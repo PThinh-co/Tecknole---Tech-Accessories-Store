@@ -8,6 +8,73 @@
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/category.css" />
+    <style>
+      /* Override CSS để 4 sản phẩm mỗi hàng */
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+        margin-bottom: 30px; 
+      }
+
+      @media (max-width: 1024px) {
+        .products-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .products-grid {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+      }
+
+      /* === CSS CHO PHÂN TRANG (MỚI) === */
+      .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 40px 0;
+      }
+      .page-btn {
+        background-color: white;
+        border: 2px solid var(--color-three);
+        color: var(--color-one);
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        min-width: 40px;
+        text-align: center;
+      }
+      .page-btn:hover {
+        background-color: var(--color-one);
+        color: white;
+        border-color: var(--color-one);
+      }
+      .page-btn.active {
+        background-color: var(--color-one);
+        color: white;
+        border-color: var(--color-one);
+      }
+      .page-btn:disabled {
+        background-color: #f0f0f0;
+        color: #aaa;
+        border-color: #ddd;
+        cursor: not-allowed;
+      }
+      /* === KẾT THÚC CSS PHÂN TRANG === */
+    </style>
   </head>
   <body>
     <header class="header">
@@ -21,7 +88,7 @@
         <div class="header-search">
           <form
             method="get"
-            action="/tim"
+            action="products.html"
             enctype="multipart/form-data"
             class="clearfix search-form bg-white"
             role="search"
@@ -109,7 +176,6 @@
               <a href="products.html">Danh mục sản phẩm ▼</a>
               <ul class="dropdown-menu">
                 <li>
-                  <!-- MÀN HÌNH -->
                   <a href="category.html?type=manhinh">Màn hình</a>
                   <ul class="submenu">
                     <li>
@@ -132,7 +198,6 @@
                   </ul>
                 </li>
                 <li>
-                  <!-- BÀN PHÍM -->
                   <a href="category.html?type=banphim">Bàn Phím</a>
                   <ul class="submenu">
                     <li>
@@ -147,7 +212,6 @@
                   </ul>
                 </li>
                 <li>
-                  <!-- CHUỘT -->
                   <a href="category.html?type=chuot">Chuột</a>
                   <ul class="submenu">
                     <li>
@@ -166,7 +230,6 @@
                   </ul>
                 </li>
                 <li>
-                  <!-- TAI NGHE -->
                   <a href="category.html?type=tainghe">Tai Nghe</a>
                   <ul class="submenu">
                     <li>
@@ -186,7 +249,6 @@
                   </ul>
                 </li>
                 <li>
-                  <!-- LOA -->
                   <a href="category.html?type=loa">Loa</a>
                   <ul class="submenu">
                     <li>
@@ -209,11 +271,9 @@
         </div>
       </nav>
     </header>
-    <!--=============PRODUCTS=============  -->
     <div class="container">
       <h2 class="section-title" id="category-title">Tất cả sản phẩm</h2>
       <p id="category-desc" style="display: none;"></p>
-      <!-- FILTER -->
       <div class="filter-section">
         <div class="filter-row">
             <div class="filter-group">
@@ -264,20 +324,23 @@
         </div>
     </div>
     
-    <!-- PRODUCTS GRID -->
-    <div class="products-grid" id="products-container">
-        <!-- Products will be loaded here -->
+    <div class="products-count" id="products-count" style="margin-bottom: 20px; font-size: 14px; color: #555;">
+        Hiển thị <strong id="count-number">...</strong> sản phẩm
     </div>
 
-    <!-- NO PRODUCTS MESSAGE -->
-    <div class="no-products" id="no-products">
+    <div class="products-grid" id="products-container">
+        </div>
+
+    <div class="pagination-container" id="pagination-container">
+        </div>
+
+    <div class="no-products" id="no-products" style="display: none;">
         <h3>Không tìm thấy sản phẩm</h3>
         <p>Vui lòng thử lại với bộ lọc khác</p>
     </div>
 </div>
 
      
-
     <footer>
       <div class="footer-content">
         <div class="footer-section">
@@ -329,6 +392,7 @@
         <p>&copy; 2025 Tecknole. All rights reserved.</p>
       </div>
     </footer>
+    
     <div id="loginModal" class="auth-modal">
       <div class="auth-modal-overlay" onclick="closeLoginModal()"></div>
       <div class="auth-modal-content">
@@ -548,6 +612,7 @@
     </div>
     <script src="assets/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/modal.js"></script>
-    <script Src="assets/js/product-detail.js"></script>
+    <script src="assets/js/product-detail.js"></script>
+    <script src="assets/js/search-pagination.js"></script>
   </body>
 </html>

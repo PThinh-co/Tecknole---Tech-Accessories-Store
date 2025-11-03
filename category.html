@@ -8,9 +8,52 @@
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/category.css">
+    <style>
+      /* CSS cho phân trang (copy từ products.html) */
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+      .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 40px 0;
+      }
+      .page-btn {
+        background-color: white;
+        border: 2px solid var(--color-three);
+        color: var(--color-one);
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        min-width: 40px;
+        text-align: center;
+      }
+      .page-btn:hover {
+        background-color: var(--color-one);
+        color: white;
+        border-color: var(--color-one);
+      }
+      .page-btn.active {
+        background-color: var(--color-one);
+        color: white;
+        border-color: var(--color-one);
+      }
+      .page-btn:disabled {
+        background-color: #f0f0f0;
+        color: #aaa;
+        border-color: #ddd;
+        cursor: not-allowed;
+      }
+    </style>
 </head>
 <body>
-    <!-- HEADER -->
     <header class="header">
         <div class="header-top">
           <div class="inner-logo">
@@ -50,7 +93,6 @@
                   aria-controls="autocomplete-list"
                 />
                 <button type="submit" class="submit-search" aria-label="Tìm kiếm">
-                  <!-- simple svg search icon -->
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -102,7 +144,6 @@
             </div>
           </div>
         </div>
-        <!-- THANH MENU -->
         <nav>
           <div class="nav-container">
             <ul class="nav-menu">
@@ -112,7 +153,6 @@
                 <a href="products.html">Danh mục sản phẩm ▼</a>
                 <ul class="dropdown-menu">
                   <li>
-                    <!-- MÀN HÌNH -->
                     <a href="category.html?type=manhinh">Màn hình</a>
                     <ul class="submenu">
                       <li>
@@ -135,7 +175,6 @@
                     </ul>
                   </li>
                   <li>
-                    <!-- BÀN PHÍM -->
                     <a href="category.html?type=banphim">Bàn Phím</a>
                     <ul class="submenu">
                       <li>
@@ -150,7 +189,6 @@
                     </ul>
                   </li>
                   <li>
-                    <!-- CHUỘT -->
                     <a href="category.html?type=chuot">Chuột</a>
                     <ul class="submenu">
                       <li>
@@ -169,7 +207,6 @@
                     </ul>
                   </li>
                   <li>
-                    <!-- TAI NGHE -->
                     <a href="category.html?type=tainghe">Tai Nghe</a>
                     <ul class="submenu">
                       <li>
@@ -189,7 +226,6 @@
                     </ul>
                   </li>
                   <li>
-                    <!-- LOA -->
                     <a href="category.html?type=loa">Loa</a>
                     <ul class="submenu">
                       <li>
@@ -212,17 +248,11 @@
           </div>
         </nav>
       </header>
-      <!-- END HEADER  -->
   
-    <!-- CATEGORY HEADER -->
-    <div class="category-header">
-        <h1 id="category-title">Danh mục sản phẩm</h1>
-        <p id="category-desc">Khám phá các sản phẩm chất lượng cao</p>
-    </div>
-
-    <!-- MAIN CONTENT -->
     <div class="container">
-        <!-- FILTER SECTION -->
+        <h2 class="section-title" id="category-title">Danh mục sản phẩm</h2>
+        <p id="category-desc">Khám phá các sản phẩm chất lượng cao</p>
+        
         <div class="filter-section">
             <div class="filter-row">
                 <div class="filter-group">
@@ -273,23 +303,22 @@
             </div>
         </div>
 
-        <div class="products-count" id="products-count">
+        <div class="products-count" id="products-count" style="margin-bottom: 20px; font-size: 14px; color: #555;">
             Hiển thị <strong id="count-number">...</strong> sản phẩm
         </div>
 
-        <!-- PRODUCTS GRID -->
         <div class="products-grid" id="products-container">
-            <!-- Products will be loaded here -->
-        </div>
+            </div>
 
-        <!-- NO PRODUCTS MESSAGE -->
-        <div class="no-products" id="no-products">
+        <div class="pagination-container" id="pagination-container">
+            </div>
+
+        <div class="no-products" id="no-products" style="display: none;">
             <h3>Không tìm thấy sản phẩm</h3>
             <p>Vui lòng thử lại với bộ lọc khác</p>
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -341,227 +370,14 @@
             <p>&copy; 2025 Tecknole. All rights reserved.</p>
         </div>
     </footer>
-    <!-- Modal Đăng Nhập -->
     <div id="loginModal" class="auth-modal">
-        <div class="auth-modal-overlay" onclick="closeLoginModal()"></div>
-        <div class="auth-modal-content">
-          <button class="auth-modal-close" onclick="closeLoginModal()">
-            &times;
-          </button>
-  
-          <div class="auth-modal-header">
-            <h2>Đăng Nhập</h2>
-            <p>Chào mừng bạn trở lại!</p>
-          </div>
-  
-          <form id="login-form" class="auth-modal-form">
-            <div class="form-group">
-              <label for="login-username">Tài khoản</label>
-              <div class="input-with-icon">
-                <span class="input-icon">👤</span>
-                <input
-                  type="text"
-                  id="login-username"
-                  placeholder="Nhập tài khoản"
-                />
-              </div>
-              <span id="error-login-username" class="error-msg"></span>
-            </div>
-  
-            <div class="form-group">
-              <label for="login-password">Mật khẩu</label>
-              <div class="input-with-icon">
-                <span class="input-icon">🔐</span>
-                <input
-                  type="password"
-                  id="login-password"
-                  placeholder="Nhập mật khẩu"
-                />
-                <span
-                  class="password-toggle"
-                  id="toggle-login-password"
-                  onclick="togglePassword('login-password', 'toggle-login-password')"
-                  >👁️‍🗨️</span
-                >
-              </div>
-              <span id="error-login-password" class="error-msg"></span>
-            </div>
-  
-            <button type="submit" class="btn-auth-submit">Đăng Nhập</button>
-          </form>
-  
-          <div class="auth-modal-footer">
-            Chưa có tài khoản?
-            <a href="#" onclick="switchToRegister()">Đăng ký ngay</a>
-          </div>
         </div>
-      </div>
-  
-      <!-- Modal Đăng Ký -->
-      <div id="registerModal" class="auth-modal">
-        <div class="auth-modal-overlay" onclick="closeRegisterModal()"></div>
-        <div class="auth-modal-content">
-          <button class="auth-modal-close" onclick="closeRegisterModal()">
-            &times;
-          </button>
-  
-          <div class="auth-modal-header">
-            <h2>Đăng Ký</h2>
-            <p>Tạo tài khoản mới của bạn</p>
-          </div>
-  
-          <form
-            id="register-form"
-            class="auth-modal-form"
-            style="max-height: 450px; overflow-y: auto"
-          >
-            <div class="form-group">
-              <label for="reg-fullname">Họ và tên</label>
-              <div class="input-with-icon">
-                <span class="input-icon">👤</span>
-                <input
-                  type="text"
-                  id="reg-fullname"
-                  placeholder="Nhập họ và tên"
-                />
-              </div>
-              <span id="error-fullname" class="error-msg"></span>
-            </div>
-  
-            <div class="form-group">
-              <label for="reg-username">Tên tài khoản</label>
-              <div class="input-with-icon">
-                <span class="input-icon">🔑</span>
-                <input
-                  type="text"
-                  id="reg-username"
-                  placeholder="Nhập tên tài khoản"
-                />
-              </div>
-              <span id="error-username" class="error-msg"></span>
-            </div>
-  
-            <div class="form-group">
-              <label for="reg-password">Mật khẩu</label>
-              <div class="input-with-icon">
-                <span class="input-icon">🔐</span>
-                <input
-                  type="password"
-                  id="reg-password"
-                  placeholder="Nhập mật khẩu"
-                />
-                <span
-                  class="password-toggle"
-                  id="toggle-reg-password"
-                  onclick="togglePassword('reg-password', 'toggle-reg-password')"
-                  >👁️‍🗨️</span
-                >
-              </div>
-              <span id="error-password" class="error-msg"></span>
-            </div>
-  
-            <div class="form-group">
-              <label for="reg-confirm-password">Nhập lại mật khẩu</label>
-              <div class="input-with-icon">
-                <span class="input-icon">🔐</span>
-                <input
-                  type="password"
-                  id="reg-confirm-password"
-                  placeholder="Nhập lại mật khẩu"
-                />
-                <span
-                  class="password-toggle"
-                  id="toggle-reg-confirm"
-                  onclick="togglePassword('reg-confirm-password', 'toggle-reg-confirm')"
-                  >👁️‍🗨️</span
-                >
-              </div>
-              <span id="error-confirm-password" class="error-msg"></span>
-            </div>
-  
-            <div class="form-group">
-              <label for="reg-email">Email</label>
-              <div class="input-with-icon">
-                <span class="input-icon">📧</span>
-                <input type="email" id="reg-email" placeholder="Nhập email" />
-              </div>
-              <span id="error-email" class="error-msg"></span>
-            </div>
-  
-            <div class="form-group">
-              <label for="reg-phone">Số điện thoại</label>
-              <div class="input-with-icon">
-                <span class="input-icon">📱</span>
-                <input
-                  type="tel"
-                  id="reg-phone"
-                  placeholder="Nhập số điện thoại"
-                />
-              </div>
-              <span id="error-phone" class="error-msg"></span>
-            </div>
-  
-            <div class="form-group">
-              <label for="reg-address">Địa chỉ</label>
-              <div class="input-with-icon">
-                <span class="input-icon">📍</span>
-                <input type="text" id="reg-address" placeholder="Nhập địa chỉ" />
-              </div>
-              <span id="error-address" class="error-msg"></span>
-            </div>
-  
-            <button type="submit" class="btn-auth-submit">Đăng Ký</button>
-          </form>
-  
-          <div class="auth-modal-footer">
-            Đã có tài khoản? <a href="#" onclick="switchToLogin()">Đăng nhập</a>
-          </div>
+    <div id="registerModal" class="auth-modal">
         </div>
-      </div>
-  
-      <!-- Modal Profile (Hiển thị khi đã đăng nhập) -->
-      <div id="profileModal" class="auth-modal">
-        <div class="auth-modal-overlay" onclick="closeProfileModal()"></div>
-        <div class="auth-modal-content">
-          <button class="auth-modal-close" onclick="closeProfileModal()">
-            &times;
-          </button>
-  
-          <div class="auth-modal-header">
-            <div class="profile-avatar-small">👤</div>
-            <h2 id="profile-fullname">Xin chào!</h2>
-            <p>Thông tin tài khoản của bạn</p>
-          </div>
-  
-          <div class="profile-info-modal">
-            <div class="info-row">
-              <span class="info-label">👤 Họ và tên:</span>
-              <span class="info-value" id="profile-name-value"></span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">🔐 Tài khoản:</span>
-              <span class="info-value" id="profile-username-value"></span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">📧 Email:</span>
-              <span class="info-value" id="profile-email-value"></span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">📱 Số điện thoại:</span>
-              <span class="info-value" id="profile-phone-value"></span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">📍 Địa chỉ:</span>
-              <span class="info-value" id="profile-address-value"></span>
-            </div>
-          </div>
-  
-          <button class="btn-logout-modal" onclick="handleLogoutModal()">
-            Đăng xuất
-          </button>
+    <div id="profileModal" class="auth-modal">
         </div>
-      </div>
-    <script src="assets/js/product-detail.js"></script>
     <script src="assets/js/modal.js"></script>
+    <script src="assets/js/product-detail.js"></script>
+    <script src="assets/js/search-pagination.js"></script>
 </body>
 </html>

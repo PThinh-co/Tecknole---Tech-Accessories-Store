@@ -1,249 +1,314 @@
+// File: assets/js/modal.js
+
 // ==================== MODAL FUNCTIONS ====================
+
+// Hàm kiểm tra Đăng nhập
+function requireLogin() {
+  const user = getCurrentUser();
+  if (!user) {
+      alert('Vui lòng đăng nhập để tiếp tục.');
+      window.location.href = 'index.html'; // Chuyển hướng về trang chủ
+      return false;
+  }
+  return true;
+}
+
+// Hàm format tiền (Dùng chung cho nhiều file)
+function formatVND(price) {
+  return price.toLocaleString('vi-VN') + 'đ';
+}
+
+// Lấy thông tin người dùng đang đăng nhập
+function getCurrentUser() {
+const userStr = localStorage.getItem('bs_user');
+return userStr ? JSON.parse(userStr) : null;
+}
+
+// ==================== CART FUNCTIONS ====================
+
+function getCart() {
+const user = getCurrentUser();
+if (!user) return [];
+const cartKey = `cart_${user.username}`;
+return JSON.parse(localStorage.getItem(cartKey)) || [];
+}
+
+function saveCart(cart) {
+const user = getCurrentUser();
+if (!user) return;
+const cartKey = `cart_${user.username}`;
+localStorage.setItem(cartKey, JSON.stringify(cart));
+updateCartCount();
+}
+
+function clearCart() {
+const user = getCurrentUser();
+if (!user) return;
+const cartKey = `cart_${user.username}`;
+localStorage.removeItem(cartKey);
+updateCartCount();
+}
+
+// Hàm cập nhật số lượng sản phẩm trong giỏ hàng hiển thị trên Header
+function updateCartCount() {
+const cartCountSpan = document.querySelector('.cart-badge span');
+if (!cartCountSpan) return;
+
+const cart = getCart();
+const totalItems = cart.reduce((total, item) => total + item.quantity, 0); 
+
+cartCountSpan.textContent = totalItems;
+}
+
 
 // Mở modal đăng nhập
 function openLoginModal() {
-  document.getElementById('loginModal').classList.add('show');
-  document.body.style.overflow = 'hidden'; // Ngăn scroll body
+document.getElementById('loginModal').classList.add('show');
+document.body.style.overflow = 'hidden';
 }
 
 // Đóng modal đăng nhập
 function closeLoginModal() {
-  document.getElementById('loginModal').classList.remove('show');
-  document.body.style.overflow = 'auto';
-  clearFormErrors();
+document.getElementById('loginModal').classList.remove('show');
+document.body.style.overflow = 'auto';
+clearFormErrors();
 }
 
 // Mở modal đăng ký
 function openRegisterModal() {
-  document.getElementById('registerModal').classList.add('show');
-  document.body.style.overflow = 'hidden';
+document.getElementById('registerModal').classList.add('show');
+document.body.style.overflow = 'hidden';
 }
 
 // Đóng modal đăng ký
 function closeRegisterModal() {
-  document.getElementById('registerModal').classList.remove('show');
-  document.body.style.overflow = 'auto';
-  clearFormErrors();
+document.getElementById('registerModal').classList.remove('show');
+document.body.style.overflow = 'auto';
+clearFormErrors();
 }
 
 // Mở modal profile
 function openProfileModal() {
-  const userStr = localStorage.getItem('bs_user');
-  if (!userStr) {
-    openLoginModal();
-    return;
-  }
-  
-  const user = JSON.parse(userStr);
-  document.getElementById('profile-fullname').textContent = 'Xin chào, ' + user.fullName + '!';
-  document.getElementById('profile-name-value').textContent = user.fullName;
-  document.getElementById('profile-username-value').textContent = user.username;
-  document.getElementById('profile-email-value').textContent = user.email;
-  document.getElementById('profile-phone-value').textContent = user.phone;
-  document.getElementById('profile-address-value').textContent = user.address;
-  
-  document.getElementById('profileModal').classList.add('show');
-  document.body.style.overflow = 'hidden';
+const userStr = localStorage.getItem('bs_user');
+if (!userStr) {
+  openLoginModal();
+  return;
+}
+
+// Đọc dữ liệu từ bs_users để có thông tin cập nhật mới nhất (nếu có)
+const user = JSON.parse(userStr);
+const users = JSON.parse(localStorage.getItem('bs_users') || '[]');
+const currentUserData = users.find(u => u.username === user.username) || user;
+
+document.getElementById('profile-fullname').textContent = 'Xin chào, ' + currentUserData.fullName + '!';
+document.getElementById('profile-name-value').textContent = currentUserData.fullName;
+document.getElementById('profile-username-value').textContent = currentUserData.username;
+document.getElementById('profile-email-value').textContent = currentUserData.email;
+document.getElementById('profile-phone-value').textContent = currentUserData.phone;
+document.getElementById('profile-address-value').textContent = currentUserData.address;
+
+document.getElementById('profileModal').classList.add('show');
+document.body.style.overflow = 'hidden';
 }
 
 // Đóng modal profile
 function closeProfileModal() {
-  document.getElementById('profileModal').classList.remove('show');
-  document.body.style.overflow = 'auto';
+document.getElementById('profileModal').classList.remove('show');
+document.body.style.overflow = 'auto';
 }
 
 // Chuyển từ login sang register
 function switchToRegister() {
-  closeLoginModal();
-  setTimeout(() => openRegisterModal(), 200);
+closeLoginModal();
+setTimeout(() => openRegisterModal(), 200);
 }
 
 // Chuyển từ register sang login
 function switchToLogin() {
-  closeRegisterModal();
-  setTimeout(() => openLoginModal(), 200);
+closeRegisterModal();
+setTimeout(() => openLoginModal(), 200);
 }
 
 // Xóa lỗi form
 function clearFormErrors() {
-  document.querySelectorAll('.error-msg').forEach(el => el.textContent = '');
+document.querySelectorAll('.error-msg').forEach(el => el.textContent = '');
 }
 
 // Toggle hiển thị mật khẩu
 function togglePassword(inputId, iconId) {
-  const input = document.getElementById(inputId);
-  const icon = document.getElementById(iconId);
-  
-  if (input.type === 'password') {
-    input.type = 'text';
-    icon.textContent = '👁️';
-  } else {
-    input.type = 'password';
-    icon.textContent = '👁️‍🗨️';
-  }
+const input = document.getElementById(inputId);
+const icon = document.getElementById(iconId);
+
+if (input.type === 'password') {
+  input.type = 'text';
+  icon.textContent = '👁️';
+} else {
+  input.type = 'password';
+  icon.textContent = '👁️‍🗨️';
+}
 }
 
 // Validate email
 function validateEmail(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
+const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+return re.test(email);
 }
 
 // Validate số điện thoại
 function validatePhone(phone) {
-  const re = /^[0-9]{10}$/;
-  return re.test(phone.replace(/\s/g, ''));
+const re = /^[0-9]{10}$/;
+return re.test(phone.replace(/\s/g, ''));
 }
 
 // Xử lý đăng nhập
 function handleLogin(e) {
-  e.preventDefault();
-  
-  const username = document.getElementById('login-username').value.trim();
-  const password = document.getElementById('login-password').value;
-  
-  clearFormErrors();
-  
-  let hasError = false;
-  
-  if (!username) {
-    document.getElementById('error-login-username').textContent = 'Vui lòng nhập tài khoản';
-    hasError = true;
-  }
-  
-  if (!password) {
-    document.getElementById('error-login-password').textContent = 'Vui lòng nhập mật khẩu';
-    hasError = true;
-  }
-  
-  if (hasError) return;
-  
-  const users = JSON.parse(localStorage.getItem('bs_users') || '[]');
-  const user = users.find(u => u.username === username);
-  
-  if (!user) {
-    document.getElementById('error-login-username').textContent = 'Tài khoản không tồn tại';
-    return;
-  }
-  
-  if (user.password !== password) {
-    document.getElementById('error-login-password').textContent = 'Mật khẩu không chính xác';
-    return;
-  }
-  
-  // Lưu thông tin người dùng đang đăng nhập (bỏ password đi)
-  localStorage.setItem('bs_user', JSON.stringify({ 
-    username: user.username,
-    fullName: user.fullName,
-    email: user.email,
-    phone: user.phone,
-    address: user.address
-  }));
-  
-  closeLoginModal();
-  alert('Đăng nhập thành công!');
-  updateAuthUI(); // Cập nhật giao diện sau khi đăng nhập
-  location.reload(); // Tải lại trang để cập nhật các thành phần khác nếu cần
+e.preventDefault();
+
+const username = document.getElementById('login-username').value.trim();
+const password = document.getElementById('login-password').value;
+
+clearFormErrors();
+
+let hasError = false;
+
+if (!username) {
+  document.getElementById('error-login-username').textContent = 'Vui lòng nhập tài khoản';
+  hasError = true;
+}
+
+if (!password) {
+  document.getElementById('error-login-password').textContent = 'Vui lòng nhập mật khẩu';
+  hasError = true;
+}
+
+if (hasError) return;
+
+const users = JSON.parse(localStorage.getItem('bs_users') || '[]');
+const user = users.find(u => u.username === username);
+
+if (!user) {
+  document.getElementById('error-login-username').textContent = 'Tài khoản không tồn tại';
+  return;
+}
+
+if (user.password !== password) {
+  document.getElementById('error-login-password').textContent = 'Mật khẩu không chính xác';
+  return;
+}
+
+// Lưu thông tin người dùng đang đăng nhập (bỏ password đi)
+localStorage.setItem('bs_user', JSON.stringify({ 
+  username: user.username,
+  fullName: user.fullName,
+  email: user.email,
+  phone: user.phone,
+  address: user.address
+}));
+
+closeLoginModal();
+alert('Đăng nhập thành công!');
+updateAuthUI(); // Cập nhật giao diện sau khi đăng nhập
+location.reload(); // Tải lại trang để cập nhật các thành phần khác nếu cần
 }
 
 // Xử lý đăng ký
 function handleRegister(e) {
-  e.preventDefault();
-  
-  const fullName = document.getElementById('reg-fullname').value.trim();
-  const username = document.getElementById('reg-username').value.trim();
-  const password = document.getElementById('reg-password').value;
-  const confirmPassword = document.getElementById('reg-confirm-password').value;
-  const email = document.getElementById('reg-email').value.trim();
-  const phone = document.getElementById('reg-phone').value.trim();
-  const address = document.getElementById('reg-address').value.trim();
-  
-  clearFormErrors();
-  
-  let hasError = false;
-  
-  if (!fullName) {
-    document.getElementById('error-fullname').textContent = 'Vui lòng nhập họ tên';
-    hasError = true;
-  }
-  
-  if (!username) {
-    document.getElementById('error-username').textContent = 'Vui lòng nhập tài khoản';
-    hasError = true;
-  } else if (username.length < 4) {
-    document.getElementById('error-username').textContent = 'Tài khoản phải có ít nhất 4 ký tự';
-    hasError = true;
-  }
-  
-  if (!password) {
-    document.getElementById('error-password').textContent = 'Vui lòng nhập mật khẩu';
-    hasError = true;
-  } else if (password.length < 6) {
-    document.getElementById('error-password').textContent = 'Mật khẩu phải có ít nhất 6 ký tự';
-    hasError = true;
-  }
-  
-  if (password !== confirmPassword) {
-    document.getElementById('error-confirm-password').textContent = 'Mật khẩu không khớp';
-    hasError = true;
-  }
-  
-  if (!email) {
-    document.getElementById('error-email').textContent = 'Vui lòng nhập email';
-    hasError = true;
-  } else if (!validateEmail(email)) {
-    document.getElementById('error-email').textContent = 'Email không hợp lệ';
-    hasError = true;
-  }
-  
-  if (!phone) {
-    document.getElementById('error-phone').textContent = 'Vui lòng nhập số điện thoại';
-    hasError = true;
-  } else if (!validatePhone(phone)) {
-    document.getElementById('error-phone').textContent = 'Số điện thoại phải có 10 chữ số';
-    hasError = true;
-  }
-  
-  if (!address) {
-    document.getElementById('error-address').textContent = 'Vui lòng nhập địa chỉ';
-    hasError = true;
-  }
-  
-  if (hasError) return;
-  
-  const existingUsers = JSON.parse(localStorage.getItem('bs_users') || '[]');
-  if (existingUsers.some(u => u.username === username)) {
-    document.getElementById('error-username').textContent = 'Tài khoản đã tồn tại';
-    return;
-  }
-  
-  const newUser = {
-    fullName,
-    username,
-    password, // Lưu mật khẩu dưới dạng plain text (chỉ dùng cho mục đích demo)
-    email,
-    phone,
-    address,
-    createdAt: new Date().toISOString()
-  };
-  
-  existingUsers.push(newUser);
-  localStorage.setItem('bs_users', JSON.stringify(existingUsers));
-  
-  closeRegisterModal();
-  alert('Đăng ký thành công! Vui lòng đăng nhập.');
-  // Logic hiện modal đăng nhập sau khi đăng ký thành công
-  setTimeout(() => openLoginModal(), 300); 
+e.preventDefault();
+
+const fullName = document.getElementById('reg-fullname').value.trim();
+const username = document.getElementById('reg-username').value.trim();
+const password = document.getElementById('reg-password').value;
+const confirmPassword = document.getElementById('reg-confirm-password').value;
+const email = document.getElementById('reg-email').value.trim();
+const phone = document.getElementById('reg-phone').value.trim();
+const address = document.getElementById('reg-address').value.trim();
+
+clearFormErrors();
+
+let hasError = false;
+
+if (!fullName) {
+  document.getElementById('error-fullname').textContent = 'Vui lòng nhập họ tên';
+  hasError = true;
+}
+
+if (!username) {
+  document.getElementById('error-username').textContent = 'Vui lòng nhập tài khoản';
+  hasError = true;
+} else if (username.length < 4) {
+  document.getElementById('error-username').textContent = 'Tài khoản phải có ít nhất 4 ký tự';
+  hasError = true;
+}
+
+if (!password) {
+  document.getElementById('error-password').textContent = 'Vui lòng nhập mật khẩu';
+  hasError = true;
+} else if (password.length < 6) {
+  document.getElementById('error-password').textContent = 'Mật khẩu phải có ít nhất 6 ký tự';
+  hasError = true;
+}
+
+if (password !== confirmPassword) {
+  document.getElementById('error-confirm-password').textContent = 'Mật khẩu không khớp';
+  hasError = true;
+}
+
+if (!email) {
+  document.getElementById('error-email').textContent = 'Vui lòng nhập email';
+  hasError = true;
+} else if (!validateEmail(email)) {
+  document.getElementById('error-email').textContent = 'Email không hợp lệ';
+  hasError = true;
+}
+
+if (!phone) {
+  document.getElementById('error-phone').textContent = 'Vui lòng nhập số điện thoại';
+  hasError = true;
+} else if (!validatePhone(phone)) {
+  document.getElementById('error-phone').textContent = 'Số điện thoại phải có 10 chữ số';
+  hasError = true;
+}
+
+if (!address) {
+  document.getElementById('error-address').textContent = 'Vui lòng nhập địa chỉ';
+  hasError = true;
+}
+
+if (hasError) return;
+
+const existingUsers = JSON.parse(localStorage.getItem('bs_users') || '[]');
+if (existingUsers.some(u => u.username === username)) {
+  document.getElementById('error-username').textContent = 'Tài khoản đã tồn tại';
+  return;
+}
+
+const newUser = {
+  fullName,
+  username,
+  password, // Lưu mật khẩu dưới dạng plain text (chỉ dùng cho mục đích demo)
+  email,
+  phone,
+  address,
+  createdAt: new Date().toISOString()
+};
+
+existingUsers.push(newUser);
+localStorage.setItem('bs_users', JSON.stringify(existingUsers));
+
+closeRegisterModal();
+alert('Đăng ký thành công! Vui lòng đăng nhập.');
+// Logic hiện modal đăng nhập sau khi đăng ký thành công
+setTimeout(() => openLoginModal(), 300);
 }
 
 // Đăng xuất từ modal
 function handleLogoutModal() {
-  if (confirm('Bạn có chắc muốn đăng xuất?')) {
-    localStorage.removeItem('bs_user');
-    closeProfileModal();
-    updateAuthUI(); // Cập nhật giao diện sau khi đăng xuất
-    location.reload(); // Tải lại trang để cập nhật giao diện
-  }
+if (confirm('Bạn có chắc muốn đăng xuất?')) {
+  localStorage.removeItem('bs_user');
+  closeProfileModal();
+  updateAuthUI(); // Cập nhật giao diện sau khi đăng xuất
+  location.reload(); // Tải lại trang để cập nhật giao diện
+}
 }
 
 
@@ -251,31 +316,33 @@ function handleLogoutModal() {
 
 // Hàm bổ sung để cập nhật khu vực đăng nhập/profile trong header
 function updateAuthUI() {
-  const authArea = document.getElementById('authArea');
-  const userStr = localStorage.getItem('bs_user');
-  
-  if (authArea) {
-    if (userStr) {
-      // Đã đăng nhập
-      const user = JSON.parse(userStr);
-      const firstName = user.fullName.split(' ').slice(-1)[0]; // Lấy tên cuối
-      authArea.innerHTML = `
-        <a href="cart.html" class="cart cart-badge">Giỏ hàng <span>0</span></a>
-        <button class="btn-profile" onclick="openProfileModal()">
-          Xin chào, ${firstName} 👤
-        </button>
-      `;
-    } else {
-      // Chưa đăng nhập (Giao diện mặc định từ HTML)
-      authArea.innerHTML = `
-        <button class="btn-auth" onclick="openLoginModal()">Đăng nhập</button>
-        <button class="btn-auth btn-signup" onclick="openRegisterModal()">
-          Đăng ký
-        </button>
-        <a href="cart.html" class="cart cart-badge">Giỏ hàng <span>0</span></a>
-      `;
-    }
+const authArea = document.getElementById('authArea');
+const userStr = localStorage.getItem('bs_user');
+
+if (authArea) {
+  if (userStr) {
+    // Đã đăng nhập
+    const user = JSON.parse(userStr);
+    const firstName = user.fullName.split(' ').slice(-1)[0]; // Lấy tên cuối
+    authArea.innerHTML = `
+      <a href="cart.html" class="cart cart-badge">Giỏ hàng <span>0</span></a>
+      <button class="btn-profile" onclick="openProfileModal()">
+        Xin chào, ${firstName} 👤
+      </button>
+    `;
+  } else {
+    // Chưa đăng nhập (Giao diện mặc định từ HTML)
+    authArea.innerHTML = `
+      <button class="btn-auth" onclick="openLoginModal()">Đăng nhập</button>
+      <button class="btn-auth btn-signup" onclick="openRegisterModal()">
+        Đăng ký
+      </button>
+      <a href="cart.html" class="cart cart-badge">Giỏ hàng <span>0</span></a>
+    `;
   }
+}
+// Cập nhật số lượng giỏ hàng
+updateCartCount();
 }
 
 // ==================== KHỞI TẠO ====================
@@ -285,13 +352,14 @@ document.addEventListener('DOMContentLoaded', updateAuthUI);
 
 // Gắn sự kiện submit cho form đăng nhập và đăng ký
 document.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.getElementById('login-form');
-  if (loginForm) {
-    loginForm.addEventListener('submit', handleLogin);
-  }
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+  loginForm.addEventListener('submit', handleLogin);
+}
 
-  const registerForm = document.getElementById('register-form');
-  if (registerForm) {
-    registerForm.addEventListener('submit', handleRegister);
-  }
+const registerForm = document.getElementById('register-form');
+if (registerForm) {
+  registerForm.addEventListener('submit', handleRegister);
+}
 });
+
