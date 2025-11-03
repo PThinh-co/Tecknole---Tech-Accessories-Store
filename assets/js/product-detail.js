@@ -14,7 +14,7 @@ const PRODUCTS_DATA = [
         id: 1,
         code: 'AULA01',
         name: 'Bàn phím Aula F75',
-        price: 7500000,
+        price: 750000,
         oldPrice: 899000,
         stock: 12,
         image: 'assets/images/popular_items/aulaf75_vang.png',
