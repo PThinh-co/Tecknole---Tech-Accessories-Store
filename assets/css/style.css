@@ -514,24 +514,29 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
    
-   /* ============================================================
-      MAIN CONTENT SECTION
-      ============================================================ */
+   /* MAIN CONTENT SECTION */
    
    /* ------------------------- Container ------------------------- */
    .container {
-     max-width: 1200px;
-     margin: 40px auto;
+     max-width: 100%;
      padding: 0 20px;
+     background-color: var(--bg); 
+     border-radius: 15px; 
+     margin-top: 5px; 
+
    }
    
    /* ------------------------- Section Title ------------------------- */
    .section-title {
+    background-color:var(--color-two);
      font-size: 32px;
      font-weight: 700;
      margin-bottom: 30px;
      color: var(--text-color-one);
      text-align: center;
+     border-radius: 15px;
+     padding: 10px; 
+     font-weight:700;
    }
    
    
