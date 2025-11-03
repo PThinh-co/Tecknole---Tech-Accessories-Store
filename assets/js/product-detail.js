@@ -676,7 +676,7 @@ const PRODUCTS_DATA = [
         price: 5999000,
         oldPrice: null,
         stock: 10,
-        image: 'assets/images/products/Ban-Phim/RAZER/razer_trungbay1.jpg]]]]',
+        image: 'assets/images/products/Ban-Phim/RAZER/razer_trungbay1.jpg',
         type: 'banphim',
         brand: 'razer',
         badge: 'NEW',
