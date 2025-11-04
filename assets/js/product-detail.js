@@ -5,9 +5,7 @@ let currentImageIndex = 0;
 let currentGallery = [];
 let currentProduct = null;
 
-// ===================================================================
 // DỮ LIỆU SẢN PHẨM (Đã bao gồm 30 sản phẩm và GalleryImages)
-// ===================================================================
 
 const PRODUCTS_DATA = [
     {
