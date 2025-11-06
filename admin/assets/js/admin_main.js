@@ -11,20 +11,14 @@ function closeModal(id) {
     if (modal) modal.style.display = 'none';
 }
 
-// === HÀM SYNC (syncToUser) ĐÃ ĐƯỢC XÓA ===
-// Hàm syncToUser() trước đây ở đây đã bị xóa
-// vì nó không cần thiết và gây lỗi logic.
-// Trang client (product-detail.js) giờ sẽ đọc trực tiếp từ 'admin_products'.
-
 // === LƯU DỮ LIỆU ===
 const saveAdminData = () => {
     localStorage.setItem('admin_users', JSON.stringify(window.adminUsers || []));
     localStorage.setItem('admin_products', JSON.stringify(window.adminProducts || []));
     localStorage.setItem('admin_categories', JSON.stringify(window.adminCategories || []));
+    localStorage.setItem('admin_brands', JSON.stringify(window.adminBrands || [])); // THÊM MỚI
     localStorage.setItem('admin_all_orders', JSON.stringify(window.adminOrders || []));
     localStorage.setItem('admin_imports', JSON.stringify(window.adminImports || []));
-    
-    // syncToUser(); // <-- ĐÃ VÔ HIỆU HÓA.
 };
 
 // === ĐĂNG NHẬP/ĐĂNG XUẤT ===
@@ -62,9 +56,10 @@ document.querySelectorAll('.menu-item').forEach(item => {
 function loadSection(section) {
     const actions = {
         dashboard: loadDashboard,
-        account: loadAccount, // <-- MỚI
+        account: loadAccount, 
         users: loadUsers,
         categories: loadCategories,
+        brands: loadBrands, // THÊM MỚI
         products: loadProducts,
         imports: loadImports,
         pricing: loadPricing,
@@ -114,7 +109,7 @@ function loadDashboard() {
     document.getElementById('newOrders').textContent = newOrdersCount;
 }
 
-// === TÀI KHOẢN ADMIN (MỚI) ===
+// === TÀI KHOẢN ADMIN ===
 function loadAccount() {
     if (!loggedInAdmin) return;
     
@@ -122,7 +117,6 @@ function loadAccount() {
     document.getElementById('adminProfileUsername').value = loggedInAdmin.username || '';
     document.getElementById('adminProfileEmail').value = loggedInAdmin.email || '';
     
-    // Xóa form để tránh lỗi
     document.getElementById('adminPasswordForm').reset();
 }
 
@@ -149,7 +143,7 @@ function loadUsers() {
                 <td>${user.email || 'N/A'}</td>
                 <td><span class="badge ${statusClass}">${statusText}</span></td>
                 <td>
-                    <button class="btn btn-warning btn-sm" onclick="resetUserPassword(${user.id})">Đặt lại mật khẩu</button>
+                    <button class="btn btn-warning btn-sm" onclick="resetUserPassword(${user.id})">Reset MK</button>
                     <button class="btn btn-secondary btn-sm" onclick="toggleUserStatus(${user.id}, '${user.status}')">${user.status === 'active' ? 'Khóa' : 'Mở khóa'}</button>
                 </td>
             </tr>
@@ -191,15 +185,12 @@ function toggleUserStatus(userId, currentStatus) {
     }
 }
 
-// HÀM MỚI ĐỂ MỞ MODAL THÊM USER
 function openUserModal(userId = null) {
-    // Hiện tại chỉ hỗ trợ thêm mới (userId = null)
-    // Nếu có userId, đó sẽ là logic "Sửa"
     document.getElementById('userForm').reset();
     document.getElementById('userModalTitle').textContent = 'Thêm Người Dùng Mới';
     document.getElementById('userId').value = '';
-    document.getElementById('userUsername').readOnly = false; // Cho phép nhập username
-    document.getElementById('userPassword').required = true; // Bắt buộc nhập pass khi tạo mới
+    document.getElementById('userUsername').readOnly = false; 
+    document.getElementById('userPassword').required = true; 
     document.getElementById('userModal').style.display = 'flex';
 }
 
@@ -225,7 +216,7 @@ function loadCategories() {
                 <td><span class="badge ${statusClass}">${statusText}</span></td>
                 <td>
                     <button class="btn btn-primary btn-sm" onclick="openCategoryModal(${cat.id})">Sửa</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteCategory(${cat.id})">${cat.status === 'active' ? 'Ẩn' : 'Hiện'}</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteCategory(${cat.id})">Xóa</button>
                 </td>
             </tr>
         `;
@@ -288,34 +279,117 @@ document.getElementById('categoryForm')?.addEventListener('submit', function (e)
     loadCategories();
 });
 
+// THAY ĐỔI: Logic Xóa vĩnh viễn
 function deleteCategory(categoryId) {
     const categories = window.adminCategories || [];
+    const products = window.adminProducts || [];
     const cat = categories.find(c => c.id === categoryId);
-    if (cat) {
-        const newStatus = cat.status === 'active' ? 'locked' : 'active';
-        if (confirm(`Bạn có chắc muốn ${newStatus === 'locked' ? 'ẨN' : 'HIỆN'} loại sản phẩm "${cat.name}"?`)) {
-            cat.status = newStatus;
-            saveAdminData();
-            loadCategories();
-        }
+    if (!cat) return;
+
+    // Kiểm tra xem có sản phẩm nào đang dùng loại này không
+    const productUsingCategory = products.find(p => p.type === cat.type);
+    if (productUsingCategory) {
+        alert(`Không thể xóa loại "${cat.name}" vì sản phẩm "${productUsingCategory.name}" đang sử dụng.`);
+        return;
+    }
+
+    if (confirm(`Bạn có chắc muốn XÓA VĨNH VIỄN loại sản phẩm "${cat.name}"? Hành động này không thể hoàn tác.`)) {
+        window.adminCategories = categories.filter(c => c.id !== categoryId);
+        saveAdminData();
+        loadCategories();
+        alert('Đã xóa loại sản phẩm.');
+    }
+}
+
+// =========================================================
+// === 3. QUẢN LÝ HÃNG SẢN PHẨM (MỚI) ===
+// =========================================================
+function loadBrands() {
+    const tableBody = document.getElementById('brandsTableBody');
+    const searchInput = document.getElementById('brandSearchInput'); // THÊM
+    if (!tableBody || !searchInput) return; // CẬP NHẬT
+
+    const brands = window.adminBrands || [];
+    const searchTerm = searchInput.value.toLowerCase(); // THÊM
+
+    // LỌC HÃNG (MỚI)
+    const filteredBrands = brands.filter(brand => {
+        return brand.name.toLowerCase().includes(searchTerm) || 
+               brand.code.toLowerCase().includes(searchTerm);
+    });
+
+    let html = '';
+    // Dùng filteredBrands
+    filteredBrands.forEach(brand => {
+        html += `
+            <tr>
+                <td>${brand.id}</td>
+                <td>${brand.name}</td>
+                <td>${brand.code}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" onclick="openBrandModal(${brand.id})">Sửa</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteBrand(${brand.id})">Xóa</button>
+                </td>
+            </tr>
+        `;
+    });
+    tableBody.innerHTML = html;
+}
+
+function openBrandModal(brandId = null) {
+    document.getElementById('brandForm').reset();
+    const brands = window.adminBrands || [];
+    const brand = brandId ? brands.find(b => b.id === brandId) : null;
+
+    if (brand) {
+        document.getElementById('brandModalTitle').textContent = 'Sửa Hãng Sản Phẩm';
+        document.getElementById('brandId').value = brand.id;
+        document.getElementById('brandName').value = brand.name;
+        document.getElementById('brandCode').value = brand.code;
+        document.getElementById('brandCode').readOnly = true; // Không cho sửa code
+    } else {
+        document.getElementById('brandModalTitle').textContent = 'Thêm Hãng Mới';
+        document.getElementById('brandId').value = '';
+        document.getElementById('brandCode').readOnly = false;
+    }
+    
+    document.getElementById('brandModal').style.display = 'flex';
+}
+
+function deleteBrand(brandId) {
+    const brands = window.adminBrands || [];
+    const products = window.adminProducts || [];
+    const brand = brands.find(b => b.id === brandId);
+    if (!brand) return;
+
+    // Kiểm tra sản phẩm
+    const productUsingBrand = products.find(p => p.brand === brand.code);
+    if (productUsingBrand) {
+        alert(`Không thể xóa hãng "${brand.name}" vì sản phẩm "${productUsingBrand.name}" đang sử dụng.`);
+        return;
+    }
+
+    if (confirm(`Bạn có chắc muốn XÓA VĨNH VIỄN hãng "${brand.name}"?`)) {
+        window.adminBrands = brands.filter(b => b.id !== brandId);
+        saveAdminData();
+        loadBrands();
+        alert('Đã xóa hãng sản phẩm.');
     }
 }
 
 
 // =========================================================
-// === 3. QUẢN LÝ SẢN PHẨM (CÓ HÌNH ẢNH & ẨN/HIỆN) ===
+// === 4. QUẢN LÝ SẢN PHẨM (ĐÃ CẬP NHẬT) ===
 // =========================================================
 function loadProducts() {
     const tableBody = document.getElementById('productsTableBody');
     if (!tableBody) return;
     
-    // --- BẮT ĐẦU LOGIC LỌC ---
     const searchInput = document.getElementById('productSearchInput');
     const categoryFilter = document.getElementById('productCategoryFilter');
     
-    // Điền dữ liệu cho category filter (chỉ 1 lần)
     const categories = window.adminCategories || [];
-    if (categoryFilter.options.length <= 1) { // <= 1 vì đã có 1 option "Lọc theo loại"
+    if (categoryFilter.options.length <= 1) { 
         categories.filter(c => c.status === 'active').forEach(cat => {
             const option = document.createElement('option');
             option.value = cat.type;
@@ -324,22 +398,18 @@ function loadProducts() {
         });
     }
 
-    // Lấy giá trị lọc
     const searchTerm = searchInput.value.toLowerCase();
     const filterCategory = categoryFilter.value;
 
-    // Lọc sản phẩm
     const products = window.adminProducts || [];
     const filteredProducts = products.filter(p => {
         const nameMatch = p.name.toLowerCase().includes(searchTerm) || 
-                          p.code.toLowerCase().includes(searchTerm);
+                          (p.code && p.code.toLowerCase().includes(searchTerm));
         const categoryMatch = !filterCategory || p.type === filterCategory;
         return nameMatch && categoryMatch;
     });
-    // --- KẾT THÚC LOGIC LỌC ---
 
     let html = '';
-    // Dùng 'filteredProducts' thay vì 'products' để render
     filteredProducts.forEach(p => { 
         const cat = categories.find(c => c.type === p.type) || { name: 'Khác' };
         const isVisible = p.status === 'Đang bán';
@@ -349,7 +419,7 @@ function loadProducts() {
         html += `
             <tr>
                <td><img src="../${p.image}" alt="${p.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;"></td>
-                <td>${p.name}<br><small style="color:#777;">(${p.code})</small></td> 
+                <td>${p.name}<br><small style="color:#777;">(${p.code || 'N/A'})</small></td> 
                 <td>${cat.name}</td>
                 <td>${formatVND(p.price)}</td>
                 <td>${p.stock}</td>
@@ -397,17 +467,27 @@ function deleteProduct(productId) {
     }
 }
 
+// CẬP NHẬT: Thêm dropdown Hãng
 function openProductModal(productId = null) {
     document.getElementById('productForm').reset();
     document.getElementById('productModalTitle').textContent = productId ? 'Sửa Sản Phẩm' : 'Thêm Sản Phẩm Mới';
     const products = window.adminProducts || [];
     const categories = window.adminCategories || [];
+    const brands = window.adminBrands || []; // Lấy Hãng
     const product = productId ? products.find(p => p.id === productId) : null;
     
+    // Điền Loại
     const typeSelect = document.getElementById('productType');
     typeSelect.innerHTML = categories
         .filter(c => c.status === 'active')
         .map(c => `<option value="${c.type}">${c.name}</option>`)
+        .join('');
+        
+    // ĐIỀN HÃNG (MỚI)
+    const brandSelect = document.getElementById('productBrand');
+    brandSelect.innerHTML = '<option value="">-- Chọn hãng --</option>'; // Reset
+    brandSelect.innerHTML += brands
+        .map(b => `<option value="${b.code}">${b.name}</option>`)
         .join('');
         
     if (product) {
@@ -418,6 +498,7 @@ function openProductModal(productId = null) {
         document.getElementById('productPrice').value = product.price;
         document.getElementById('productShortDesc').value = product.shortDesc || '';
         document.getElementById('productType').value = product.type;
+        document.getElementById('productBrand').value = product.brand || ''; // Đặt giá trị hãng
     } else {
         document.getElementById('productId').value = '';
     }
@@ -425,6 +506,7 @@ function openProductModal(productId = null) {
     document.getElementById('productModal').style.display = 'flex';
 }
 
+// CẬP NHẬT: Thêm 'brand' vào logic lưu
 document.getElementById('productForm')?.addEventListener('submit', function (e) {
     e.preventDefault();
     const products = window.adminProducts || [];
@@ -434,10 +516,16 @@ document.getElementById('productForm')?.addEventListener('submit', function (e) 
         name: document.getElementById('productName').value.trim(),
         code: document.getElementById('productCode').value.trim(),
         type: document.getElementById('productType').value,
+        brand: document.getElementById('productBrand').value, // Lấy giá trị hãng
         image: document.getElementById('productImage').value.trim(),
         price: parseInt(document.getElementById('productPrice').value),
         shortDesc: document.getElementById('productShortDesc').value.trim(),
     };
+
+    if (!newProductData.brand) {
+        alert('Vui lòng chọn hãng sản phẩm.');
+        return;
+    }
 
     if (id) {
         const product = products.find(p => p.id == id);
@@ -467,7 +555,7 @@ document.getElementById('productForm')?.addEventListener('submit', function (e) 
 
 
 // =========================================================
-// === 4. QUẢN LÝ NHẬP HÀNG (ĐÃ CẬP NHẬT LỌC) ===
+// === 5. QUẢN LÝ NHẬP HÀNG (ĐÃ CẬP NHẬT LỌC & MODAL) ===
 // =========================================================
 function loadImports() {
     const tableBody = document.getElementById('importsTableBody');
@@ -476,6 +564,8 @@ function loadImports() {
     // --- BẮT ĐẦU LOGIC LỌC ---
     const searchInput = document.getElementById('importSearchInput');
     const statusFilter = document.getElementById('importStatusFilter');
+    const startDate = document.getElementById('importStartDate').value; // LỌC NGÀY
+    const endDate = document.getElementById('importEndDate').value;     // LỌC NGÀY
     
     const searchTerm = searchInput.value.toLowerCase();
     const filterStatus = statusFilter.value;
@@ -484,12 +574,17 @@ function loadImports() {
     const filteredImports = imports.filter(imp => {
         const codeMatch = imp.code.toLowerCase().includes(searchTerm);
         const statusMatch = !filterStatus || imp.status === filterStatus;
-        return codeMatch && statusMatch;
+        
+        // LỌC NGÀY
+        let dateMatch = true;
+        if (startDate && imp.date < startDate) dateMatch = false;
+        if (endDate && imp.date > endDate) dateMatch = false;
+
+        return codeMatch && statusMatch && dateMatch;
     });
     // --- KẾT THÚC LOGIC LỌC ---
     
     let html = '';
-    // Dùng filteredImports
     filteredImports.forEach(imp => {
         const total = imp.items.reduce((sum, item) => sum + (item.cost * item.quantity), 0);
         const statusClass = imp.status === 'Hoàn thành' ? 'badge-active' : 'badge-warning';
@@ -546,12 +641,34 @@ function updateItemCost(selectElement) {
     calculateImportTotal();
 }
 
+// CẬP NHẬT: Phân nhóm sản phẩm trong dropdown
 function addImportItem(item = {}) {
     const container = document.getElementById('importItemsContainer');
     const products = window.adminProducts || [];
-    const productsOptions = products
-        .map(p => `<option value="${p.id}">${p.code} - ${p.name} (Tồn: ${p.stock})</option>`)
-        .join('');
+    const categories = window.adminCategories || [];
+    const brands = window.adminBrands || [];
+    
+    let productsOptions = '';
+
+    // Nhóm theo Loại
+    categories.filter(c => c.status === 'active').forEach(cat => {
+        const productsInCategory = products.filter(p => p.type === cat.type);
+        if (productsInCategory.length > 0) {
+            productsOptions += `<optgroup label="${cat.name}">`;
+            
+            productsInCategory.forEach(p => {
+                // Tìm tên hãng
+                const brand = brands.find(b => b.code === p.brand) || { name: p.brand || 'N/A' };
+                productsOptions += `
+                    <option value="${p.id}">
+                        ${p.code} - ${brand.name} ${p.name} (Tồn: ${p.stock})
+                    </option>`;
+            });
+
+            productsOptions += `</optgroup>`;
+        }
+    });
+
     
     const row = document.createElement('div');
     row.classList.add('import-item-row');
@@ -589,7 +706,6 @@ function openImportModal(importId = null) {
     const imports = window.adminImports || [];
     const imp = importId ? imports.find(i => i.id === importId) : null;
     
-    // FIX LỖI DATE FORMAT WARNING
     const today = new Date();
     const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     
@@ -689,18 +805,17 @@ function completeImport(importId) {
 }
 
 // =========================================================
-// === 5. QUẢN LÝ GIÁ BÁN (ĐÃ CẬP NHẬT LỌC) ===
+// === 6. QUẢN LÝ GIÁ BÁN ===
 // =========================================================
 function loadPricing() {
     const tableBody = document.getElementById('pricingTableBody');
-    const searchInput = document.getElementById('pricingSearchInput'); // Sửa ID
-    const categoryFilter = document.getElementById('pricingCategoryFilter'); // Thêm
+    const searchInput = document.getElementById('pricingSearchInput'); 
+    const categoryFilter = document.getElementById('pricingCategoryFilter'); 
     if (!tableBody || !searchInput || !categoryFilter) return;
 
     const products = window.adminProducts || [];
     const categories = window.adminCategories || [];
 
-    // Điền dữ liệu cho category filter
     if (categoryFilter.options.length <= 1) { 
         categories.filter(c => c.status === 'active').forEach(cat => {
             const option = document.createElement('option');
@@ -711,15 +826,15 @@ function loadPricing() {
     }
 
     const searchTerm = searchInput.value.toLowerCase();
-    const filterCategory = categoryFilter.value; // Thêm
+    const filterCategory = categoryFilter.value; 
     
     let html = '';
     
     const filteredProducts = products.filter(p => {
         const nameMatch = p.name.toLowerCase().includes(searchTerm) || 
-                          p.code.toLowerCase().includes(searchTerm);
-        const categoryMatch = !filterCategory || p.type === filterCategory; // Thêm
-        return nameMatch && categoryMatch; // Cập nhật
+                          (p.code && p.code.toLowerCase().includes(searchTerm));
+        const categoryMatch = !filterCategory || p.type === filterCategory; 
+        return nameMatch && categoryMatch; 
     });
 
     filteredProducts.forEach(p => {
@@ -728,21 +843,19 @@ function loadPricing() {
         
         html += `
             <tr>
-                <td>${p.code}</td>
+                <td>${p.code || 'N/A'}</td>
                 <td>${p.name}</td>
                 <td>${cat.name}</td>
                 <td>${formatVND(p.cost || 0)}</td>
                 <td>${profitValue}% ${p.profit === null ? '(Mặc định)' : ''}</td>
                 <td>${formatVND(p.price)}</td>
                 <td>
-                    <button class="btn btn-warning btn-sm" onclick="openPricingModal(${p.id})">Chỉnh giá/Lợi nhuận</button>
+                    <button class="btn btn-warning btn-sm" onclick="openPricingModal(${p.id})">Chỉnh giá/LN</button>
                 </td>
             </tr>
         `;
     });
     tableBody.innerHTML = html;
-    
-    // searchInput.oninput = loadPricing; // Xóa oninput, dùng nút
 }
 
 function openPricingModal(productId) {
@@ -787,24 +900,24 @@ document.getElementById('pricingForm')?.addEventListener('submit', function (e) 
 });
 
 // =========================================================
-// === 6. QUẢN LÝ ĐƠN HÀNG (ĐÃ CẬP NHẬT LỌC & SẮP XẾP) ===
+// === 7. QUẢN LÝ ĐƠN HÀNG ===
 // =========================================================
 function loadOrders() {
     const tableBody = document.getElementById('ordersTableBody');
     const statusFilter = document.getElementById('orderStatusFilter');
     const startFilter = document.getElementById('orderStart');
     const endFilter = document.getElementById('orderEnd');
-    const sortFilter = document.getElementById('orderSortFilter'); // THÊM
-    if (!tableBody || !statusFilter || !startFilter || !endFilter || !sortFilter) return; // CẬP NHẬT
+    const sortFilter = document.getElementById('orderSortFilter'); 
+    if (!tableBody || !statusFilter || !startFilter || !endFilter || !sortFilter) return; 
 
     const orders = window.adminOrders || [];
 
     const filterStatus = statusFilter.value;
     const filterStart = startFilter.value;
     const filterEnd = endFilter.value;
-    const sortValue = sortFilter.value; // THÊM
+    const sortValue = sortFilter.value; 
     
-    let filteredOrders = orders.filter(order => { // BỎ CONST
+    let filteredOrders = orders.filter(order => { 
         const statusMatch = !filterStatus || order.status === filterStatus;
         
         let dateMatch = true;
@@ -814,20 +927,15 @@ function loadOrders() {
         return statusMatch && dateMatch;
     });
     
-    // === LOGIC SẮP XẾP MỚI ===
     if (sortValue === 'ward_asc') {
         filteredOrders.sort((a, b) => {
-            // Dữ liệu phường được lấy từ admin_data_sync.js
             const wardA = a.address?.ward.toLowerCase() || 'zzz'; 
             const wardB = b.address?.ward.toLowerCase() || 'zzz';
-            // Sắp xếp tiếng Việt
             return wardA.localeCompare(wardB, 'vi'); 
         });
     } else {
-        // Mặc định (newest)
         filteredOrders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate)); 
     }
-    // === KẾT THÚC LOGIC SẮP XẾP ===
     
     let html = '';
     filteredOrders.forEach(order => {
@@ -915,11 +1023,9 @@ function updateOrderStatus(orderId, newStatus) {
             });
         }
         
-       // CẬP NHẬT TRỞ LẠI LOCALSTORAGE CỦA KHÁCH HÀNG (FIXED)
        const userOrders = JSON.parse(localStorage.getItem(`orders_${order.originalUsername}`) || '[]');
        if (userOrders[order.originalOrderIndex]) {
            let userStatus = 'pending';
-           // ÁNH XẠ TRẠNG THÁI (FIXED)
            if (newStatus === 'Đã xử lý') userStatus = 'shipped'; 
            if (newStatus === 'Đang giao') userStatus = 'shipped'; 
            if (newStatus === 'Đã giao thành công') userStatus = 'completed'; 
@@ -937,7 +1043,7 @@ function updateOrderStatus(orderId, newStatus) {
 }
 
 // =========================================================
-// === 7. QUẢN LÝ TỒN KHO (ĐÃ CẬP NHẬT LỌC) ===
+// === 8. QUẢN LÝ TỒN KHO ===
 // =========================================================
 function loadInventory() {
     const tableBody = document.getElementById('inventoryTableBody');
@@ -949,7 +1055,6 @@ function loadInventory() {
     const products = window.adminProducts || [];
     const categories = window.adminCategories || [];
 
-    // Điền dữ liệu cho category filter
     if (categoryFilter.options.length <= 1) { 
         categories.filter(c => c.status === 'active').forEach(cat => {
             const option = document.createElement('option');
@@ -959,22 +1064,19 @@ function loadInventory() {
         });
     }
 
-    // Lấy giá trị lọc
     const searchTerm = searchInput.value.toLowerCase();
     const filterCategory = categoryFilter.value;
 
     let totalLowStock = 0;
     let html = '';
     
-    // Lọc sản phẩm
     const filteredProducts = products.filter(p => {
         const nameMatch = p.name.toLowerCase().includes(searchTerm) || 
-                          p.code.toLowerCase().includes(searchTerm);
+                          (p.code && p.code.toLowerCase().includes(searchTerm));
         const categoryMatch = !filterCategory || p.type === filterCategory;
         return nameMatch && categoryMatch;
     });
 
-    // Dùng filteredProducts
     filteredProducts.sort((a, b) => a.stock - b.stock).forEach(p => {
         const stock = p.stock; 
         const isLow = stock < 10 && p.status === 'Đang bán';
@@ -984,7 +1086,7 @@ function loadInventory() {
         
         html += `
             <tr class="${isLow ? 'table-warning' : ''}">
-                <td>${p.code}</td>
+                <td>${p.code || 'N/A'}</td>
                 <td>${p.name}</td>
                 <td>${cat.name}</td>
                 <td>${p.totalImport || 0}</td>
@@ -1026,7 +1128,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('pricingForm')?.addEventListener('submit', function (e) { /* Logic đã có ở trên */ });
         document.getElementById('importForm')?.addEventListener('submit', function (e) { /* Logic đã có ở trên */ });
 
-        // GẮN SỰ KIỆN CHO FORM ĐỔI MẬT KHẨU (MỚI)
+        // GẮN SỰ KIỆN CHO FORM ĐỔI MẬT KHẨU
         document.getElementById('adminPasswordForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
             const newPass = document.getElementById('adminNewPassword').value;
@@ -1043,27 +1145,19 @@ window.addEventListener('DOMContentLoaded', () => {
             }
 
             if (confirm('Bạn có chắc chắn muốn đổi mật khẩu?')) {
-                // 1. Cập nhật trong window
                 loggedInAdmin.password = newPass;
-                
-                // 2. Cập nhật trong adminUsers (rất quan trọng)
                 const userInList = (window.adminUsers || []).find(u => u.id === loggedInAdmin.id);
                 if (userInList) {
                     userInList.password = newPass;
                 }
-                
-                // 3. Cập nhật admin_logged_in_user (để lần sau login là pass mới)
                 localStorage.setItem('admin_logged_in_user', JSON.stringify(loggedInAdmin));
-                
-                // 4. Lưu vào danh sách chung
                 saveAdminData();
-                
                 alert('Đổi mật khẩu thành công!');
                 document.getElementById('adminPasswordForm').reset();
             }
         });
         
-        // GẮN SỰ KIỆN CHO FORM THÊM NGƯỜI DÙNG (MỚI)
+        // GẮN SỰ KIỆN CHO FORM THÊM NGƯỜI DÙNG
         document.getElementById('userForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
             const id = document.getElementById('userId').value;
@@ -1073,15 +1167,14 @@ window.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('userPassword').value;
 
             if (id) {
-                // Logic sửa (chưa được yêu cầu, có thể phát triển sau)
+                // Sửa
             } else {
-                // Logic Thêm Mới
+                // Thêm Mới
                 if (!username || !fullName || !email || !password) {
                     alert('Vui lòng điền đầy đủ thông tin.');
                     return;
                 }
                 
-                // Kiểm tra username tồn tại
                 if ((window.adminUsers || []).find(u => u.username === username)) {
                     alert('Tên tài khoản này đã tồn tại. Vui lòng chọn tên khác.');
                     return;
@@ -1090,7 +1183,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 const newUser = {
                     id: getNextId(window.adminUsers),
                     fullName: fullName,
-                    name: fullName, // Thêm trường 'name' cho đồng bộ
+                    name: fullName, 
                     username: username,
                     email: email,
                     password: password,
@@ -1098,22 +1191,59 @@ window.addEventListener('DOMContentLoaded', () => {
                     status: 'active'
                 };
 
-                // 1. Thêm vào danh sách admin (window.adminUsers)
                 window.adminUsers.push(newUser);
                 
-                // 2. Thêm vào danh sách client (bs_users)
-                // Đây là bước quan trọng để người dùng mới có thể đăng nhập
                 const bsUsers = JSON.parse(localStorage.getItem('bs_users') || '[]');
-                bsUsers.push(newUser); // Đẩy newUser vào
+                bsUsers.push(newUser); 
                 localStorage.setItem('bs_users', JSON.stringify(bsUsers));
 
-                // 3. Lưu lại tất cả
                 saveAdminData();
                 
                 alert('Đã thêm người dùng mới thành công!');
                 closeModal('userModal');
-                loadUsers(); // Tải lại bảng người dùng
+                loadUsers(); 
             }
         });
+
+        // GẮN SỰ KIỆN CHO FORM HÃNG (MỚI)
+        document.getElementById('brandForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const brands = window.adminBrands || [];
+            const id = document.getElementById('brandId').value;
+            const name = document.getElementById('brandName').value.trim();
+            const code = document.getElementById('brandCode').value.trim().toLowerCase();
+
+            if (!name || !code) {
+                alert('Vui lòng nhập đầy đủ tên hãng và mã code.');
+                return;
+            }
+
+            if (id) {
+                // Sửa Hãng
+                const brand = brands.find(b => b.id == id);
+                if (brand) {
+                    brand.name = name;
+                    // Không cho sửa code
+                    alert(`Đã cập nhật hãng: ${name}`);
+                }
+            } else {
+                // Thêm Hãng
+                if (brands.find(b => b.code === code)) {
+                    alert('Mã code này đã tồn tại. Vui lòng chọn mã khác.');
+                    return;
+                }
+                const newBrand = {
+                    id: getNextId(brands),
+                    name: name,
+                    code: code
+                };
+                brands.push(newBrand);
+                alert(`Đã thêm hãng: ${name}`);
+            }
+
+            saveAdminData();
+            closeModal('brandModal');
+            loadBrands();
+        });
     }
-});
+}); 

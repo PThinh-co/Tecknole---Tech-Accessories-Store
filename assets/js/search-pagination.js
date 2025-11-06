@@ -311,3 +311,99 @@ window.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+function getSyncedCategories() {
+    // 1. Dữ liệu mặc định phòng trường hợp localStorage rỗng
+    const defaultCategories = [
+        { id: 1, code: 'PK', name: 'Phụ kiện', type: 'pk', profit: 20, status: 'active' },
+        { id: 2, code: 'MN', name: 'Màn hình', type: 'manhinh', profit: 15, status: 'active' },
+        { id: 3, code: 'BP', name: 'Bàn phím', type: 'banphim', profit: 15, status: 'active' },
+        { id: 4, code: 'CH', name: 'Chuột', type: 'chuot', profit: 18, status: 'active' },
+        { id: 5, code: 'TN', name: 'Tai nghe', type: 'tainghe', profit: 22, status: 'active' },
+        { id: 6, code: 'LOA', name: 'Loa', type: 'loa', profit: 20, status: 'active' }
+    ];
+    
+    // 2. Lấy dữ liệu từ admin (nguồn chính)
+    let categories = JSON.parse(localStorage.getItem('admin_categories')) || defaultCategories;
+    
+    // 3. Chỉ trả về các danh mục đang 'active'
+    return categories.filter(cat => cat.status === 'active' || cat.status === undefined);
+}
+
+/**
+ * Hàm 1: Cập nhật các bộ lọc dạng <select>
+ * (Bao gồm thanh tìm kiếm và thanh filter ở nội dung)
+ */
+function populateCategorySelects(categories) {
+    // Tìm TẤT CẢ các dropdown <select> cần cập nhật
+    const selectDropdowns = document.querySelectorAll(
+        'select[name="scat_id"], #filter-type'
+    );
+
+    if (selectDropdowns.length === 0) return;
+
+    selectDropdowns.forEach(selectElement => {
+        const currentSelectedValue = selectElement.value; // Lưu giá trị cũ
+        
+        // Giữ lại option đầu tiên (ví dụ: "Tất cả danh mục")
+        const firstOption = selectElement.querySelector('option');
+        selectElement.innerHTML = ''; 
+        if (firstOption) {
+            selectElement.appendChild(firstOption);
+        }
+
+        // Thêm các option mới từ dữ liệu
+        categories.forEach(cat => {
+            const option = document.createElement('option');
+            // Dùng `cat.type` để đồng bộ với cách lọc
+            option.value = cat.type; 
+            option.textContent = cat.name;
+            selectElement.appendChild(option);
+        });
+
+        // Khôi phục giá trị đã chọn (nếu có)
+        if (currentSelectedValue) {
+            selectElement.value = currentSelectedValue;
+        }
+    });
+}
+
+/**
+ * Hàm 2: Cập nhật menu điều hướng <nav> chính
+ */
+function populateCategoryNavMenu(categories) {
+    // Tìm menu <ul> trong <nav>
+    const navMenu = document.querySelector('nav .dropdown-menu');
+    if (!navMenu) return;
+
+    // Xóa sạch các <li> danh mục cũ
+    navMenu.innerHTML = ''; 
+
+    categories.forEach(cat => {
+        const li = document.createElement('li');
+        
+        // Tạo link danh mục chính
+        // Lưu ý: Code này sẽ thay thế menu tĩnh cũ, 
+        // bao gồm cả các submenu thương hiệu (Acer, Asus...)
+        // vì dữ liệu thương hiệu không được đồng bộ từ admin.
+        li.innerHTML = `<a href="category.html?type=${cat.type}">${cat.name}</a>`;
+        
+        navMenu.appendChild(li);
+    });
+}
+
+/**
+ * Hàm chạy chính: Đồng bộ tất cả
+ */
+function syncAllCategories() {
+    const categories = getSyncedCategories();
+    populateCategorySelects(categories);
+    populateCategoryNavMenu(categories);
+}
+
+// Chạy hàm này ngay khi tệp modal.js được tải
+// (Vì modal.js được tải ở mọi trang)
+document.addEventListener('DOMContentLoaded', syncAllCategories);
+
+// (Nâng cao) Tự động cập nhật nếu admin thay đổi
+window.addEventListener('adminDataChanged', syncAllCategories);

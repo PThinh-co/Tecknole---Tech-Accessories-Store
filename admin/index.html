@@ -37,7 +37,7 @@
         <div class="menu-item" data-section="account">Tài khoản</div>
         <div class="menu-item" data-section="users">Người dùng</div>
         <div class="menu-item" data-section="categories">Loại sản phẩm</div>
-        <div class="menu-item" data-section="products">Sản phẩm</div>
+        <div class="menu-item" data-section="brands">Hãng sản phẩm</div> <div class="menu-item" data-section="products">Sản phẩm</div>
         <div class="menu-item" data-section="imports">Nhập hàng</div>
         <div class="menu-item" data-section="pricing">Giá bán</div>
         <div class="menu-item" data-section="orders">Đơn hàng</div>
@@ -54,19 +54,19 @@
             <div class="section active" id="dashboard">
                 <div class="stats-grid">
                     <div class="stat-card" style="border-left: 5px solid #2ecc71;">
-                        <h4>DOANH THU (Đã hoàn thành)</h4>
+                        <h4>DOANH THU </h4>
                         <div class="stat-value" id="totalRevenue">0 đ</div>
                     </div>
                     <div class="stat-card" style="border-left: 5px solid #3498db;">
-                        <h4>TOTAL CUSTOMERS</h4>
+                        <h4>SỐ KHÁCH HÀNG</h4>
                         <div class="stat-value" id="totalUsers">0</div>
                     </div>
                     <div class="stat-card" style="border-left: 5px solid #e74c3c;">
-                        <h4>NEW ORDERS (Chưa xử lý)</h4>
+                        <h4>ĐƠN HÀNG CHƯA XỬ LÍ</h4>
                         <div class="stat-value" id="newOrders">0</div>
                     </div>
                     <div class="stat-card" style="border-left: 5px solid #f39c12;">
-                        <h4>TOTAL PRODUCTS (Hiển thị)</h4>
+                        <h4>TỔNG SẢN PHẨM</h4>
                         <div class="stat-value" id="totalProducts">0</div>
                     </div>
                 </div>
@@ -105,6 +105,7 @@
                     <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
                 </form>
             </div>
+            
             <div class="section" id="users">
                 <h3>Quản lý người dùng</h3>
                 <button class="btn btn-add" onclick="openUserModal()">+ Thêm người dùng</button>
@@ -117,6 +118,16 @@
                 <table id="categoriesTable"><thead><tr><th>Mã</th><th>Tên</th><th>% LN</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="categoriesTableBody"></tbody></table>
             </div>
 
+            <div class="section" id="brands">
+                <h3>Quản lý hãng sản phẩm</h3>
+                <button class="btn btn-add" onclick="openBrandModal()">+ Thêm hãng</button>
+            
+                <div class="search-bar">
+                    <input type="text" id="brandSearchInput" placeholder="Tìm theo tên hoặc mã...">
+                    <button class="btn btn-primary" onclick="loadBrands()">Lọc</button>
+                </div>
+                <table id="brandsTable"><thead><tr><th>ID</th><th>Tên Hãng</th><th>Mã (code)</th><th>Thao tác</th></tr></thead><tbody id="brandsTableBody"></tbody></table>
+            </div>
             <div class="section" id="products">
                 <h3>Quản lý sản phẩm</h3>
                 <button class="btn btn-add" onclick="openProductModal()">+ Thêm sản phẩm</button>
@@ -131,7 +142,7 @@
                 <table id="productsTable">
                     <thead>
                         <tr>
-                            <th>IMAGE</th> <th>Mã</th>
+                            <th>IMAGE</th> 
                             <th>Tên</th>
                             <th>Loại</th>
                             <th>Giá</th>
@@ -148,6 +159,9 @@
                 <h3>Quản lý nhập hàng</h3>
                 <button class="btn btn-add" onclick="openImportModal()">+ Tạo phiếu nhập</button>
                 <div class="search-bar">
+                    <input type="date" id="importStartDate" />
+                    <span>đến</span>
+                    <input type="date" id="importEndDate" />
                     <input type="text" id="importSearchInput" placeholder="Tìm theo mã phiếu...">
                     <select id="importStatusFilter">
                         <option value="">-- Lọc theo trạng thái --</option>
@@ -232,6 +246,25 @@
     </div>
 </div>
 
+<div class="modal" id="brandModal" onclick="closeModal('brandModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <h3><span id="brandModalTitle">Thêm Hãng Mới</span></h3>
+        <form id="brandForm">
+            <input type="hidden" id="brandId" />
+            <div class="form-group">
+                <label>Tên Hãng (Hiển thị)</label>
+                <input type="text" id="brandName" required />
+            </div>
+            <div class="form-group">
+                <label>Mã Hãng (code - Dùng cho lọc)</label>
+                <input type="text" id="brandCode" required placeholder="vi du: acer, asus, lg..." />
+            </div>
+            <button type="submit" class="btn btn-add">Lưu</button>
+            <button type="button" class="btn btn-secondary" onclick="closeModal('brandModal')">Hủy</button>
+        </form>
+    </div>
+</div>
+
 <div class="modal" id="productModal" onclick="closeModal('productModal')">
     <div class="modal-content" onclick="event.stopPropagation()">
         <h3><span id="productModalTitle">Thêm Sản Phẩm Mới</span></h3>
@@ -248,6 +281,12 @@
             <div class="form-group">
                 <label>Loại sản phẩm</label>
                 <select id="productType" required></select>
+            </div>
+            <div class="form-group">
+                <label>Hãng sản phẩm</label>
+                <select id="productBrand" required>
+                    <option value="">-- Chọn hãng --</option>
+                </select>
             </div>
             <div class="form-group">
                 <label>Link Ảnh Chính</label>
@@ -314,7 +353,7 @@
             <input type="hidden" id="importId" />
             <div class="form-group">
                 <label>Ngày nhập</label>
-                <input type="date" id="importDate" required value="${new Date().toISOString().split('T')[0]}" />
+                <input type="date" id="importDate" required />
             </div>
             
             <h4 style="margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Danh sách sản phẩm nhập</h4>

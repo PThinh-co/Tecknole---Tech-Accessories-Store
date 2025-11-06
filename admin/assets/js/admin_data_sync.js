@@ -22,8 +22,6 @@ function syncAdminData() {
 
     if (adminProducts.length === 0 && initialProducts.length > 0) {
         // Ưu tiên 2: Nếu localStorage rỗng, dùng dữ liệu mồi từ client (được định nghĩa là DEFAULT_PRODUCTS_DATA trong product-detail.js)
-        // (Điều này chỉ xảy ra ở lần chạy đầu tiên, trước khi client kịp lưu)
-        // console.log("SYNC: localStorage rỗng, tạo admin_products từ tệp JS.");
         
         adminProducts = initialProducts.map(p => ({
             ...p,
@@ -38,7 +36,6 @@ function syncAdminData() {
         // Lưu lại ngay lập tức để đồng bộ
         localStorage.setItem('admin_products', JSON.stringify(adminProducts));
     }
-    // Nếu cả hai đều rỗng, adminProducts sẽ là mảng [] (hoàn toàn bình thường)
 
 
     // 3. Định nghĩa/Khởi tạo Categories
@@ -52,7 +49,30 @@ function syncAdminData() {
     ];
     const adminCategories = JSON.parse(localStorage.getItem('admin_categories')) || defaultCategories;
 
-    // 4. Khởi tạo/Đồng bộ Admin Users và Khách hàng
+    // 4. THÊM MỚI: Định nghĩa/Khởi tạo Brands (Hãng)
+    const defaultBrands = [
+        { id: 1, name: 'Acer', code: 'acer' },
+        { id: 2, name: 'Asus', code: 'asus' },
+        { id: 3, name: 'LG', code: 'lg' },
+        { id: 4, name: 'MSI', code: 'msi' },
+        { id: 5, name: 'Viewsonic', code: 'viewsonic' },
+        { id: 6, name: 'Aula', code: 'aula' },
+        { id: 7, name: 'Akko', code: 'akko' },
+        { id: 8, name: 'Razer', code: 'razer' },
+        { id: 9, name: 'Corsair', code: 'corsair' },
+        { id: 10, name: 'Logitech', code: 'logitech' },
+        { id: 11, name: 'Apple', code: 'apple' },
+        { id: 12, name: 'Bose', code: 'bose' },
+        { id: 13, name: 'Marshall', code: 'marshall' },
+        { id: 14, name: 'Sony', code: 'sony' },
+        { id: 15, name: 'Acnos', code: 'acnos' },
+        { id: 16, name: 'Devialet', code: 'devialet' },
+        { id: 17, name: 'JBL', code: 'jbl' }
+    ];
+    const adminBrands = JSON.parse(localStorage.getItem('admin_brands')) || defaultBrands;
+
+
+    // 5. Khởi tạo/Đồng bộ Admin Users và Khách hàng
     let users = JSON.parse(localStorage.getItem('admin_users') || '[]');
     const bsUsers = JSON.parse(localStorage.getItem('bs_users') || '[]'); 
 
@@ -65,34 +85,28 @@ function syncAdminData() {
     
     let maxId = Math.max(...users.map(u => u.id), 1000);
     
-    // === LOGIC SỬA LỖI NẰM Ở ĐÂY ===
     bsUsers.forEach(bUser => {
         const existing = users.find(u => u.username === bUser.username);
         if (existing) {
-             // 1. Lưu lại trạng thái (status) và ID của admin trước
              const adminStatus = existing.status;
              const adminId = existing.id;
 
-             // 2. Đồng bộ thông tin từ client (như tên, email nếu họ tự cập nhật)
              if (!existing.is_admin || existing.username !== DEFAULT_ADMIN.username) {
                  Object.assign(existing, bUser);
              }
              
-             // 3. Khôi phục lại trạng thái và ID mà admin đã quản lý
-             existing.status = adminStatus || 'active'; // Ưu tiên status của admin
-             existing.id = adminId; // Đảm bảo ID không bị ghi đè
+             existing.status = adminStatus || 'active'; 
+             existing.id = adminId; 
              existing.is_admin = existing.is_admin || false;
 
         } else {
-             // Thêm user mới từ client vào danh sách admin
              users.push({ ...bUser, id: ++maxId, status: 'active', is_admin: false });
         }
     });
-    // === KẾT THÚC SỬA LỖI ===
 
     localStorage.setItem('admin_users', JSON.stringify(users));
 
-    // 5. Đồng bộ Orders và Imports
+    // 6. Đồng bộ Orders và Imports
     let allOrders = []; 
     let orderId = 1;
     users.filter(u => !u.is_admin).forEach(user => {
@@ -125,16 +139,18 @@ function syncAdminData() {
 
     const adminImports = JSON.parse(localStorage.getItem('admin_imports')) || [];
 
-    // 6. GÁN DỮ LIỆU VÀO WINDOW (QUAN TRỌNG NHẤT)
+    // 7. GÁN DỮ LIỆU VÀO WINDOW (QUAN TRỌNG NHẤT)
     window.adminUsers = users;
-    window.adminProducts = adminProducts; // <--- Dùng dữ liệu đã đồng bộ
+    window.adminProducts = adminProducts; 
     window.adminCategories = adminCategories;
+    window.adminBrands = adminBrands; // THÊM MỚI
     window.adminOrders = allOrders;
     window.adminImports = adminImports;
 
     // LƯU VÀO localStorage
-    localStorage.setItem('admin_products', JSON.stringify(adminProducts)); // <--- Đảm bảo lưu lại
+    localStorage.setItem('admin_products', JSON.stringify(adminProducts)); 
     localStorage.setItem('admin_categories', JSON.stringify(adminCategories));
+    localStorage.setItem('admin_brands', JSON.stringify(adminBrands)); // THÊM MỚI
     localStorage.setItem('admin_all_orders', JSON.stringify(allOrders));
     localStorage.setItem('admin_imports', JSON.stringify(adminImports));
 }
