@@ -37,7 +37,8 @@
         <div class="menu-item" data-section="account">Tài khoản</div>
         <div class="menu-item" data-section="users">Người dùng</div>
         <div class="menu-item" data-section="categories">Loại sản phẩm</div>
-        <div class="menu-item" data-section="brands">Hãng sản phẩm</div> <div class="menu-item" data-section="products">Sản phẩm</div>
+        <div class="menu-item" data-section="brands">Hãng sản phẩm</div> 
+        <div class="menu-item" data-section="products">Sản phẩm</div>
         <div class="menu-item" data-section="imports">Nhập hàng</div>
         <div class="menu-item" data-section="pricing">Giá bán</div>
         <div class="menu-item" data-section="orders">Đơn hàng</div>
@@ -54,19 +55,19 @@
             <div class="section active" id="dashboard">
                 <div class="stats-grid">
                     <div class="stat-card" style="border-left: 5px solid #2ecc71;">
-                        <h4>DOANH THU </h4>
+                        <h4>DOANH THU (Đã hoàn thành)</h4>
                         <div class="stat-value" id="totalRevenue">0 đ</div>
                     </div>
                     <div class="stat-card" style="border-left: 5px solid #3498db;">
-                        <h4>SỐ KHÁCH HÀNG</h4>
+                        <h4>TỔNG KHÁCH HÀNG</h4>
                         <div class="stat-value" id="totalUsers">0</div>
                     </div>
                     <div class="stat-card" style="border-left: 5px solid #e74c3c;">
-                        <h4>ĐƠN HÀNG CHƯA XỬ LÍ</h4>
+                        <h4>ĐƠN HÀNG(Chưa xử lý)</h4>
                         <div class="stat-value" id="newOrders">0</div>
                     </div>
                     <div class="stat-card" style="border-left: 5px solid #f39c12;">
-                        <h4>TỔNG SẢN PHẨM</h4>
+                        <h4>TỔNG SẢN PHẨM HIỆN CÓ</h4>
                         <div class="stat-value" id="totalProducts">0</div>
                     </div>
                 </div>
@@ -84,7 +85,7 @@
                     <input type="text" id="adminProfileName" readonly />
                 </div>
                 <div class="form-group">
-                    <label>Tên tài khoản (Username):</label>
+                    <label>Tên đăng nhập:</label>
                     <input type="text" id="adminProfileUsername" readonly />
                 </div>
                 <div class="form-group">
@@ -121,13 +122,12 @@
             <div class="section" id="brands">
                 <h3>Quản lý hãng sản phẩm</h3>
                 <button class="btn btn-add" onclick="openBrandModal()">+ Thêm hãng</button>
-            
                 <div class="search-bar">
-                    <input type="text" id="brandSearchInput" placeholder="Tìm theo tên hoặc mã...">
-                    <button class="btn btn-primary" onclick="loadBrands()">Lọc</button>
+                    <input type="text" id="brandSearchInput" placeholder="Tìm theo tên hoặc mã..." oninput="loadBrands()" />
                 </div>
                 <table id="brandsTable"><thead><tr><th>ID</th><th>Tên Hãng</th><th>Mã (code)</th><th>Thao tác</th></tr></thead><tbody id="brandsTableBody"></tbody></table>
             </div>
+
             <div class="section" id="products">
                 <h3>Quản lý sản phẩm</h3>
                 <button class="btn btn-add" onclick="openProductModal()">+ Thêm sản phẩm</button>
@@ -196,21 +196,24 @@
                     </select>
                     <button class="btn btn-primary" onclick="loadOrders()">Lọc & Sắp xếp</button>
                 </div>
-                <table id="ordersTable"><thead><tr><th>Mã</th><th>Khách</th><th>Ngày</th><th>Tổng</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="ordersTableBody"></tbody></table>
+                <table id="ordersTable"><thead><tr><th>Mã</th><th>Khách</th><th>Ngày Đặt</th><th>Ngày C.Nhật</th><th>Tổng</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="ordersTableBody"></tbody></table>
             </div>
 
             <div class="section" id="inventory">
                 <h3>Thống kê tồn kho</h3>
-                <div class="search-bar"> <input type="date" id="reportStart" /> <input type="date" id="reportEnd" />
-                    <button class="btn btn-primary" onclick="loadInventoryReport()">Xem báo cáo</button>
-                </div>
                 <div id="lowStockAlert" class="alert-warning" style="display:none;"></div>
                 
                 <div class="search-bar">
                     <input type="text" id="inventorySearchInput" placeholder="Tìm theo tên hoặc mã...">
                     <select id="inventoryCategoryFilter">
                         <option value="">-- Lọc theo loại --</option>
-                        </select>
+                    </select>
+                    <select id="inventoryStatusFilter">
+                        <option value="">-- Tất cả trạng thái --</option>
+                        <option value="stable">Ổn định (Trên 10)</option>
+                        <option value="low_stock">Tồn kho thấp (1-10)</option>
+                        <option value="out_of_stock">Hết hàng (0)</option>
+                    </select>
                     <button class="btn btn-primary" onclick="loadInventory()">Lọc</button>
                 </div>
                 <table id="inventoryTable"><thead><tr><th>Mã</th><th>Tên</th><th>Loại</th><th>Nhập</th><th>Xuất</th><th>Tồn</th><th>Cảnh báo</th></tr></thead><tbody id="inventoryTableBody"></tbody></table>
@@ -390,7 +393,7 @@
                 <input type="email" id="userEmail" required />
             </div>
             <div class="form-group">
-                <label>Mật khẩu (Khởi tạo)</label>
+                <label>Mật khẩu </label>
                 <input type="password" id="userPassword" required />
             </div>
             <button type="submit" class="btn btn-add">Lưu</button>

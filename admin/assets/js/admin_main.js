@@ -16,7 +16,7 @@ const saveAdminData = () => {
     localStorage.setItem('admin_users', JSON.stringify(window.adminUsers || []));
     localStorage.setItem('admin_products', JSON.stringify(window.adminProducts || []));
     localStorage.setItem('admin_categories', JSON.stringify(window.adminCategories || []));
-    localStorage.setItem('admin_brands', JSON.stringify(window.adminBrands || [])); // THÊM MỚI
+    localStorage.setItem('admin_brands', JSON.stringify(window.adminBrands || [])); 
     localStorage.setItem('admin_all_orders', JSON.stringify(window.adminOrders || []));
     localStorage.setItem('admin_imports', JSON.stringify(window.adminImports || []));
 };
@@ -59,7 +59,7 @@ function loadSection(section) {
         account: loadAccount, 
         users: loadUsers,
         categories: loadCategories,
-        brands: loadBrands, // THÊM MỚI
+        brands: loadBrands, 
         products: loadProducts,
         imports: loadImports,
         pricing: loadPricing,
@@ -85,14 +85,13 @@ function loadDashboard() {
     const lowStockProducts = products.filter(p => p.stock <= 10 && p.stock > 0 && p.status === 'Đang bán')
                                      .sort((a, b) => a.stock - b.stock);
     
-    // Cảnh báo tồn kho
+    // Cảnh báo tồn kho (ĐÃ XÓA NÚT "QUẢN LÝ NHẬP")
     const lowStockAlerts = document.getElementById('inventoryAlertsBody');
     if (lowStockAlerts) {
         lowStockAlerts.innerHTML = lowStockProducts.map(p => `
             <div class="alert-item">
                 <span class="product-name">${p.name}</span>
                 <span class="stock-count" style="color: #c0392b; font-weight: 600;">Chỉ còn ${p.stock} sản phẩm!</span>
-                <button class="btn btn-primary btn-sm" onclick="loadSection('imports')">Quản lý nhập</button>
             </div>
         `).join('');
         if (lowStockProducts.length === 0) {
@@ -143,7 +142,7 @@ function loadUsers() {
                 <td>${user.email || 'N/A'}</td>
                 <td><span class="badge ${statusClass}">${statusText}</span></td>
                 <td>
-                    <button class="btn btn-warning btn-sm" onclick="resetUserPassword(${user.id})">Reset MK</button>
+                    <button class="btn btn-warning btn-sm" onclick="resetUserPassword(${user.id})">Đặt lại mật khẩu</button>
                     <button class="btn btn-secondary btn-sm" onclick="toggleUserStatus(${user.id}, '${user.status}')">${user.status === 'active' ? 'Khóa' : 'Mở khóa'}</button>
                 </td>
             </tr>
@@ -279,14 +278,12 @@ document.getElementById('categoryForm')?.addEventListener('submit', function (e)
     loadCategories();
 });
 
-// THAY ĐỔI: Logic Xóa vĩnh viễn
 function deleteCategory(categoryId) {
     const categories = window.adminCategories || [];
     const products = window.adminProducts || [];
     const cat = categories.find(c => c.id === categoryId);
     if (!cat) return;
 
-    // Kiểm tra xem có sản phẩm nào đang dùng loại này không
     const productUsingCategory = products.find(p => p.type === cat.type);
     if (productUsingCategory) {
         alert(`Không thể xóa loại "${cat.name}" vì sản phẩm "${productUsingCategory.name}" đang sử dụng.`);
@@ -302,24 +299,22 @@ function deleteCategory(categoryId) {
 }
 
 // =========================================================
-// === 3. QUẢN LÝ HÃNG SẢN PHẨM (MỚI) ===
+// === 3. QUẢN LÝ HÃNG SẢN PHẨM ===
 // =========================================================
 function loadBrands() {
     const tableBody = document.getElementById('brandsTableBody');
-    const searchInput = document.getElementById('brandSearchInput'); // THÊM
-    if (!tableBody || !searchInput) return; // CẬP NHẬT
-
+    const searchInput = document.getElementById('brandSearchInput'); 
+    if (!tableBody || !searchInput) return; 
+    
     const brands = window.adminBrands || [];
-    const searchTerm = searchInput.value.toLowerCase(); // THÊM
+    const searchTerm = searchInput.value.toLowerCase(); 
 
-    // LỌC HÃNG (MỚI)
     const filteredBrands = brands.filter(brand => {
         return brand.name.toLowerCase().includes(searchTerm) || 
                brand.code.toLowerCase().includes(searchTerm);
     });
-
+    
     let html = '';
-    // Dùng filteredBrands
     filteredBrands.forEach(brand => {
         html += `
             <tr>
@@ -346,7 +341,7 @@ function openBrandModal(brandId = null) {
         document.getElementById('brandId').value = brand.id;
         document.getElementById('brandName').value = brand.name;
         document.getElementById('brandCode').value = brand.code;
-        document.getElementById('brandCode').readOnly = true; // Không cho sửa code
+        document.getElementById('brandCode').readOnly = true; 
     } else {
         document.getElementById('brandModalTitle').textContent = 'Thêm Hãng Mới';
         document.getElementById('brandId').value = '';
@@ -362,7 +357,6 @@ function deleteBrand(brandId) {
     const brand = brands.find(b => b.id === brandId);
     if (!brand) return;
 
-    // Kiểm tra sản phẩm
     const productUsingBrand = products.find(p => p.brand === brand.code);
     if (productUsingBrand) {
         alert(`Không thể xóa hãng "${brand.name}" vì sản phẩm "${productUsingBrand.name}" đang sử dụng.`);
@@ -379,7 +373,7 @@ function deleteBrand(brandId) {
 
 
 // =========================================================
-// === 4. QUẢN LÝ SẢN PHẨM (ĐÃ CẬP NHẬT) ===
+// === 4. QUẢN LÝ SẢN PHẨM ===
 // =========================================================
 function loadProducts() {
     const tableBody = document.getElementById('productsTableBody');
@@ -467,25 +461,22 @@ function deleteProduct(productId) {
     }
 }
 
-// CẬP NHẬT: Thêm dropdown Hãng
 function openProductModal(productId = null) {
     document.getElementById('productForm').reset();
     document.getElementById('productModalTitle').textContent = productId ? 'Sửa Sản Phẩm' : 'Thêm Sản Phẩm Mới';
     const products = window.adminProducts || [];
     const categories = window.adminCategories || [];
-    const brands = window.adminBrands || []; // Lấy Hãng
+    const brands = window.adminBrands || []; 
     const product = productId ? products.find(p => p.id === productId) : null;
     
-    // Điền Loại
     const typeSelect = document.getElementById('productType');
     typeSelect.innerHTML = categories
         .filter(c => c.status === 'active')
         .map(c => `<option value="${c.type}">${c.name}</option>`)
         .join('');
         
-    // ĐIỀN HÃNG (MỚI)
     const brandSelect = document.getElementById('productBrand');
-    brandSelect.innerHTML = '<option value="">-- Chọn hãng --</option>'; // Reset
+    brandSelect.innerHTML = '<option value="">-- Chọn hãng --</option>'; 
     brandSelect.innerHTML += brands
         .map(b => `<option value="${b.code}">${b.name}</option>`)
         .join('');
@@ -498,7 +489,7 @@ function openProductModal(productId = null) {
         document.getElementById('productPrice').value = product.price;
         document.getElementById('productShortDesc').value = product.shortDesc || '';
         document.getElementById('productType').value = product.type;
-        document.getElementById('productBrand').value = product.brand || ''; // Đặt giá trị hãng
+        document.getElementById('productBrand').value = product.brand || ''; 
     } else {
         document.getElementById('productId').value = '';
     }
@@ -506,7 +497,6 @@ function openProductModal(productId = null) {
     document.getElementById('productModal').style.display = 'flex';
 }
 
-// CẬP NHẬT: Thêm 'brand' vào logic lưu
 document.getElementById('productForm')?.addEventListener('submit', function (e) {
     e.preventDefault();
     const products = window.adminProducts || [];
@@ -516,7 +506,7 @@ document.getElementById('productForm')?.addEventListener('submit', function (e) 
         name: document.getElementById('productName').value.trim(),
         code: document.getElementById('productCode').value.trim(),
         type: document.getElementById('productType').value,
-        brand: document.getElementById('productBrand').value, // Lấy giá trị hãng
+        brand: document.getElementById('productBrand').value, 
         image: document.getElementById('productImage').value.trim(),
         price: parseInt(document.getElementById('productPrice').value),
         shortDesc: document.getElementById('productShortDesc').value.trim(),
@@ -555,17 +545,16 @@ document.getElementById('productForm')?.addEventListener('submit', function (e) 
 
 
 // =========================================================
-// === 5. QUẢN LÝ NHẬP HÀNG (ĐÃ CẬP NHẬT LỌC & MODAL) ===
+// === 5. QUẢN LÝ NHẬP HÀNG ===
 // =========================================================
 function loadImports() {
     const tableBody = document.getElementById('importsTableBody');
     if (!tableBody) return;
     
-    // --- BẮT ĐẦU LOGIC LỌC ---
     const searchInput = document.getElementById('importSearchInput');
     const statusFilter = document.getElementById('importStatusFilter');
-    const startDate = document.getElementById('importStartDate').value; // LỌC NGÀY
-    const endDate = document.getElementById('importEndDate').value;     // LỌC NGÀY
+    const startDate = document.getElementById('importStartDate').value; 
+    const endDate = document.getElementById('importEndDate').value;     
     
     const searchTerm = searchInput.value.toLowerCase();
     const filterStatus = statusFilter.value;
@@ -575,14 +564,12 @@ function loadImports() {
         const codeMatch = imp.code.toLowerCase().includes(searchTerm);
         const statusMatch = !filterStatus || imp.status === filterStatus;
         
-        // LỌC NGÀY
         let dateMatch = true;
         if (startDate && imp.date < startDate) dateMatch = false;
         if (endDate && imp.date > endDate) dateMatch = false;
 
         return codeMatch && statusMatch && dateMatch;
     });
-    // --- KẾT THÚC LOGIC LỌC ---
     
     let html = '';
     filteredImports.forEach(imp => {
@@ -641,7 +628,6 @@ function updateItemCost(selectElement) {
     calculateImportTotal();
 }
 
-// CẬP NHẬT: Phân nhóm sản phẩm trong dropdown
 function addImportItem(item = {}) {
     const container = document.getElementById('importItemsContainer');
     const products = window.adminProducts || [];
@@ -650,14 +636,12 @@ function addImportItem(item = {}) {
     
     let productsOptions = '';
 
-    // Nhóm theo Loại
     categories.filter(c => c.status === 'active').forEach(cat => {
         const productsInCategory = products.filter(p => p.type === cat.type);
         if (productsInCategory.length > 0) {
             productsOptions += `<optgroup label="${cat.name}">`;
             
             productsInCategory.forEach(p => {
-                // Tìm tên hãng
                 const brand = brands.find(b => b.code === p.brand) || { name: p.brand || 'N/A' };
                 productsOptions += `
                     <option value="${p.id}">
@@ -950,6 +934,7 @@ function loadOrders() {
                 <td>${order.code}</td>
                 <td>${order.customerName}</td>
                 <td>${order.date}</td>
+                <td>${order.updateDate || order.date}</td>
                 <td>${formatVND(order.total)}</td>
                 <td><span class="badge ${statusClass}">${order.status}</span></td>
                 <td>
@@ -1012,6 +997,7 @@ function updateOrderStatus(orderId, newStatus) {
     
     if (isConfirmed) {
         order.status = newStatus;
+        // THÊM NGÀY CẬP NHẬT
         order.updateDate = new Date().toISOString().split('T')[0];
 
         if (newStatus === 'Đã giao thành công') {
@@ -1043,14 +1029,16 @@ function updateOrderStatus(orderId, newStatus) {
 }
 
 // =========================================================
-// === 8. QUẢN LÝ TỒN KHO ===
+// === 8. QUẢN LÝ TỒN KHO (ĐÃ CẬP NHẬT LỌC TRẠNG THÁI) ===
 // =========================================================
 function loadInventory() {
     const tableBody = document.getElementById('inventoryTableBody');
     const lowStockAlert = document.getElementById('lowStockAlert');
     const searchInput = document.getElementById('inventorySearchInput');
     const categoryFilter = document.getElementById('inventoryCategoryFilter');
-    if (!tableBody || !lowStockAlert || !searchInput || !categoryFilter) return;
+    // LẤY BỘ LỌC TRẠNG THÁI MỚI
+    const statusFilter = document.getElementById('inventoryStatusFilter');
+    if (!tableBody || !lowStockAlert || !searchInput || !categoryFilter || !statusFilter) return;
 
     const products = window.adminProducts || [];
     const categories = window.adminCategories || [];
@@ -1066,6 +1054,7 @@ function loadInventory() {
 
     const searchTerm = searchInput.value.toLowerCase();
     const filterCategory = categoryFilter.value;
+    const filterStatus = statusFilter.value; // LẤY GIÁ TRỊ LỌC
 
     let totalLowStock = 0;
     let html = '';
@@ -1074,41 +1063,63 @@ function loadInventory() {
         const nameMatch = p.name.toLowerCase().includes(searchTerm) || 
                           (p.code && p.code.toLowerCase().includes(searchTerm));
         const categoryMatch = !filterCategory || p.type === filterCategory;
-        return nameMatch && categoryMatch;
+        
+        // LOGIC LỌC TRẠNG THÁI MỚI
+        let statusMatch = true;
+        if (filterStatus === 'stable') {
+            statusMatch = p.stock > 10;
+        } else if (filterStatus === 'low_stock') {
+            statusMatch = p.stock > 0 && p.stock <= 10;
+        } else if (filterStatus === 'out_of_stock') {
+            statusMatch = p.stock === 0;
+        }
+        
+        return nameMatch && categoryMatch && statusMatch;
     });
 
     filteredProducts.sort((a, b) => a.stock - b.stock).forEach(p => {
         const stock = p.stock; 
-        const isLow = stock < 10 && p.status === 'Đang bán';
-        if (isLow) totalLowStock++;
-
+        
+        // CẬP NHẬT LOGIC CẢNH BÁO
+        let warningText = 'Ổn định';
+        let rowClass = '';
+        if (stock === 0) {
+            warningText = '<span style="color:#d9534f; font-weight:600;">HẾT HÀNG</span>';
+            rowClass = 'table-danger'; // Lớp CSS mới (cần thêm vào style.css nếu muốn)
+        } else if (stock > 0 && stock <= 10) {
+            warningText = '<span style="color:#f0ad4e; font-weight:600;">⚠️ THẤP</span>';
+            rowClass = 'table-warning';
+            totalLowStock++; // Chỉ đếm hàng thấp
+        }
+        
         const cat = categories.find(c => c.type === p.type) || { name: 'Khác' };
         
         html += `
-            <tr class="${isLow ? 'table-warning' : ''}">
+            <tr class="${rowClass}">
                 <td>${p.code || 'N/A'}</td>
                 <td>${p.name}</td>
                 <td>${cat.name}</td>
                 <td>${p.totalImport || 0}</td>
                 <td>${p.totalSold || 0}</td>
                 <td>${stock}</td>
-                <td>${isLow ? '<span style="color:#e74c3c; font-weight:600;">⚠️ THẤP</span>' : 'Ổn định'}</td>
+                <td>${warningText}</td>
             </tr>
         `;
     });
     tableBody.innerHTML = html;
 
     if (totalLowStock > 0) {
-        lowStockAlert.textContent = `⚠️ Có ${totalLowStock} sản phẩm đang ở mức tồn kho thấp (dưới 10).`;
+        lowStockAlert.textContent = `⚠️ Có ${totalLowStock} sản phẩm đang ở mức tồn kho thấp (1-10).`;
         lowStockAlert.style.display = 'block';
     } else {
         lowStockAlert.style.display = 'none';
     }
 }
 
-function loadInventoryReport() {
-    alert('Báo cáo tồn kho trong khoảng thời gian (cần logic phức tạp hơn) đang được phát triển.');
-}
+// ĐÃ XÓA HÀM NÀY
+// function loadInventoryReport() {
+//     alert('Báo cáo tồn kho trong khoảng thời gian (cần logic phức tạp hơn) đang được phát triển.');
+// }
 
 
 // === KHỞI TẠO ===
@@ -1246,4 +1257,4 @@ window.addEventListener('DOMContentLoaded', () => {
             loadBrands();
         });
     }
-}); 
+});
