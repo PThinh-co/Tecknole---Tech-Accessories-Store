@@ -1,19 +1,17 @@
 // File: assets/js/user-cart.js
 
 // --- BỌC TẤT CẢ LOGIC TRONG SỰ KIỆN NÀY ---
-// Đảm bảo trang web tải xong HTML trước khi chạy JavaScript
 window.addEventListener('DOMContentLoaded', function() {
 
     // 1. Kiểm tra đăng nhập TRƯỚC HẾT
-    // (Hàm requireLogin() này được lấy từ modal.js)
     if (!requireLogin()) {
-        return; // Dừng thực thi nếu chưa đăng nhập
+        return; 
     }
 
     // 2. Lấy dữ liệu user (sau khi đã xác nhận đăng nhập)
     const user = getCurrentUser(); 
-    const users = JSON.parse(localStorage.getItem('bs_users')) || []; 
-    const currentUserData = users.find(u => u.username === user.username) || user; 
+    var users = JSON.parse(localStorage.getItem('bs_users')) || []; 
+    var currentUserData = users.find(u => u.username === user.username) || user; 
 
     // 3. Gọi các hàm render
     renderProfileInfo(currentUserData);
@@ -22,12 +20,10 @@ window.addEventListener('DOMContentLoaded', function() {
 
 // --- CÁC HÀM ĐỊNH NGHĨA ---
 
-// (ĐÃ XÓA hàm formatVND() trùng lặp. Nó sẽ được lấy từ modal.js)
-
 // 1. Hiển thị thông tin cá nhân
 function renderProfileInfo(currentUserData) {
     const infoContainer = document.getElementById('user-profile-info');
-    if (!infoContainer) return; // Kiểm tra an toàn
+    if (!infoContainer) return; 
     
     infoContainer.innerHTML = `
         <div class="info-row">
@@ -53,13 +49,12 @@ function renderProfileInfo(currentUserData) {
     `;
 }
 
-// 2. Hiển thị đơn hàng đã mua
+// 2. Hiển thị đơn hàng đã mua (ĐÃ BỔ SUNG TRẠNG THÁI CANCELLED)
 function renderOrders(user) {
     const orderList = document.getElementById('order-list');
     const noOrders = document.getElementById('no-orders');
-    if (!orderList || !noOrders) return; // Kiểm tra an toàn
+    if (!orderList || !noOrders) return; 
     
-    // Lấy đúng key đơn hàng
     const orders = JSON.parse(localStorage.getItem(`orders_${user.username}`) || '[]');
 
     if (orders.length === 0) {
@@ -87,13 +82,16 @@ function renderOrders(user) {
                 statusText = 'Đang giao';
                 statusClass = 'shipped';
                 break;
+            case 'cancelled': // Xử lý trạng thái Hủy từ Admin
+                statusText = 'Đã hủy';
+                statusClass = 'cancelled';
+                break;
             case 'pending':
             default:
                 statusText = 'Chờ xác nhận';
                 statusClass = 'pending';
         }
 
-        // Sử dụng hàm formatVND() chung từ modal.js
         let itemsHTML = order.items.map(item => `
             <div class="order-item-detail">
                 <img src="${item.image}" alt="${item.name}">

@@ -7,7 +7,7 @@ let currentProduct = null;
 
 // DỮ LIỆU SẢN PHẨM (Đã bao gồm 30 sản phẩm và GalleryImages)
 
-const PRODUCTS_DATA = [
+let DEFAULT_PRODUCTS_DATA = [
     {
         id: 1,
         code: 'AULA01',
@@ -836,7 +836,45 @@ const PRODUCTS_DATA = [
         ]
     },
 ];
+const getSyncedProducts = () => {
+    // 1. Thử lấy dữ liệu từ kho lưu trữ của admin
+    const adminProductsJSON = localStorage.getItem('admin_products');
 
+    if (adminProductsJSON) {
+        // Nếu có, dùng nó. Đây là nguồn dữ liệu chính
+        // console.log("CLIENT: Đã tải sản phẩm từ localStorage.");
+        return JSON.parse(adminProductsJSON);
+    } else {
+        // 2. Nếu không có (lần chạy đầu tiên, localStorage rỗng)
+        // console.warn("CLIENT: Không tìm thấy 'admin_products'. Đang dùng dữ liệu mặc định và lưu lại.");
+
+        // Lấy dữ liệu mồi
+        const defaultData = DEFAULT_PRODUCTS_DATA;
+
+        // Bổ sung các trường admin còn thiếu cho dữ liệu mồi
+        const dataWithAdminFields = defaultData.map(p => ({
+            ...p,
+            cost: p.cost || Math.round(p.price * 0.85),
+            profit: p.profit || 15,
+            totalImport: p.totalImport || 0,
+            totalSold: p.totalSold || 0,
+            stock: p.stock || 0,
+            status: (p.stock || 0) > 0 ? 'Đang bán' : 'Ngừng bán'
+        }));
+
+        // 3. Lưu lại vào localStorage để trang admin có thể đọc
+        localStorage.setItem('admin_products', JSON.stringify(dataWithAdminFields));
+
+        // 4. Trả về dữ liệu này
+        return dataWithAdminFields;
+    }
+};
+
+// ĐÂY LÀ NGUỒN DỮ LIỆU MỚI MÀ TOÀN BỘ TRANG CLIENT SẼ DÙNG
+const PRODUCTS_DATA = getSyncedProducts();
+
+// (Optional) Gửi sự kiện để báo cho admin biết client đã load
+window.dispatchEvent(new Event('clientDataLoaded'));
 // ===================================================================
 // LOGIC CHUYỂN ẢNH VÀ XỬ LÝ DỮ LIỆU
 // ===================================================================
@@ -954,7 +992,10 @@ function renderProductDetail(product) {
     currentImageIndex = 0;
 
     // Hiển thị nội dung (Ẩn loading state)
-    document.getElementById('loading-state').style.display = 'none';
+    const loadingStateEl = document.getElementById('loading-state');
+    if (loadingStateEl) {
+    loadingStateEl.style.display = 'none';
+    }
     document.getElementById('product-display').style.display = 'grid';
     document.getElementById('product-tabs').style.display = 'block';
 
@@ -1025,31 +1066,44 @@ function renderProductDetail(product) {
 
 // Khởi tạo trang chi tiết sản phẩm
 document.addEventListener('DOMContentLoaded', () => {
+    const productDisplay = document.getElementById('product-display');
+    if (!productDisplay) {
+        // Nếu không phải trang chi tiết sản phẩm, DỪNG code khởi tạo chi tiết sản phẩm.
+        // Chỉ chạy updateAuthUI() và dừng.
+        if (typeof updateAuthUI === 'function') {
+            updateAuthUI();
+        }
+        return; 
+    }
+    
     // Lấy ID sản phẩm từ URL
     const urlParams = new URLSearchParams(window.location.search);
     const productId = parseInt(urlParams.get('id'));
 
+    // Bổ sung kiểm tra an toàn cho các element hiển thị lỗi
+    const loadingState = document.getElementById('loading-state');
+    const errorState = document.getElementById('error-state');
+
     if (isNaN(productId)) {
-        document.getElementById('loading-state').style.display = 'none';
-        document.getElementById('error-state').style.display = 'block';
+        if(loadingState) loadingState.style.display = 'none';
+        if(errorState) errorState.style.display = 'block';
         return;
     }
 
-    // Tìm sản phẩm
     const product = PRODUCTS_DATA.find(p => p.id === productId);
 
     if (product) {
         renderProductDetail(product);
     } else {
-        document.getElementById('loading-state').style.display = 'none';
-        document.getElementById('error-state').style.display = 'block';
+        if(loadingState) loadingState.style.display = 'none';
+        if(errorState) errorState.style.display = 'block';
     }
     
     // Đảm bảo UI Header (login/cart count) được cập nhật
     if (typeof updateAuthUI === 'function') {
         updateAuthUI();
     }
-});
+}); 
 
 console.log('Tổng số sản phẩm:', PRODUCTS_DATA.length);
 
@@ -1114,6 +1168,18 @@ function formatPrice(price) {
 
 // Tạo HTML cho thẻ sản phẩm
 function createProductCard(product) {
+    if (product.status === 'Ngừng bán') {
+        return `
+            <div class="product-card out-of-stock" style="opacity:0.6; pointer-events:none;">
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p class="price">${formatVND(product.price)}</p>
+                <div style="background:#e74c3c; color:white; padding:4px 8px; border-radius:4px; font-size:12px; display:inline-block;">
+                    Ngừng bán
+                </div>
+            </div>
+        `;
+    }
     const oldPriceHTML = product.oldPrice > 0 
         ? '<span class="old-price">' + formatPrice(product.oldPrice) + '</span>' 
         : '';
@@ -1247,28 +1313,70 @@ function initializeFilters() {
         console.log('Đã set filter brand:', brand);
     }
 }
+const filterTypeEl = document.getElementById('filter-type');
+const filterBrandEl = document.getElementById('filter-brand');
+const filterSortEl = document.getElementById('filter-sort');
 
-// Gắn sự kiện cho các bộ lọc
-document.getElementById('filter-type').addEventListener('change', function() {
-    console.log('Đã thay đổi loại sản phẩm');
-    displayProducts();
-});
+if (filterTypeEl && filterBrandEl && filterSortEl) {
+    // Nếu là trang danh mục/products, gắn sự kiện và khởi tạo UI
+    filterTypeEl.addEventListener('change', function() {
+        console.log('Đã thay đổi loại sản phẩm');
+        displayProducts();
+    });
 
-document.getElementById('filter-brand').addEventListener('change', function() {
-    console.log('Đã thay đổi thương hiệu');
-    displayProducts();
-});
+    filterBrandEl.addEventListener('change', function() {
+        console.log('Đã thay đổi thương hiệu');
+        displayProducts();
+    });
 
-document.getElementById('filter-sort').addEventListener('change', function() {
-    console.log('Đã thay đổi cách sắp xếp');
-    displayProducts();
-});
-
+    filterSortEl.addEventListener('change', function() {
+        console.log('Đã thay đổi cách sắp xếp');
+        displayProducts();
+    });
+}
 // Khởi tạo trang khi DOM đã load xong
 window.addEventListener('DOMContentLoaded', function() {
-    console.log('=== BẮT ĐẦU KHỞI TẠO TRANG ===');
-    updatePageTitle();
-    initializeFilters();
-    displayProducts();
-    console.log('=== HOÀN THÀNH KHỞI TẠO ===');
+    // [FIX QUAN TRỌNG] Kiểm tra xem có phần tử đặc trưng của trang Danh mục/Products không.
+    const productsContainer = document.getElementById('products-container');
+    
+    if (productsContainer) {
+        console.log('=== BẮT ĐẦU KHỞI TẠO TRANG DANH MỤC ===');
+        // Các hàm này chỉ được gọi khi chắc chắn các ID UI của trang danh mục đã có
+        if (typeof updatePageTitle === 'function') {
+            updatePageTitle();
+        }
+        if (typeof initializeFilters === 'function') {
+            initializeFilters();
+        }
+        if (typeof displayProducts === 'function') {
+            displayProducts();
+        }
+        console.log('=== HOÀN THÀNH KHỞI TẠO ===');
+    }
+});
+window.addEventListener('adminDataChanged', function () {
+    // 1. Hiển thị thông báo (Giữ nguyên)
+    const notification = document.createElement('div');
+    // ... (Code tạo thông báo giữ nguyên) ...
+
+    document.body.appendChild(notification);
+
+    // 2. [KÍCH HOẠT UI] Buộc trang danh mục và giỏ hàng reload data
+    if (typeof displayProducts === 'function') {
+        // Gọi hàm hiển thị sản phẩm để đọc PRODUCTS_DATA đã được cập nhật
+        displayProducts(); 
+    }
+    if (typeof updateAuthUI === 'function') {
+        // Cập nhật số lượng giỏ hàng
+        updateAuthUI(); 
+    }
+    
+    // 3. Tự động xóa thông báo
+    setTimeout(() => {
+        if (notification.isConnected) {
+            notification.style.transition = 'opacity 0.5s';
+            notification.style.opacity = '0';
+            setTimeout(() => notification.remove(), 500);
+        }
+    }, 10000);
 });

@@ -50,7 +50,7 @@ function displayProducts(autoDetect = false) {
         // Ánh xạ ID danh mục (1, 2, 3...) sang type (manhinh, banphim...)
         const searchCategoryMap = {
             '1': 'manhinh', '2': 'banphim', '3': 'chuot', 
-            '4': 'tainghe', '5': 'loa', '6': 'mic'
+            '4': 'tainghe', '5': 'loa', 
         };
         const searchType = searchCategoryMap[searchCatId];
         if (searchType) {

@@ -173,7 +173,7 @@ function initializeCheckoutEvents() {
 
         // Hiển thị thông báo thành công
         alert(`
-  ✅ Đặt hàng thành công!
+            Đặt hàng thành công!
 
 Mã đơn hàng: #${orders.length}
 Tổng tiền: ${formatVND(total)}
