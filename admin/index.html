@@ -6,15 +6,16 @@
     <title>QUẢN TRỊ - Tecknole</title>
     <link rel="stylesheet" href="assets/css/reset.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css" />
 </head>
 <body>
 
 <div class="login-container" id="loginPage">
     <div class="login-box">
-        <h2>ĐĂNG NHẬP QUẢN TRỊ</h2>
+        <h2><i class="bi bi-gear-fill"></i> ĐĂNG NHẬP QUẢN TRỊ</h2>
         <form id="loginForm">
             <div class="form-group">
-                <label>Tài khoản</label>
+                <label><i class="bi bi-person-circle"></i> Tài khoản </label>
                 <input type="text" id="username" required placeholder="quanly1" />
             </div>
             <div class="form-group">
@@ -30,19 +31,19 @@
 <div class="admin-container" id="adminPage">
     <div class="sidebar">
         <div class="sidebar-header">
-            <h3>QUẢN TRỊ</h3>
+            <h3>TECKNOLE</h3>
             <div class="admin-info" id="adminName">Admin</div>
         </div>
-        <div class="menu-item active" data-section="dashboard">Tổng quan</div>
-        <div class="menu-item" data-section="account">Tài khoản</div>
-        <div class="menu-item" data-section="users">Người dùng</div>
-        <div class="menu-item" data-section="categories">Loại sản phẩm</div>
-        <div class="menu-item" data-section="brands">Hãng sản phẩm</div> 
-        <div class="menu-item" data-section="products">Sản phẩm</div>
-        <div class="menu-item" data-section="imports">Nhập hàng</div>
-        <div class="menu-item" data-section="pricing">Giá bán</div>
-        <div class="menu-item" data-section="orders">Đơn hàng</div>
-        <div class="menu-item" data-section="inventory">Tồn kho</div>
+        <div class="menu-item active" data-section="dashboard"><i class="bi bi-list-ul"></i> Tổng quan</div>
+        <div class="menu-item" data-section="account"><i class="bi bi-person-fill-gear"></i> Tài khoản</div>
+        <div class="menu-item" data-section="users"><i class="bi bi-people-fill"></i> Người dùng</div>
+        <div class="menu-item" data-section="categories"><i class="bi bi-folder-fill"></i> Loại sản phẩm</div>
+        <div class="menu-item" data-section="brands"><i class="bi bi-folder-fill"></i> Hãng sản phẩm</div> 
+        <div class="menu-item" data-section="products"><i class="bi bi-folder-fill"></i> Sản phẩm</div>
+        <div class="menu-item" data-section="imports"><i class="bi bi-bag-plus-fill"></i> Nhập hàng</div>
+        <div class="menu-item" data-section="pricing"><i class="bi bi-tag-fill"></i> Giá bán</div>
+        <div class="menu-item" data-section="orders"><i class="bi bi-bag-heart-fill"></i> Đơn hàng</div>
+        <div class="menu-item" data-section="inventory"><i class="bi bi-box2-heart-fill"></i> Tồn kho</div>
     </div>
 
     <div class="main-content">
@@ -108,28 +109,28 @@
             </div>
             
             <div class="section" id="users">
-                <h3>Quản lý người dùng</h3>
+                
                 <button class="btn btn-add" onclick="openUserModal()">+ Thêm người dùng</button>
                 <table id="usersTable"><thead><tr><th>ID</th><th>Tên</th><th>Tài khoản</th><th>Email</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="usersTableBody"></tbody></table>
             </div>
 
             <div class="section" id="categories">
-                <h3>Quản lý loại sản phẩm</h3>
+                
                 <button class="btn btn-add" onclick="openCategoryModal()">+ Thêm loại</button>
                 <table id="categoriesTable"><thead><tr><th>Mã</th><th>Tên</th><th>% LN</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="categoriesTableBody"></tbody></table>
             </div>
 
             <div class="section" id="brands">
-                <h3>Quản lý hãng sản phẩm</h3>
+                
                 <button class="btn btn-add" onclick="openBrandModal()">+ Thêm hãng</button>
                 <div class="search-bar">
                     <input type="text" id="brandSearchInput" placeholder="Tìm theo tên hoặc mã..." oninput="loadBrands()" />
                 </div>
-                <table id="brandsTable"><thead><tr><th>ID</th><th>Tên Hãng</th><th>Mã (code)</th><th>Thao tác</th></tr></thead><tbody id="brandsTableBody"></tbody></table>
+                <table id="brandsTable"><thead><tr><th>ID</th><th>Tên Hãng</th><th>Mã</th><th>Thao tác</th></tr></thead><tbody id="brandsTableBody"></tbody></table>
             </div>
 
             <div class="section" id="products">
-                <h3>Quản lý sản phẩm</h3>
+                
                 <button class="btn btn-add" onclick="openProductModal()">+ Thêm sản phẩm</button>
                 
                 <div class="search-bar">
@@ -156,7 +157,7 @@
             </div>
 
             <div class="section" id="imports">
-                <h3>Quản lý nhập hàng</h3>
+                <
                 <button class="btn btn-add" onclick="openImportModal()">+ Tạo phiếu nhập</button>
                 <div class="search-bar">
                     <input type="date" id="importStartDate" />
@@ -174,7 +175,7 @@
             </div>
 
             <div class="section" id="pricing">
-                <h3>Quản lý giá bán</h3>
+                
                 <div class="search-bar">
                     <input type="text" id="pricingSearchInput" placeholder="Tìm theo tên hoặc mã...">
                     <select id="pricingCategoryFilter">
@@ -186,7 +187,7 @@
             </div>
 
             <div class="section" id="orders">
-                <h3>Quản lý đơn hàng</h3>
+                
                 <div class="search-bar">
                     <input type="date" id="orderStart" /> <input type="date" id="orderEnd" />
                     <select id="orderStatusFilter"><option value="">Tất cả</option><option>Chưa xử lý</option><option>Đã xử lý</option><option>Đang giao</option><option>Đã giao thành công</option><option>Đã hủy</option></select>
@@ -200,7 +201,7 @@
             </div>
 
             <div class="section" id="inventory">
-                <h3>Thống kê tồn kho</h3>
+               
                 <div id="lowStockAlert" class="alert-warning" style="display:none;"></div>
                 
                 <div class="search-bar">
@@ -232,11 +233,11 @@
                 <input type="text" id="categoryName" required />
             </div>
             <div class="form-group">
-                <label>Mã loại (Code - Dùng cho sản phẩm)</label>
+                <label>Mã loại (Dùng cho sản phẩm)</label>
                 <input type="text" id="categoryCode" required />
             </div>
             <div class="form-group">
-                <label>Tên Type (Dùng cho lọc JS)</label>
+                <label>Tên Type (Dùng cho lọc)</label>
                 <input type="text" id="categoryType" required placeholder="manhinh, banphim,..." />
             </div>
             <div class="form-group">
@@ -259,7 +260,7 @@
                 <input type="text" id="brandName" required />
             </div>
             <div class="form-group">
-                <label>Mã Hãng (code - Dùng cho lọc)</label>
+                <label>Mã Hãng (Dùng cho lọc)</label>
                 <input type="text" id="brandCode" required placeholder="vi du: acer, asus, lg..." />
             </div>
             <button type="submit" class="btn btn-add">Lưu</button>
@@ -278,7 +279,7 @@
                 <input type="text" id="productName" required />
             </div>
             <div class="form-group">
-                <label>Mã sản phẩm (CODE)</label>
+                <label>Mã sản phẩm</label>
                 <input type="text" id="productCode" required />
             </div>
             <div class="form-group">
@@ -315,13 +316,13 @@
         <form id="pricingForm">
             <input type="hidden" id="pricingProductId" />
             <p>Sản phẩm: <strong id="pricingProductName"></strong></p>
-            <p>Giá vốn (Cost): <strong id="pricingProductCost"></strong></p>
+            <p>Giá vốn : <strong id="pricingProductCost"></strong></p>
             <div class="form-group">
                 <label>% Lợi nhuận (Để trống để dùng % mặc định theo loại)</label>
                 <input type="number" id="pricingProductProfit" min="0" placeholder="15" />
             </div>
             <div class="form-group">
-                <label>Giá Bán Mới (Price)</label>
+                <label>Giá Bán Mới</label>
                 <input type="number" id="pricingProductPrice" min="1000" required />
             </div>
             <button type="submit" class="btn btn-add">Cập nhật</button>
@@ -385,7 +386,7 @@
                 <input type="text" id="userFullName" required />
             </div>
             <div class="form-group">
-                <label>Tên tài khoản (Username)</label>
+                <label>Tên tài khoản</label>
                 <input type="text" id="userUsername" required />
             </div>
             <div class="form-group">

@@ -14,3 +14,40 @@ body{
 a{
     text-decoration: none;
 }
+/* === CSS CHO PHÂN TRANG (MỚI) === */
+      .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 40px 0;
+      }
+      .page-btn {
+        background-color: white;
+        border: 2px solid var(--color-three);
+        color: var(--color-one);
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        min-width: 40px;
+        text-align: center;
+      }
+      .page-btn:hover {
+        background-color: var(--color-one);
+        color: white;
+        border-color: var(--color-one);
+      }
+      .page-btn.active {
+        background-color: var(--color-one);
+        color: white;
+        border-color: var(--color-one);
+      }
+      .page-btn:disabled {
+        background-color: #f0f0f0;
+        color: #aaa;
+        border-color: #ddd;
+        cursor: not-allowed;
+      }
+      /* === KẾT THÚC CSS PHÂN TRANG === */

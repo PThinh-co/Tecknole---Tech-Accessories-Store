@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/about.css" />
+    <link rel="stylesheet" href="admin/assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css" />
   </head>
 
   <body>
@@ -218,13 +219,13 @@
     <div class="introduce-container">
       <!-- Hero Section -->
       <div class="intro-hero">
-        <h1>🎯 Chào Mừng Đến Với Tecknole</h1>
+        <h1>Chào Mừng Đến Với Tecknole</h1>
         <p>Đối tác tin cậy cho mọi nhu cầu phụ kiện công nghệ của bạn</p>
       </div>
 
       <!-- About Section -->
-      <div class="about-section">
-        <h2>📖 Về Chúng Tôi</h2>
+      <div class="about-section" id="about">
+        <h2>Về Chúng Tôi</h2>
         <div class="about-content">
           <div class="about-text">
             <p>
@@ -279,7 +280,7 @@
       <!-- Policies Grid -->
       <div class="policies-grid">
         <!-- Chính sách bảo mật -->
-        <div class="policy-card">
+        <div class="policy-card"id="privacy">
           <div class="policy-icon">🔒</div>
           <h3>Chính Sách Bảo Mật</h3>
           <div class="policy-content">
@@ -296,7 +297,7 @@
         </div>
 
         <!-- Chính sách đổi trả -->
-        <div class="policy-card">
+        <div class="policy-card"id="return">
           <div class="policy-icon">🔄</div>
           <h3>Chính Sách Đổi Trả</h3>
           <div class="policy-content">
@@ -313,7 +314,7 @@
         </div>
 
         <!-- Chính sách bảo hành -->
-        <div class="policy-card">
+        <div class="policy-card" id="term">
           <div class="policy-icon">🛡️</div>
           <h3>Chính Sách Bảo Hành</h3>
           <div class="policy-content">
@@ -328,7 +329,7 @@
         </div>
 
         <!-- Chính sách thanh toán -->
-        <div class="policy-card">
+        <div class="policy-card" id="payment">
           <div class="policy-icon">💳</div>
           <h3>Chính Sách Thanh Toán</h3>
           <div class="policy-content">
@@ -343,7 +344,7 @@
         </div>
 
         <!-- Chính sách vận chuyển -->
-        <div class="policy-card">
+        <div class="policy-card"id="shipping">
           <div class="policy-icon">🚚</div>
           <h3>Chính Sách Vận Chuyển</h3>
           <div class="policy-content">
@@ -358,7 +359,7 @@
         </div>
 
         <!-- Quy trình mua hàng -->
-        <div class="policy-card">
+        <div class="policy-card" id="process">
           <div class="policy-icon">📋</div>
           <h3>Quy Trình Mua Hàng</h3>
           <div class="policy-content">
@@ -388,55 +389,50 @@
     <footer>
       <div class="footer-content">
         <div class="footer-section">
-          <h3>Về TechStore</h3>
-          <ul>
-            <li><a href="about.html">Giới thiệu</a></li>
-            <li><a href="#">Tuyển dụng</a></li>
-            <li><a href="#">Chính sách bảo mật</a></li>
-            <li><a href="#">Điều khoản sử dụng</a></li>
-          </ul>
+            <h3>Về TechStore</h3>
+            <ul>
+                <li><a href="#top">Giới thiệu</a></li>
+                <li><a href="#careers">Tuyển dụng</a></li>
+                <li><a href="#privacy">Chính sách bảo mật</a></li>
+                <li><a href="#terms">Điều khoản sử dụng</a></li>
+            </ul>
         </div>
-
+    
         <div class="footer-section">
-          <h3>Hỗ trợ khách hàng</h3>
-          <ul>
-            <li><a href="#">Hướng dẫn mua hàng</a></li>
-            <li><a href="#">Chính sách đổi trả</a></li>
-            <li><a href="#">Bảo hành</a></li>
-            <li><a href="#">Câu hỏi thường gặp</a></li>
-          </ul>
+            <h3>Hỗ trợ khách hàng</h3>
+            <ul>
+                <li><a href="#process">Hướng dẫn mua hàng</a></li>
+                <li><a href="#returns">Chính sách đổi trả</a></li>
+                <li><a href="#returns">Bảo hành</a></li>
+            </ul>
         </div>
-
+    
         <div class="footer-section">
-          <h3>Chính sách</h3>
-          <ul>
-            <li><a href="#">Chính sách thanh toán</a></li>
-            <li><a href="#">Chính sách vận chuyển</a></li>
-            <li><a href="#">Chính sách bảo hành</a></li>
-            <li><a href="#">Chính sách đổi trả</a></li>
-          </ul>
+            <h3>Chính sách</h3>
+            <ul>
+                <li><a href="#payment">Chính sách thanh toán</a></li>
+                <li><a href="#shipping">Chính sách vận chuyển</a></li>
+                <li><a href="#returns">Chính sách bảo hành</a></li>
+                <li><a href="#returns">Chính sách đổi trả</a></li>
+            </ul>
         </div>
-
+    
         <div class="footer-section contact-info">
-          <h3>Liên hệ</h3>
-          <p>📍 123 Nguyễn Văn Linh, Q7, TP.HCM</p>
-          <p>📞 Hotline: 1900 xxxx</p>
-          <p>✉️ Email: support@techstore.vn</p>
-          <p>🕐 Giờ làm việc: 8:00 - 22:00</p>
-          <div class="social-links">
-            <a href="#">f</a>
-            <a href="#">📷</a>
-            <a href="#">▶️</a>
-            <a href="#">💼</a>
+            <h3>Liên hệ</h3>
+            <p><i class="bi bi-geo-alt-fill"></i> 854 Tạ Quang Bửu, Q8, TP.HCM</p>
+            <p><i class="bi bi-telephone-fill"></i> Hotline: 1900 202020</p>
+            <p><i class="bi bi-envelope-fill"></i> Email: support@techstore.vn</p>
+            <p><i class="bi bi-clock-fill"></i> Giờ làm việc: 8:00 - 22:00</p>
+            <div class="social-links">
+              <a href="https://www.facebook.com"><i class="bi bi-facebook"></i></a>
+              <a href="http:"><i class="bi bi-instagram"></i></a>
+              <a href="http://c03.nhahodau.net"><i class="bi bi-youtube"></i></a>
+              <a href="http://c03.nhahodau.net"><i class="bi bi-linkedin"></i></a>
           </div>
         </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2025 Tecknole. All rights reserved.</p>
-      </div>
+    </div>
     </footer>
-    <!-- Modal Đăng Nhập -->
+     <!-- Modal Đăng Nhập -->
     <div id="loginModal" class="auth-modal">
       <div class="auth-modal-overlay" onclick="closeLoginModal()"></div>
       <div class="auth-modal-content">
@@ -453,7 +449,7 @@
           <div class="form-group">
             <label for="login-username">Tài khoản</label>
             <div class="input-with-icon">
-              <span class="input-icon">👤</span>
+              <span class="input-icon"><i class="bi bi-person-fill"></i></span>
               <input
                 type="text"
                 id="login-username"
@@ -466,7 +462,7 @@
           <div class="form-group">
             <label for="login-password">Mật khẩu</label>
             <div class="input-with-icon">
-              <span class="input-icon">🔐</span>
+              <span class="input-icon"><i class="bi bi-key-fill"></i></span>
               <input
                 type="password"
                 id="login-password"
@@ -513,7 +509,7 @@
           <div class="form-group">
             <label for="reg-fullname">Họ và tên</label>
             <div class="input-with-icon">
-              <span class="input-icon">👤</span>
+              <span class="input-icon"><i class="bi bi-person-circle"></i></span>
               <input
                 type="text"
                 id="reg-fullname"
@@ -526,7 +522,7 @@
           <div class="form-group">
             <label for="reg-username">Tên tài khoản</label>
             <div class="input-with-icon">
-              <span class="input-icon">🔑</span>
+              <span class="input-icon"><i class="bi bi-person-lines-fill"></i></span>
               <input
                 type="text"
                 id="reg-username"
@@ -539,7 +535,7 @@
           <div class="form-group">
             <label for="reg-password">Mật khẩu</label>
             <div class="input-with-icon">
-              <span class="input-icon">🔐</span>
+              <span class="input-icon"><i class="bi bi-lock-fill"></i></span>
               <input
                 type="password"
                 id="reg-password"
@@ -558,7 +554,7 @@
           <div class="form-group">
             <label for="reg-confirm-password">Nhập lại mật khẩu</label>
             <div class="input-with-icon">
-              <span class="input-icon">🔐</span>
+              <span class="input-icon"><i class="bi bi-lock-fill"></i></span>
               <input
                 type="password"
                 id="reg-confirm-password"
@@ -577,7 +573,7 @@
           <div class="form-group">
             <label for="reg-email">Email</label>
             <div class="input-with-icon">
-              <span class="input-icon">📧</span>
+              <span class="input-icon"><i class="bi bi-envelope-at-fill"></i></span>
               <input type="email" id="reg-email" placeholder="Nhập email" />
             </div>
             <span id="error-email" class="error-msg"></span>
@@ -586,7 +582,7 @@
           <div class="form-group">
             <label for="reg-phone">Số điện thoại</label>
             <div class="input-with-icon">
-              <span class="input-icon">📱</span>
+              <span class="input-icon"><i class="bi bi-telephone-fill"></i></span>
               <input
                 type="tel"
                 id="reg-phone"
@@ -599,7 +595,7 @@
           <div class="form-group">
             <label for="reg-address">Địa chỉ</label>
             <div class="input-with-icon">
-              <span class="input-icon">📍</span>
+              <span class="input-icon"><i class="bi bi-geo-alt-fill"></i></span>
               <input type="text" id="reg-address" placeholder="Nhập địa chỉ" />
             </div>
             <span id="error-address" class="error-msg"></span>
@@ -623,30 +619,30 @@
         </button>
 
         <div class="auth-modal-header">
-          <div class="profile-avatar-small">👤</div>
+          <div class="profile-avatar-small"><i class="bi bi-person-circle"></i></div>
           <h2 id="profile-fullname">Xin chào!</h2>
           <p>Thông tin tài khoản của bạn</p>
         </div>
 
         <div class="profile-info-modal">
           <div class="info-row">
-            <span class="info-label">👤 Họ và tên:</span>
+            <span class="info-label"><i class="bi bi-person-circle"></i> Họ và tên:</span>
             <span class="info-value" id="profile-name-value"></span>
           </div>
           <div class="info-row">
-            <span class="info-label">🔐 Tài khoản:</span>
+            <span class="info-label"><i class="bi bi-lock-fill"></i> Tài khoản:</span>
             <span class="info-value" id="profile-username-value"></span>
           </div>
           <div class="info-row">
-            <span class="info-label">📧 Email:</span>
+            <span class="info-label"><i class="bi bi-envelope-at-fill"></i> Email:</span>
             <span class="info-value" id="profile-email-value"></span>
           </div>
           <div class="info-row">
-            <span class="info-label">📱 Số điện thoại:</span>
+            <span class="info-label"><i class="bi bi-envelope-at-fill"></i> Số điện thoại:</span>
             <span class="info-value" id="profile-phone-value"></span>
           </div>
           <div class="info-row">
-            <span class="info-label">📍 Địa chỉ:</span>
+            <span class="info-label"><i class="bi bi-geo-alt-fill"></i> Địa chỉ:</span>
             <span class="info-value" id="profile-address-value"></span>
           </div>
         </div>

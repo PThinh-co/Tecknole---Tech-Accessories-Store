@@ -40,7 +40,6 @@ function syncAdminData() {
 
     // 3. Định nghĩa/Khởi tạo Categories
     const defaultCategories = [
-        { id: 1, code: 'PK', name: 'Phụ kiện', type: 'pk', profit: 20, status: 'active' },
         { id: 2, code: 'MN', name: 'Màn hình', type: 'manhinh', profit: 15, status: 'active' },
         { id: 3, code: 'BP', name: 'Bàn phím', type: 'banphim', profit: 15, status: 'active' },
         { id: 4, code: 'CH', name: 'Chuột', type: 'chuot', profit: 18, status: 'active' },

@@ -490,13 +490,13 @@ if (authArea) {
     authArea.innerHTML = `
       <div class="user-dropdown-container">
         <button class="btn-profile" onclick="toggleUserDropdown(event)">
-          <span class="user-avatar">👤</span>
+          <span class="user-avatar"><i class="bi bi-person-circle"></i></span>
           <span class="user-name">Xin chào, ${firstName}</span>
           <span class="dropdown-arrow">▼</span>
         </button>
         <div class="user-dropdown-menu" id="userDropdownMenu">
           <div class="dropdown-header">
-            <div class="user-avatar-large">👤</div>
+            <div class="user-avatar-large"><i class="bi bi-person-circle"></i></div>
             <div class="user-info">
               <div class="user-fullname">${user.fullName}</div>
               <div class="user-email">${user.email}</div>
@@ -504,16 +504,16 @@ if (authArea) {
           </div>
           <div class="dropdown-divider"></div>
           <a href="user_cart.html" class="dropdown-item">
-            <span class="dropdown-icon">📦</span>
+            <span class="dropdown-icon"><i class="bi bi-bag-heart"></i></span>
             <span>Lịch sử mua hàng</span>
           </a>
           <button class="dropdown-item" onclick="openAccountInfoModal()">
-            <span class="dropdown-icon">👤</span>
+            <span class="dropdown-icon"><i class="bi bi-person-circle"></i></span>
             <span>Thông tin tài khoản</span>
           </button>
           <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="handleLogout()" style="color: #e74c3c;">
-            <span class="dropdown-icon">🚪</span>
+            <span class="dropdown-icon"></span>
             <span>Đăng xuất</span>
           </button>
         </div>
