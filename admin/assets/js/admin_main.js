@@ -215,7 +215,6 @@ function loadCategories() {
                 <td><span class="badge ${statusClass}">${statusText}</span></td>
                 <td>
                     <button class="btn btn-primary btn-sm" onclick="openCategoryModal(${cat.id})">Sửa</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteCategory(${cat.id})">Xóa</button>
                 </td>
             </tr>
         `;
@@ -323,7 +322,6 @@ function loadBrands() {
                 <td>${brand.code}</td>
                 <td>
                     <button class="btn btn-primary btn-sm" onclick="openBrandModal(${brand.id})">Sửa</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteBrand(${brand.id})">Xóa</button>
                 </td>
             </tr>
         `;
@@ -423,7 +421,6 @@ function loadProducts() {
                     <button class="btn btn-secondary btn-sm" onclick="toggleProductVisibility(${p.id}, ${isVisible})">
                         ${isVisible ? 'Ẩn' : 'Hiện'}
                     </button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">Xóa</button>
                 </td>
             </tr>
         `;
@@ -585,8 +582,7 @@ function loadImports() {
                 <td>
                     <button class="btn btn-info btn-sm" onclick="openImportModal(${imp.id})">Xem/Sửa</button>
                     ${imp.status !== 'Hoàn thành' ? 
-                        `<button class="btn btn-success btn-sm" onclick="completeImport(${imp.id})">Hoàn thành</button>
-                         <button class="btn btn-danger btn-sm" onclick="deleteImport(${imp.id})">Xóa</button>` 
+                        `<button class="btn btn-success btn-sm" onclick="completeImport(${imp.id})">Hoàn thành</button>` 
                         : ''
                     }
                 </td>
@@ -673,7 +669,6 @@ function addImportItem(item = {}) {
                 <label>Số lượng</label>
                 <input type="number" class="item-quantity" min="1" required value="${item.quantity || ''}" oninput="calculateImportTotal()" />
             </div>
-            <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.import-item-row').remove(); calculateImportTotal();">Xóa</button>
         </div>
     `;
     container.appendChild(row);
@@ -1085,11 +1080,11 @@ function loadInventory() {
         let rowClass = '';
         if (stock === 0) {
             warningText = '<span style="color:#d9534f; font-weight:600;">HẾT HÀNG</span>';
-            rowClass = 'table-danger'; // Lớp CSS mới (cần thêm vào style.css nếu muốn)
+            rowClass = 'table-danger';
         } else if (stock > 0 && stock <= 10) {
             warningText = '<span style="color:#f0ad4e; font-weight:600;">⚠️ THẤP</span>';
             rowClass = 'table-warning';
-            totalLowStock++; // Chỉ đếm hàng thấp
+            totalLowStock++;
         }
         
         const cat = categories.find(c => c.type === p.type) || { name: 'Khác' };
