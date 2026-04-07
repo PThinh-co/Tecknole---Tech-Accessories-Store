@@ -1,0 +1,5 @@
+[06-Apr-2026 05:18:03 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'tecknole_db.tk_brands' doesn't exist in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\save_product.php:54
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\save_product.php(54): mysqli->query('SELECT id FROM ...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\save_product.php on line 54

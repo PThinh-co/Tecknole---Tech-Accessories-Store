@@ -1,0 +1,88 @@
+.profile-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  .top-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .top-title h2 {
+    color: var(--text-color-one);
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: 700;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--color-three);
+  }
+  .top-title a{
+    color: var(--color-one);
+    margin:10px 10px; 
+    border-radius: 15px;
+    border: 2px solid var(--color-one);
+    padding: 10px ; 
+  }
+  h3 {
+      font-size: 20px;
+      margin-top: 20px;
+      margin-bottom: 15px;
+      border-left: 5px solid var(--color-one);
+      padding-left: 10px;
+  }
+  .order-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+  }
+  .order-card {
+      border: 1px solid #e0e0e0;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  .order-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-weight: 600;
+      border-bottom: 1px dashed #f0f0f0;
+      padding-bottom: 10px;
+  }
+  .order-status {
+      font-size: 14px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: white;
+      background: #007bff; /* Pending */
+  }
+  .order-status.pending { background: #ffc107; color: #333; }
+  .order-status.completed { background: #28a745; }
+  .order-item-detail {
+      display: flex;
+      gap: 15px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f9f9f9;
+      align-items: center;
+  }
+  .order-item-detail img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+  }
+  .order-summary-footer {
+      text-align: right;
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 15px;
+      color: var(--color-one);
+  }
+  .no-orders {
+      text-align: center;
+      padding: 50px;
+      color: #777;
+  }
