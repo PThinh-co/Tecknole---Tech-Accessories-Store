@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $sql = "SELECT o.*, 
-        (SELECT GROUP_CONCAT(CONCAT(qty, 'x ', p.name) SEPARATOR ', ') 
+        (SELECT GROUP_CONCAT(CONCAT(quantity, 'x ', p.name) SEPARATOR ', ') 
          FROM tk_order_items oi 
          JOIN tk_products p ON oi.product_id = p.id 
          WHERE oi.order_id = o.id) as items_summary

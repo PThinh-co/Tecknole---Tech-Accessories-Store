@@ -30,27 +30,31 @@ try {
     $import_id = $conn->insert_id;
 
     // 2. Lưu chi tiết và cập nhật kho (nếu hoàn thành)
-    $stmtItem = $conn->prepare("INSERT INTO tk_import_items (import_id, product_id, qty, cost_price) VALUES (?, ?, ?, ?)");
-    $stmtUpdateStock = $conn->prepare("UPDATE tk_products SET stock = stock + ?, cost = ? WHERE id = ?");
+    $stmtItem = $conn->prepare("INSERT INTO tk_import_items (import_id, product_id, quantity, import_price) VALUES (?, ?, ?, ?)");
 
     foreach ($items as $item) {
         $p_id = (int)$item['product_id'];
-        $qty = (int)$item['qty'];
+        $quantity = (int)($item['quantity'] ?? $item['qty'] ?? 1);
         $cost = (float)$item['cost'];
 
-        // Lưu chi tiết
-        $stmtItem->bind_param("iiid", $import_id, $p_id, $qty, $cost);
+        if ($cost <= 1000) {
+            throw new Exception("Sản phẩm ID {$p_id} có giá vốn quá thấp (<= 1000đ).");
+        }
+
+        // Lưu chi tiết phiếu nhập
+        $stmtItem->bind_param("iiid", $import_id, $p_id, $quantity, $cost);
         $stmtItem->execute();
 
-        // Cập nhật kho và giá vốn mới cho sản phẩm CHỈ KHI phiếu Hoàn thành
+        // Cập nhật kho CHỈ KHI phiếu Hoàn thành ngay
         if ($status === 'Hoàn thành') {
-            $stmtUpdateStock->bind_param("idi", $qty, $cost, $p_id);
-            $stmtUpdateStock->execute();
+            $conn->query("UPDATE tk_products SET stock = stock + $quantity WHERE id = $p_id");
         }
     }
 
     mysqli_commit($conn);
-    $msg = $status === 'Hoàn thành' ? 'Lập phiếu nhập thành công và đã cập nhật kho.' : 'Đã lưu tạm phiếu nháp thành công. (Chưa cộng kho)';
+    $msg = $status === 'Hoàn thành'
+        ? 'Lập phiếu nhập thành công. Đã cập nhật kho và giá vốn bình quân.'
+        : 'Đã lưu tạm phiếu nháp. (Chưa cộng kho)';
     echo json_encode(['success' => true, 'message' => $msg]);
 
 } catch (Exception $e) {

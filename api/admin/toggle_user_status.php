@@ -16,18 +16,20 @@ if (!isset($data['id']) || !isset($data['status'])) {
 }
 
 $id = (int)$data['id'];
-$status = mysqli_real_escape_string($conn, $data['status']);
+$newStatus = mysqli_real_escape_string($conn, $data['status']);
 
-// Determine the new status
-$newStatus = ($status === 'active') ? 'locked' : 'active';
+// Không cho phép tự khóa chính mình
+if ($id === $_SESSION['admin_user_id']) {
+    exit(json_encode(['success' => false, 'message' => 'Bạn không thể tự khóa tài khoản của chính mình.']));
+}
 
-$sql = "UPDATE tk_users SET status = '$newStatus' WHERE id = $id AND role = 'user'";
+$sql = "UPDATE tk_users SET status = '$newStatus' WHERE id = $id";
 
 if ($conn->query($sql)) {
     if ($conn->affected_rows > 0) {
-        echo json_encode(['success' => true, 'newStatus' => $newStatus]);
+        echo json_encode(['success' => true, 'message' => 'Cập nhật trạng thái thành công.', 'newStatus' => $newStatus]);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Không tìm thấy người dùng hoặc bạn không có quyền khóa admin.']);
+        echo json_encode(['success' => false, 'message' => 'Không tìm thấy người dùng hoặc trạng thái không đổi.']);
     }
 } else {
     echo json_encode(['success' => false, 'message' => $conn->error]);

@@ -19,13 +19,14 @@ if ($id <= 0 || $price < 0) {
     exit;
 }
 
-// Update the newly calculated selling price and the target profit margin
-$stmt = $conn->prepare("UPDATE tk_products SET price = ?, profit = ? WHERE id = ?");
-$stmt->bind_param("iii", $price, $profit, $id);
+// Update the profit margin
+$stmt = $conn->prepare("UPDATE tk_products SET profit_margin = ? WHERE id = ?");
+$stmt->bind_param("ii", $profit, $id);
 
 if ($stmt->execute()) {
     echo json_encode(['success' => true]);
-} else {
+}
+else {
     echo json_encode(['success' => false, 'message' => 'Lỗi DB: ' . $stmt->error]);
 }
 ?>

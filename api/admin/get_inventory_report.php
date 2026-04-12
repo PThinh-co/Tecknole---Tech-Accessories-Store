@@ -16,10 +16,12 @@ $threshold = isset($_GET['threshold']) ? intval($_GET['threshold']) : 20;
 try {
     $where = "WHERE 1=1";
     if ($category) {
-        $where .= " AND p.type = '" . mysqli_real_escape_string($conn, $category) . "'";
+        $where .= " AND p.category_id = " . (int)$category;
     }
 
-    $res = $conn->query("SELECT p.id, p.code, p.name, p.stock, p.type FROM tk_products p $where");
+    $res = $conn->query("SELECT p.id, p.name, p.stock, p.cost, p.profit_margin, p.price, p.category_name as cat_name 
+                         FROM v_products_full p 
+                         $where");
 
     $products = [];
     while ($p = $res->fetch_assoc()) {
@@ -27,7 +29,7 @@ try {
         $current_stock = (int)$p['stock'];
 
         // 2. Nhập trong kỳ
-        $qIn = "SELECT SUM(ii.qty) as total FROM tk_import_items ii 
+        $qIn = "SELECT SUM(ii.quantity) as total FROM tk_import_items ii 
                 JOIN tk_imports i ON ii.import_id = i.id 
                 WHERE ii.product_id = $p_id 
                 AND i.status = 'Hoàn thành'
@@ -37,7 +39,7 @@ try {
         $total_import = isset($inData['total']) ? (int)$inData['total'] : 0;
 
         // 3. Xuất trong kỳ
-        $qOut = "SELECT SUM(oi.qty) as total FROM tk_order_items oi 
+        $qOut = "SELECT SUM(oi.quantity) as total FROM tk_order_items oi 
                  JOIN tk_orders o ON oi.order_id = o.id 
                  WHERE oi.product_id = $p_id 
                  AND LOWER(o.status) NOT IN ('đã hủy', 'cancelled', 'hủy', 'failed', 'thất bại')
@@ -49,7 +51,7 @@ try {
         // 4. Tồn tại điểm
         $stock_at_point = $current_stock;
         if ($point_date) {
-            $fInRes = $conn->query("SELECT SUM(ii.qty) as total FROM tk_import_items ii 
+            $fInRes = $conn->query("SELECT SUM(ii.quantity) as total FROM tk_import_items ii 
                                     JOIN tk_imports i ON ii.import_id = i.id 
                                     WHERE ii.product_id = $p_id 
                                     AND i.status = 'Hoàn thành'
@@ -57,7 +59,7 @@ try {
             $fInData = $fInRes->fetch_assoc();
             $future_imports = isset($fInData['total']) ? (int)$fInData['total'] : 0;
 
-            $fOutRes = $conn->query("SELECT SUM(oi.qty) as total FROM tk_order_items oi 
+            $fOutRes = $conn->query("SELECT SUM(oi.quantity) as total FROM tk_order_items oi 
                                      JOIN tk_orders o ON oi.order_id = o.id 
                                      WHERE oi.product_id = $p_id 
                                      AND LOWER(o.status) NOT IN ('đã hủy', 'cancelled', 'hủy', 'failed', 'thất bại')
@@ -69,16 +71,18 @@ try {
         }
 
         $products[] = [
-            'id' => $p_id,
-            'code' => $p['code'] ?? 'N/A',
-            'name' => $p['name'],
-            'category' => $p['type'] ?? 'Chưa phân loại',
-            'starting' => $stock_at_point,
-            'imported' => $total_import,
-            'exported' => $total_export,
-            'ending' => $current_stock,
-            'is_out' => ($current_stock <= 0),
-            'is_low' => ($current_stock > 0 && $current_stock <= $threshold)
+            'id'            => $p_id,
+            'name'          => $p['name'],
+            'category'      => $p['cat_name'] ?? 'Chưa phân loại',
+            'cost'          => (int)$p['cost'],
+            'profit_margin' => (int)($p['profit_margin'] ?? 20),
+            'price'         => (int)$p['price'],
+            'starting'      => $stock_at_point,
+            'imported'      => $total_import,
+            'exported'      => $total_export,
+            'ending'        => $current_stock,
+            'is_out'        => ($current_stock <= 0),
+            'is_low'        => ($current_stock > 0 && $current_stock <= $threshold)
         ];
     }
 

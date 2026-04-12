@@ -6,7 +6,7 @@ require_once 'includes/image_helpers.php';
 $featured = [];
 $featRes = mysqli_query(
   $conn,
-  "SELECT id, name, price, old_price, image, badge FROM v_products_simple WHERE status = 'Đang bán' ORDER BY total_sold DESC, id ASC LIMIT 8"
+  "SELECT id, name, price, image, stock FROM v_products_simple WHERE status = 'Hiện' AND image != '' ORDER BY id ASC LIMIT 8"
 );
 if ($featRes && mysqli_num_rows($featRes) > 0) {
   while ($row = mysqli_fetch_assoc($featRes)) {
@@ -89,26 +89,20 @@ else: ?>
     $imgUrl = resolve_product_image_url($row['image']);
     $safeImage = htmlspecialchars($imgUrl, ENT_QUOTES, 'UTF-8');
     $priceFormatted = number_format($row['price'], 0, ',', '.') . 'đ';
-    $oldPriceHtml = ($row['old_price'] > 0)
-      ? '<span class="old-price" style="text-decoration: line-through; color: #999; font-size: 14px; margin-left: 10px;">'
-      . number_format($row['old_price'], 0, ',', '.') . 'đ</span>'
-      : '';
-    $badge = isset($row['badge']) ? trim((string)$row['badge']) : '';
-    $badgeHtml = $badge !== ''
-      ? '<span class="product-badge">' . htmlspecialchars($badge, ENT_QUOTES, 'UTF-8') . '</span>'
-      : '';
 ?>
             <div class="product-card" data-id="<?php echo $safeId; ?>">
               <a href="product-detail.php?id=<?php echo $safeId; ?>">
                 <div class="product-image">
                   <img src="<?php echo $safeImage; ?>" alt="<?php echo $safeName; ?>">
-                  <?php echo $badgeHtml; ?>
                 </div>
               </a>
               <div class="product-info">
                 <a href="product-detail.php?id=<?php echo $safeId; ?>" class="product-name"><?php echo $safeName; ?></a>
-                <div class="product-price <?php echo($row['old_price'] > 0) ? 'price-discounted' : ''; ?>">
-                    <?php echo $priceFormatted . $oldPriceHtml; ?>
+                <div class="product-price">
+                    <?php echo $priceFormatted; ?>
+                    <?php if ((int)$row['stock'] <= 0): ?>
+                        <span style="color: #ef4444; font-size: 11px; margin-left: 5px; font-weight: 700;">(Hết hàng)</span>
+                    <?php endif; ?>
                 </div>
                 <a href="product-detail.php?id=<?php echo $safeId; ?>" class="view-details" style="display: block; text-align: center; text-decoration: none; box-sizing: border-box;">Xem chi tiết</a>
               </div>

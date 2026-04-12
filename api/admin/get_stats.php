@@ -26,22 +26,22 @@ try {
     $newOrders = $resNewOrders->fetch_assoc()['total'] ?? 0;
 
     // 4. Tổng sản phẩm đang kinh doanh
-    $qProducts = "SELECT COUNT(*) as total FROM tk_products WHERE status NOT IN ('Ngừng kinh doanh', 'deleted')";
+    $qProducts = "SELECT COUNT(*) as total FROM tk_products WHERE status = 'Hiện'";
     $resProducts = $conn->query($qProducts);
     $totalProducts = $resProducts->fetch_assoc()['total'] ?? 0;
 
     // 5. Danh sách 5 đơn hàng mới nhất
     $recentOrders = [];
-    $resRecent = $conn->query("SELECT id, receiver_name, total_amount, status, order_date FROM tk_orders ORDER BY order_date DESC LIMIT 5");
+    $resRecent = $conn->query("SELECT id, receiver_name, total_amount, status, order_date, payment_method FROM tk_orders ORDER BY order_date DESC LIMIT 5");
     while($row = $resRecent->fetch_assoc()) {
         $recentOrders[] = $row;
     }
 
-    // 6. Top sản phẩm bán chạy (Mô phỏng hoặc thực tế nếu có view)
-    $topProducts = [];
-    $resTop = $conn->query("SELECT name, stock, code FROM tk_products WHERE status = 'Đang bán' ORDER BY stock ASC LIMIT 5");
-    while($row = $resTop->fetch_assoc()) {
-        $topProducts[] = $row;
+    // 6. Cảnh báo kho thấp (Sắp hết hàng)
+    $lowStock = [];
+    $resLow = $conn->query("SELECT name, stock FROM tk_products WHERE status = 'Hiện' AND stock < 20 ORDER BY stock ASC LIMIT 5");
+    while($row = $resLow->fetch_assoc()) {
+        $lowStock[] = $row;
     }
 
     echo json_encode([
@@ -52,7 +52,7 @@ try {
             'new_orders' => (int)$newOrders,
             'products' => (int)$totalProducts,
             'recent_orders' => $recentOrders,
-            'low_stock' => $topProducts
+            'low_stock' => $lowStock
         ]
     ]);
 } catch (Exception $e) {

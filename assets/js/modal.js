@@ -397,6 +397,7 @@ function openAccountInfoModal() {
               </div>
               <div class="auth-modal-form">
                 <button type="button" class="btn-auth-submit" onclick="openUpdateProfileModal()">Điều chỉnh thông tin</button>
+                <button type="button" class="btn-auth-submit" style="background: #1e293b; color: white;" onclick="showChangePassModal()">Đổi mật khẩu</button>
                 <button type="button" class="btn-auth-submit" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); margin-top: 0;" onclick="handleLogout()">Đăng xuất</button>
               </div>
             </div>
@@ -556,6 +557,11 @@ function updateAuthUI() {
   fetch('api/get_user.php')
     .then(res => res.json())
     .then(data => {
+      if (!data.success && data.locked) {
+        alert('⚠️ Tài khoản của bạn hiện đang bị khóa. Bạn sẽ được đăng xuất.');
+        window.location.href = 'index.php';
+        return;
+      }
       window.currentUserData = data.success ? data.user : null;
       _renderAuthArea(authArea);
       // Phát sự kiện để các script khác biết auth đã sẵn sàng
@@ -699,3 +705,69 @@ function syncAllCategories() {
 
 // Tự động cập nhật nếu admin thay đổi
 window.addEventListener('adminDataChanged', syncAllCategories);
+
+async function showChangePassModal() {
+    // Đóng modal Thông tin tài khoản cũ
+    closeAccountInfoModal();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'changePassModal';
+    overlay.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:9999;";
+    
+    overlay.innerHTML = `
+        <div style="background:white; width:90%; max-width:400px; padding:30px; border-radius:20px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="margin:0; font-size:20px; font-weight:800; color:#1e293b;">🔒 Đổi mật khẩu</h3>
+                <span onclick="document.getElementById('changePassModal').remove()" style="cursor:pointer; font-size:24px; color:#94a3b8;">&times;</span>
+            </div>
+            <form id="globalChangePassForm">
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; font-size:12px; margin-bottom:5px; font-weight:700; color:#64748b; text-transform:uppercase;">Mật khẩu hiện tại</label>
+                    <input type="password" id="oldPassGlobal" required style="width:100%; padding:12px; border-radius:10px; border:1px solid #e2e8f0;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; font-size:12px; margin-bottom:5px; font-weight:700; color:#64748b; text-transform:uppercase;">Mật khẩu mới</label>
+                    <input type="password" id="newPassGlobal" required style="width:100%; padding:12px; border-radius:10px; border:1px solid #e2e8f0;">
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <label style="display:block; font-size:12px; margin-bottom:5px; font-weight:700; color:#64748b; text-transform:uppercase;">Xác nhận mật khẩu mới</label>
+                    <input type="password" id="confirmNewPassGlobal" required style="width:100%; padding:12px; border-radius:10px; border:1px solid #e2e8f0;">
+                </div>
+                <button type="submit" id="btnSubmitChangePass" style="background:#2563eb; color:white; border:none; padding:15px; border-radius:12px; width:100%; font-weight:700; font-family:inherit; cursor:pointer; box-shadow:0 10px 15px -3px rgba(37,99,235,0.3);">
+                    CẬP NHẬT NGAY
+                </button>
+            </form>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    document.getElementById('globalChangePassForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const oldPass = document.getElementById('oldPassGlobal').value;
+        const newPass = document.getElementById('newPassGlobal').value;
+        const confirmPass = document.getElementById('confirmNewPassGlobal').value;
+
+        if (newPass !== confirmPass) { alert('Mật khẩu xác nhận không khớp!'); return; }
+        if (newPass.length < 6) { alert('Mật khẩu mới phải từ 6 ký tự!'); return; }
+
+        const btn = document.getElementById('btnSubmitChangePass');
+        btn.disabled = true; btn.textContent = 'Đang xử lý...';
+
+        try {
+            const res = await fetch('api/change_password.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ oldPass, newPass })
+            }).then(r => r.json());
+
+            if (res.success) {
+                alert('Đổi mật khẩu thành công!');
+                overlay.remove();
+            } else {
+                alert('Lỗi: ' + res.message);
+            }
+        } catch (err) { alert('Có lỗi hệ thống xảy ra.'); }
+        finally { btn.disabled = false; btn.textContent = 'CẬP NHẬT NGAY'; }
+    });
+}

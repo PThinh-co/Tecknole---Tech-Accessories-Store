@@ -33,17 +33,17 @@ if ($page < 1) {
 }
 
 $limit = 8;
-$whereSql = " WHERE status = 'Đang bán'";
+$whereSql = " WHERE status = 'Hiện'";
 $paramTypes = '';
 $paramValues = [];
 
 if ($type !== '') {
-    $whereSql .= ' AND type = ?';
-    $paramTypes .= 's';
-    $paramValues[] = $type;
+    $whereSql .= ' AND category_id = ?';
+    $paramTypes .= 'i';
+    $paramValues[] = (int)$type;
 }
 if ($brand !== '') {
-    $whereSql .= ' AND brand = ?';
+    $whereSql .= ' AND brand_name = ?';
     $paramTypes .= 's';
     $paramValues[] = $brand;
 }
@@ -144,7 +144,7 @@ if ($dataStmt) {
       <?php
       $displayTitle = "Tất cả sản phẩm";
       if ($type !== '') {
-          $nameRes = mysqli_query($conn, "SELECT name FROM tk_categories WHERE type = '$type' LIMIT 1");
+          $nameRes = mysqli_query($conn, "SELECT name FROM tk_categories WHERE id = " . (int)$type . " LIMIT 1");
           if ($nameRes && $nr = mysqli_fetch_assoc($nameRes)) {
               $displayTitle = "Sản phẩm " . $nr['name'];
           }
@@ -152,42 +152,175 @@ if ($dataStmt) {
       ?>
       <h2 class="section-title" id="category-title"><?php echo $displayTitle; ?></h2>
       <p id="category-desc" style="display: none;"></p>
-      <form method="GET" action="products.php" class="filter-bar" style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; align-items: center; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-        <?php if ($brand !== ''): ?>
-        <input type="hidden" name="brand" value="<?php echo htmlspecialchars($brand, ENT_QUOTES, 'UTF-8'); ?>">
+      <form method="GET" action="products.php" class="advanced-filter-bar">
+        <?php if ($sort !== ''): ?>
+          <input type="hidden" name="sort" value="<?php echo htmlspecialchars($sort, ENT_QUOTES, 'UTF-8'); ?>">
         <?php endif; ?>
-        <select name="type" onchange="this.form.submit()" style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ddd; outline: none;">
-            <option value="">Tất cả danh mục</option>
+        
+        <div class="filter-group">
+          <select name="type">
+            <option value="">Theo mục lục</option>
             <?php
-            $catSql = "SELECT name, type FROM tk_categories WHERE status = 'Hiển thị' ORDER BY id";
+            $catSql = "SELECT id, name FROM tk_categories WHERE status = 'Hiển thị' ORDER BY id";
             $catRes = mysqli_query($conn, $catSql);
             if ($catRes) {
                 while ($c = mysqli_fetch_assoc($catRes)) {
-                    $selected = ($type === $c['type']) ? 'selected' : '';
-                    echo '<option value="'.htmlspecialchars($c['type'], ENT_QUOTES, 'UTF-8').'" '.$selected.'>'.htmlspecialchars($c['name'], ENT_QUOTES, 'UTF-8').'</option>';
+                    $selected = ($type == $c['id']) ? 'selected' : '';
+                    echo '<option value="'.$c['id'].'" '.$selected.'>'.htmlspecialchars($c['name'], ENT_QUOTES, 'UTF-8').'</option>';
                 }
             }
             ?>
-        </select>
-
-        <select name="sort" onchange="this.form.submit()" style="padding: 8px 12px; border-radius: 5px; border: 1px solid #ddd; outline: none;">
-            <option value="">Sắp xếp mặc định</option>
-            <option value="price_asc" <?php echo ($sort === 'price_asc') ? 'selected' : ''; ?>>Giá: Thấp đến Cao</option>
-            <option value="price_desc" <?php echo ($sort === 'price_desc') ? 'selected' : ''; ?>>Giá: Cao xuống Thấp</option>
-        </select>
-
-        <div class="price-filter" style="display: flex; align-items: center; gap: 8px; background: #f9f9f9; padding: 4px 10px; border-radius: 8px; border: 1px solid #eee;">
-            <span style="font-size: 13px; font-weight: 600; color: #666;">Giá:</span>
-            <input type="number" name="min_price" id="filter-min-price" placeholder="Từ" value="<?php echo isset($_GET['min_price']) ? htmlspecialchars($_GET['min_price']) : ''; ?>" style="width: 80px; padding: 5px 8px; border: 1px solid #ddd; border-radius: 4px; outline: none; font-size: 13px;">
-            <span style="color: #ccc;">-</span>
-            <input type="number" name="max_price" id="filter-max-price" placeholder="Đến" value="<?php echo isset($_GET['max_price']) ? htmlspecialchars($_GET['max_price']) : ''; ?>" style="width: 80px; padding: 5px 8px; border: 1px solid #ddd; border-radius: 4px; outline: none; font-size: 13px;">
+          </select>
         </div>
 
-        <div style="display: flex; margin-left: auto; gap: 5px;">
-            <input type="text" name="search" placeholder="Nhập tên sản phẩm..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search'], ENT_QUOTES, 'UTF-8') : (isset($_GET['q']) ? htmlspecialchars($_GET['q'], ENT_QUOTES, 'UTF-8') : ''); ?>" style="padding: 8px 15px; border-radius: 5px; border: 1px solid #ddd; outline: none; width: 250px;">
-            <button type="submit" style="padding: 8px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Tìm</button>
+        <div class="filter-group group-name">
+          <input type="text" name="search" placeholder="Tên sản phẩm..." value="<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>">
+        </div>
+
+        <div class="filter-group">
+          <select name="sort">
+              <option value="">Sắp xếp mặc định</option>
+              <option value="price_asc" <?php echo ($sort === 'price_asc') ? 'selected' : ''; ?>>Giá: Thấp đến Cao</option>
+              <option value="price_desc" <?php echo ($sort === 'price_desc') ? 'selected' : ''; ?>>Giá: Cao xuống Thấp</option>
+          </select>
+        </div>
+
+        <div class="filter-group price-inputs">
+          <input type="number" name="min_price" placeholder="Giá từ..." value="<?php echo $min_p > 0 ? $min_p : ''; ?>">
+          <input type="number" name="max_price" placeholder="Giá đến..." value="<?php echo $max_p > 0 ? $max_p : ''; ?>">
+        </div>
+
+        <div class="filter-actions">
+          <button type="submit" class="btn-search">Tìm kiếm</button>
+          <a href="products.php" class="btn-clear">Đặt lại</a>
         </div>
       </form>
+
+      <style>
+        .advanced-filter-bar {
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          margin-bottom: 25px;
+          background: #ffffff;
+          padding: 10px 15px;
+          border-radius: 12px;
+          align-items: center;
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+          border: 1px solid #f1f5f9;
+        }
+
+        .filter-group {
+          flex: 1;
+          min-width: 140px;
+        }
+
+        .filter-group.group-name {
+          flex: 1.2;
+          min-width: 150px;
+        }
+
+        .filter-group.price-inputs {
+          flex: 1.5;
+          display: flex;
+          gap: 6px;
+          min-width: 220px;
+        }
+
+        .filter-group select, 
+        .filter-group input {
+          width: 100%;
+          padding: 0 12px;
+          border: 1px solid #e2e8f0;
+          border-radius: 10px;
+          background: #fcfdfe;
+          font-size: 13.5px;
+          color: #1e293b;
+          outline: none;
+          transition: all 0.2s ease;
+          height: 40px;
+          font-family: inherit;
+        }
+
+        .filter-group input::placeholder {
+          color: #94a3b8;
+        }
+
+        .filter-group input:focus, 
+        .filter-group select:focus {
+          background: #ffffff;
+          border-color: #6366f1;
+          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .filter-actions {
+          display: flex;
+          gap: 8px;
+          padding-left: 12px;
+          border-left: 1px solid #f1f5f9;
+        }
+
+        .btn-search {
+          padding: 0 20px;
+          height: 40px;
+          background: #4f46e5;
+          color: white;
+          border: none;
+          border-radius: 10px;
+          font-weight: 700;
+          cursor: pointer;
+          font-size: 13.5px;
+          transition: all 0.2s;
+        }
+
+        .btn-search:hover {
+          background: #4338ca;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+        }
+
+        .btn-clear {
+          padding: 0 15px;
+          height: 40px;
+          line-height: 38px;
+          background: transparent;
+          color: #64748b;
+          border: 1px solid #e2e8f0;
+          border-radius: 10px;
+          font-weight: 600;
+          cursor: pointer;
+          text-decoration: none;
+          display: inline-block;
+          transition: all 0.2s;
+          font-size: 13.5px;
+          box-sizing: border-box;
+          text-align: center;
+        }
+
+        .btn-clear:hover {
+          background: #f8fafc;
+          border-color: #cbd5e1;
+          color: #334155;
+        }
+
+        @media (max-width: 1024px) {
+          .filter-actions {
+            border-left: none;
+            padding-left: 0;
+            margin-top: 5px;
+            width: 100%;
+          }
+          .btn-search, .btn-clear {
+            flex: 1;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .filter-group {
+            min-width: 100%;
+          }
+        }
+      </style>
 
       <div class="products-grid" id="products-container">
           <?php
@@ -198,9 +331,9 @@ if ($dataStmt) {
                   $imgUrl = resolve_product_image_url($row['image']);
                   $safeImage = htmlspecialchars($imgUrl, ENT_QUOTES, 'UTF-8');
                   $safeId = (int) $row['id'];
-                  $safeBadge = htmlspecialchars((string) $row['badge'], ENT_QUOTES, 'UTF-8');
+                  $safeBadge = htmlspecialchars((string) ($row['badge'] ?? ''), ENT_QUOTES, 'UTF-8');
 
-                  $oldPriceHtml = ($row['old_price'] > 0) ? "<span class='old-price' style='text-decoration: line-through; color: #999; font-size: 14px; margin-left: 10px;'>" . number_format($row['old_price'], 0, ',', '.') . "đ</span>" : "";
+                  $oldPriceHtml = "";
                   $badgeHtml = $safeBadge !== '' ? "<span class='product-badge'>{$safeBadge}</span>" : "";
 
                   echo '
@@ -208,12 +341,14 @@ if ($dataStmt) {
                       <a href="product-detail.php?id='.$safeId.'">
                           <div class="product-image">
                               <img src="'.$safeImage.'" alt="'.$safeName.'">
-                              '.$badgeHtml.'
                           </div>
                       </a>
                       <div class="product-info">
                           <a href="product-detail.php?id='.$safeId.'" class="product-name">'.$safeName.'</a>
-                          <div class="product-price '.($row['old_price'] > 0 ? 'price-discounted' : '').'">'.$priceFormatted . $oldPriceHtml.'</div>
+                          <div class="product-price">
+                              '.$priceFormatted.'
+                              '.((int)$row['stock'] <= 0 ? '<span style="color: #ef4444; font-size: 11px; margin-left: 5px; font-weight: 700;">(Hết hàng)</span>' : '').'
+                          </div>
                           <a href="product-detail.php?id='.$safeId.'" class="view-details" style="display: block; text-align: center; text-decoration: none; box-sizing: border-box;">Xem chi tiết</a>
                       </div>
                   </div>';

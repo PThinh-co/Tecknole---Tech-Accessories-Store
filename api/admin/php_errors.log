@@ -3,3 +3,253 @@ Stack trace:
 #0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\save_product.php(54): mysqli->query('SELECT id FROM ...')
 #1 {main}
   thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\save_product.php on line 54
+[10-Apr-2026 16:10:31 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:32 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:32 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:33 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:33 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:33 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:41 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:41 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:41 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:42 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:42 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 16:10:42 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.price' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 18:52:22 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 18:52:22 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 18:52:23 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 18:52:23 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 18:52:24 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 18:52:24 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[10-Apr-2026 18:52:24 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[11-Apr-2026 11:02:43 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[11-Apr-2026 11:02:43 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[11-Apr-2026 11:02:43 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[11-Apr-2026 13:34:52 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[11-Apr-2026 13:34:53 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php(36): mysqli->query('SELECT ii.*, p....')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_import_details.php on line 36
+[11-Apr-2026 21:41:50 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:41:51 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:41:52 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:41:52 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:41:52 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:41:54 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:41:54 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:41:54 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:41:55 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:41:55 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:44:04 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:44:04 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:44:04 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:44:05 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:44:05 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:44:11 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:44:11 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:46:43 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:46:44 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:46:44 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:46:44 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:46:45 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:46:45 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:46:45 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:47:55 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36
+[11-Apr-2026 21:47:58 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.code' in 'field list' in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php:36
+Stack trace:
+#0 D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php(36): mysqli->query('SELECT i.*, p.n...')
+#1 {main}
+  thrown in D:\web\htdocs\Tecknole---Tech-Accessories-Store\api\admin\get_order_details.php on line 36

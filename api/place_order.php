@@ -41,13 +41,13 @@ if (mysqli_query($conn, $sql)) {
     // Insert chi tiết đơn hàng
     foreach ($_SESSION['cart'] as $item) {
         $product_id = $item['id'];
-        $qty = $item['quantity'];
+        $quantity = $item['quantity'];
         $price = $item['price'];
-        $sql_item = "INSERT INTO tk_order_items (order_id, product_id, qty, price) VALUES ($order_id, $product_id, $qty, $price)";
+        $sql_item = "INSERT INTO tk_order_items (order_id, product_id, quantity, price) VALUES ($order_id, $product_id, $quantity, $price)";
         mysqli_query($conn, $sql_item);
         
         // Cập nhật tồn kho
-        $sql_stock = "UPDATE tk_products SET stock = stock - $qty WHERE id = $product_id";
+        $sql_stock = "UPDATE tk_products SET stock = stock - $quantity WHERE id = $product_id";
         mysqli_query($conn, $sql_stock);
     }
 

@@ -41,11 +41,11 @@ if (session_status() === PHP_SESSION_NONE) {
             <select name="type" aria-label="Chọn danh mục" style="border: none; background: transparent; padding: 0 10px; height: 100%; font-size: 14px; color: #555; outline: none; cursor: pointer;">
               <option value="">Tất cả danh mục</option>
               <?php
-                $res_header_cats = mysqli_query($conn, "SELECT name, type FROM tk_categories WHERE status = 'Hiển thị' ORDER BY id");
+                $res_header_cats = mysqli_query($conn, "SELECT id, name FROM tk_categories WHERE status = 'Hiển thị' ORDER BY id");
                 if ($res_header_cats) {
                     while ($h_cat = mysqli_fetch_assoc($res_header_cats)) {
-                        $selected = (isset($_GET['type']) && $_GET['type'] == $h_cat['type']) ? 'selected' : '';
-                        echo "<option value='".htmlspecialchars($h_cat['type'], ENT_QUOTES, 'UTF-8')."' {$selected}>".htmlspecialchars($h_cat['name'], ENT_QUOTES, 'UTF-8')."</option>";
+                        $selected = (isset($_GET['type']) && $_GET['type'] == $h_cat['id']) ? 'selected' : '';
+                        echo "<option value='".htmlspecialchars($h_cat['id'], ENT_QUOTES, 'UTF-8')."' {$selected}>".htmlspecialchars($h_cat['name'], ENT_QUOTES, 'UTF-8')."</option>";
                     }
                 }
               ?>
@@ -66,14 +66,6 @@ if (session_status() === PHP_SESSION_NONE) {
               <i class="bi bi-search"></i> Tìm kiếm
             </button>
 
-            <div
-              class="autocomplete-suggestions"
-              id="autocomplete-list"
-              role="listbox"
-              aria-hidden="true"
-            >
-              <ul></ul>
-            </div>
           </form>
         </div>
 
@@ -96,23 +88,23 @@ if (session_status() === PHP_SESSION_NONE) {
               <ul class="dropdown-menu">
                 <?php
                 // Tự động quét các danh mục đang cho phép 'Hiển thị'
-                $res_dyn_cats = mysqli_query($conn, "SELECT name, type FROM tk_categories WHERE status = 'Hiển thị' ORDER BY id");
+                $res_dyn_cats = mysqli_query($conn, "SELECT id, name FROM tk_categories WHERE status = 'Hiển thị' ORDER BY id");
                 if ($res_dyn_cats) {
                     while ($cat = mysqli_fetch_assoc($res_dyn_cats)) {
                         $nm = htmlspecialchars($cat['name'], ENT_QUOTES, 'UTF-8');
-                        $tp = htmlspecialchars($cat['type'], ENT_QUOTES, 'UTF-8');
+                        $cat_id = $cat['id'];
                         
-                        // Tìm hãng có SP
-                        $bRes = mysqli_query($conn, "SELECT DISTINCT brand FROM tk_products WHERE type = '$tp' AND brand != '' LIMIT 6");
+                        // Tìm hãng có SP theo ID danh mục
+                        $bRes = mysqli_query($conn, "SELECT DISTINCT brand_name FROM tk_products WHERE category_id = $cat_id AND brand_name != '' AND brand_name IS NOT NULL LIMIT 6");
                         
                         echo "<li>";
-                        echo "<a href='products.php?type={$tp}'>{$nm}</a>";
+                        echo "<a href='products.php?type={$cat_id}'>{$nm}</a>";
                         if ($bRes && mysqli_num_rows($bRes) > 0) {
                             echo "<ul class='submenu'>";
                             while ($br = mysqli_fetch_assoc($bRes)) {
-                                $brN = htmlspecialchars($br['brand'], ENT_QUOTES, 'UTF-8');
+                                $brN = htmlspecialchars($br['brand_name'], ENT_QUOTES, 'UTF-8');
                                 $brLk = urlencode(strtolower($brN));
-                                echo "<li><a href='products.php?type={$tp}&brand={$brLk}'>{$brN}</a></li>";
+                                echo "<li><a href='products.php?type={$cat_id}&brand={$brLk}'>{$brN}</a></li>";
                             }
                             echo "</ul>";
                         }

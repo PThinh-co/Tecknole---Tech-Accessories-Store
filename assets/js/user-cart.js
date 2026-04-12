@@ -9,7 +9,7 @@ async function initUserCart() {
         
         if (data.success) {
             window.currentUserData = data.user;
-            renderProfileInfo(data.user);
+            // renderProfileInfo(data.user);
             renderOrders(); 
         } else {
             console.warn('User not logged in, showing login modal...');
@@ -34,35 +34,7 @@ if (document.readyState === 'loading') {
 
 // --- CÁC HÀM ĐỊNH NGHĨA ---
 
-function renderProfileInfo(currentUserData) {
-    const infoContainer = document.getElementById('user-profile-info');
-    if (!infoContainer) return; 
-    
-    infoContainer.innerHTML = `
-        <div class="info-row">
-            <span class="info-label">👤 Họ và tên:</span>
-            <span class="info-value">${currentUserData.fullname || ''}</span>
-        </div>
 
-
-        <div class="info-row">
-            <span class="info-label">🔐 Tài khoản:</span>
-            <span class="info-value">${currentUserData.username || ''}</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">📧 Email:</span>
-            <span class="info-value">${currentUserData.email || ''}</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">📱 Số điện thoại:</span>
-            <span class="info-value">${currentUserData.phone || ''}</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">📍 Địa chỉ đã lưu:</span>
-            <span class="info-value">${currentUserData.address || 'Chưa cập nhật'}</span>
-        </div>
-    `;
-}
 
 // 2. Hiển thị đơn hàng đã mua (Lấy từ Database qua API)
 async function renderOrders() {
@@ -159,4 +131,6 @@ function getPaymentMethodLabel(method) {
         case 'qr': return 'Quét mã QR';
         default: return method || 'Chưa chọn';
     }
-}
+}
+
+

@@ -27,7 +27,7 @@ if ($product_id <= 0 || $quantity <= 0) {
 }
 
 // Kiểm tra tồn kho và giá bán bằng Prepared Statement
-$sql = "SELECT id, name, price, stock, image FROM tk_products WHERE id = ? AND status = 'Đang bán'";
+$sql = "SELECT id, name, price, stock, image FROM v_products_full WHERE id = ? AND status = 'Hiện'";
 $stmt = mysqli_prepare($conn, $sql);
 if (!$stmt) {
     echo json_encode(['success' => false, 'message' => 'Lỗi chuẩn bị truy vấn']);

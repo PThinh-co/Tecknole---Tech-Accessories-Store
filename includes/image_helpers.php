@@ -6,7 +6,7 @@ function resolve_product_image_url($relativePath)
 {
     $relativePath = trim((string)$relativePath);
     if ($relativePath === '') {
-        return 'assets/images/sadmeme.jpg';
+        return '';
     }
     $relativePath = str_replace('\\', '/', $relativePath);
     $relativePath = ltrim($relativePath, '/');
@@ -17,5 +17,5 @@ function resolve_product_image_url($relativePath)
         return $relativePath;
     }
 
-    return 'assets/images/sadmeme.jpg';
+    return '';
 }

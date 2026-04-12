@@ -127,10 +127,7 @@ function showInvoicePopup(orderId, orderData, cartItems) {
 // Hàm Load thông tin người dùng vào form
 async function loadUserInfo() {
     if (!window.currentUserData) return;
-    document.getElementById('receiver-name').value = window.currentUserData.fullName || window.currentUserData.fullname || '';
-    document.getElementById('receiver-phone').value = window.currentUserData.phone || '';
-    document.getElementById('receiver-email').value = window.currentUserData.email || '';
-
+    
     const addressRadio = document.querySelector('input[name="address_source"]:checked');
     if (!addressRadio) return; 
 
@@ -142,6 +139,11 @@ async function loadUserInfo() {
     document.getElementById('ward').disabled = isProfile;
 
     if (isProfile) {
+        // Điền thông tin mặc định từ hồ sơ
+        document.getElementById('receiver-name').value = window.currentUserData.fullName || window.currentUserData.fullname || '';
+        document.getElementById('receiver-phone').value = window.currentUserData.phone || '';
+        document.getElementById('receiver-email').value = window.currentUserData.email || '';
+
         const addr = window.currentUserData.address || "";
         const parts = addr.split(",").map(p => p.trim());
         const street = parts[0] || "";
@@ -152,9 +154,14 @@ async function loadUserInfo() {
         await loadProvincesForCheckout(province, ward);
         document.getElementById('address-desc').textContent = "Sử dụng địa chỉ từ hồ sơ của bạn.";
     } else {
+        // Xóa sạch thông tin để người dùng nhập mới
+        document.getElementById('receiver-name').value = "";
+        document.getElementById('receiver-phone').value = "";
+        document.getElementById('receiver-email').value = "";
         document.getElementById('street').value = "";
+        
         await loadProvincesForCheckout();
-        document.getElementById('address-desc').textContent = "Vui lòng nhập địa chỉ cụ thể để giao hàng.";
+        document.getElementById('address-desc').textContent = "Vui lòng nhập họ tên, SĐT và địa chỉ người nhận mới.";
     }
 }
 

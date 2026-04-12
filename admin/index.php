@@ -170,20 +170,12 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                                 <label>Tên loại <span style="color:red">*</span></label>
                                 <input type="text" class="adv-form-control" id="inlineCategoryName" required placeholder="VD: Màn hình">
                             </div>
-                            <div class="adv-form-group" style="margin-bottom: 16px;">
-                                <label>Slug Type (URL/Lọc) <span style="color:red">*</span></label>
-                                <input type="text" class="adv-form-control" id="inlineCategoryType" required placeholder="VD: manhinh">
-                            </div>
-                            <div class="adv-form-group" style="margin-bottom: 16px;">
-                                <label>Mã hiển thị <span style="color:red">*</span></label>
-                                <input type="text" class="adv-form-control" id="inlineCategoryCode" required placeholder="VD: MN">
-                            </div>
 
                             <div class="adv-form-group" style="margin-bottom: 20px;">
                                 <label>Trạng thái</label>
                                 <select class="adv-form-control" id="inlineCategoryStatus">
-                                    <option value="active">Hoạt động</option>
-                                    <option value="inactive">Đã ẩn</option>
+                                    <option value="Hiển thị">Hiển thị (Hiện)</option>
+                                    <option value="Ẩn">Ẩn (Tạm ẩn)</option>
                                 </select>
                             </div>
                             <div style="display: flex; gap: 10px;">
@@ -204,10 +196,8 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                         <table class="adv-table" id="categoriesTable">
                             <thead style="background:#f1f5f9;">
                                 <tr>
-                                    <th>MÃ</th>
+                                    <th style="width: 50px;">ID</th>
                                     <th>TÊN LOẠI</th>
-                                    <th>SLUG</th>
-
                                     <th>TRẠNG THÁI</th>
                                     <th>HÀNH ĐỘNG</th>
                                 </tr>
@@ -223,11 +213,11 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
             <div class="section" id="products">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h3>Quản lý Sản phẩm</h3>
-                    <button class="btn btn-add" onclick="openProductModal()">+ Thêm Sản phẩm mới</button>
+                    <button class="btn btn-add" onclick="openProductModal()">Thêm Sản phẩm mới</button>
                 </div>
                 <div class="search-bar">
-                    <input type="text" id="productSearchInput" placeholder="Tìm theo tên hoặc mã SP...">
-                    <select id="productCategoryFilter"><option value="">-- Tất cả loại --</option></select>
+                    <input type="text" id="productSearchInput" placeholder="Tìm theo tên sản phẩm...">
+                    <select id="productCategoryFilter"><option value="">Tất cả loại</option></select>
                     <button class="btn btn-primary" onclick="loadProducts()">Tìm kiếm</button>
                 </div>
                 <table id="productsTable">
@@ -235,7 +225,7 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                         <tr>
                             <th>Ảnh</th> 
                             <th>Tên sản phẩm</th>
-                            <th>Loại / Hãng</th>
+                            <th>Loại</th>
                             <th>Giá bán</th>
                             <th>Tồn kho</th>
                             <th>Trạng thái</th>
@@ -279,7 +269,7 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                     <table style="width: 100%; border-collapse: collapse;">
                         <thead>
                             <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 11px; text-transform: uppercase;">
-                                <th style="padding: 20px; text-align: left;">MÃ PN</th>
+                                <th style="padding: 20px; text-align: left;">MÃ PHIẾU NHẬP</th>
                                 <th style="padding: 20px; text-align: left;">NGÀY NHẬP</th>
                                 <th style="padding: 20px; text-align: right;">TỔNG GIÁ VỐN</th>
                                 <th style="padding: 20px; text-align: center;">TRẠNG THÁI</th>
@@ -292,39 +282,52 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                     </table>
                 </div>
             </div>
+
+            <!-- PRICING SECTION -->
             <div class="section" id="pricing">
-                <h2 style="font-size: 24px; font-weight: 700; color: #1e293b; margin-bottom: 24px;">Quản lý Giá bán</h2>
-                
-                <div class="adv-search-card">
-                    <div style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Tra cứu và Tinh chỉnh Giá bán</div>
-                    <div class="adv-search-grid">
-                        <div class="adv-form-group" style="flex: 2;">
-                            <input type="text" class="adv-form-control" id="pricingSearchInput" placeholder="Tìm theo tên hoặc mã SKU...">
-                        </div>
-                        <div class="adv-form-group">
-                            <select class="adv-form-control" id="pricingCategoryFilter">
-                                <option value="">Tất cả loại sản phẩm</option>
-                            </select>
-                        </div>
-                        <div class="adv-action-row">
-                            <button class="adv-btn adv-btn-primary" onclick="loadPricing()" style="width: 120px;">Tìm</button>
-                        </div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;">
+                    <div>
+                        <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">🏷️ Quản lý Giá Bán</h1>
+                        <p style="color:#64748b; font-size:14px; margin:0;">Xem giá vốn & thiết lập / cập nhật giá bán theo % lợi nhuận.</p>
                     </div>
                 </div>
 
+                <div class="adv-search-card">
+                    <div class="adv-search-grid">
+                        <div class="adv-form-group" style="flex:2;">
+                            <input type="text" class="adv-form-control" id="pricingSearchInput" placeholder="Tìm theo tên sản phẩm..." oninput="loadPricing()">
+                        </div>
+                        <div class="adv-form-group">
+                            <select class="adv-form-control" id="pricingCategoryFilter" onchange="loadPricing()">
+                                <option value="">Tất cả loại sản phẩm</option>
+                            </select>
+                        </div>
+                        <div class="adv-form-group">
+                            <select class="adv-form-control" id="pricingStatusFilter" onchange="loadPricing()">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="Chưa có giá vốn">Chưa có giá vốn</option>
+                                <option value="Hiện">Đang hiển thị</option>
+                                <option value="Ẩn">Đang ẩn</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+    
                 <div class="adv-table-card">
-                    <table class="adv-table" id="pricingTable">
+                    <table class="adv-table" style="width:100%; border-collapse:collapse;">
                         <thead>
                             <tr style="background:#f1f5f9;">
-                                <th>TÊN SẢN PHẨM</th>
-                                <th>LOẠI SP</th>
-                                <th>GIÁ VỐN</th>
-                                <th>% LỢI NHUẬN</th>
-                                <th>GIÁ BÁN DỰ KIẾN</th>
-                                <th>HÀNH ĐỘNG</th>
+                                <th style="padding:14px 16px; font-size:11px; color:#64748b; text-transform:uppercase;">Sản phẩm</th>
+                                <th style="padding:14px 16px; font-size:11px; color:#ef4444; text-transform:uppercase; text-align:right;">Giá nhập</th>
+                                <th style="padding:14px 16px; font-size:11px; color:#f59e0b; text-transform:uppercase; text-align:center;">% Lợi Nhuận</th>
+                                <th style="padding:14px 16px; font-size:11px; color:#3b82f6; text-transform:uppercase; text-align:right;">Giá Bán</th>
+                                <th style="padding:14px 16px; font-size:11px; color:#64748b; text-transform:uppercase; text-align:center;">Trạng Thái</th>
+                                <th style="padding:14px 16px; font-size:11px; color:#64748b; text-transform:uppercase; text-align:center;">Hành Động</th>
                             </tr>
                         </thead>
-                        <tbody id="pricingTableBody"></tbody>
+                        <tbody id="pricingTableBody">
+                            <tr><td colspan="7" style="text-align:center; padding:40px; color:#94a3b8;">Đang tải...</td></tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -360,9 +363,9 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                         </div>
                         <div class="adv-form-group">
                             <label>Sắp xếp</label>
-                            <select class="adv-form-control" id="orderSortFilter">
-                                <option value="">Mới nhất</option>
-                                <option value="ward_asc">Theo Phường/Xã</option>
+                            <select id="orderSortFilter" class="adv-form-control">
+                                <option value="date_desc">Mới nhất</option>
+                                <option value="ward_asc">Theo Địa chỉ (Quận/Huyện)</option>
                             </select>
                         </div>
                         <div class="adv-action-row">
@@ -378,7 +381,7 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                     <table class="adv-table" id="ordersTable">
                         <thead>
                             <tr style="background:#f1f5f9;">
-                                <th>MÃ ĐH</th>
+                                <th>MÃ ĐƠN HÀNG</th>
                                 <th>KHÁCH HÀNG</th>
                                 <th>ĐỊA CHỈ GIAO HÀNG</th>
                                 <th>NGÀY ĐẶT</th>
@@ -403,7 +406,7 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                     <!-- NHÓM BỘ LỌC HIỆN ĐẠI -->
                     <div style="display:flex; flex-wrap:wrap; gap:20px; background:white; padding:24px; border-radius:20px; border:1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); align-items: flex-end;">
                         <div class="adv-form-group" style="margin:0; flex: 1; min-width: 150px;">
-                            <label style="display:block; font-size:11px; font-weight:700; color:#94a3b8; text-transform:uppercase; margin-bottom:8px;">Loại SP</label>
+                            <label style="display:block; font-size:11px; font-weight:700; color:#94a3b8; text-transform:uppercase; margin-bottom:8px;">Loại sản phẩm</label>
                             <select id="reportCategory" class="adv-form-control" style="height:45px; width:100%; font-size:14px; border:1px solid #f1f5f9; background:#f8fafc; border-radius:12px; padding:0 15px;">
                                 <option value="">-- Tất cả loại --</option>
                             </select>
@@ -439,7 +442,7 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                             <i class="bi bi-boxes"></i>
                         </div>
                         <div>
-                            <div style="font-size:13px; opacity:0.8; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Tổng loại SP</div>
+                            <div style="font-size:13px; opacity:0.8; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Tổng loại sản phẩm</div>
                             <div id="totalReportItems" style="font-size:28px; font-weight:800;">0</div>
                         </div>
                     </div>
@@ -476,12 +479,14 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                     <table class="adv-table" id="inventoryTable">
                         <thead>
                             <tr style="background: white;">
-                                <th style="padding:15px 24px; color:#94a3b8; font-size:11px; text-transform:uppercase;">Mã SP</th>
-                                <th style="padding:15px 24px; color:#94a3b8; font-size:11px; text-transform:uppercase;">Tên Sản Phẩm</th>
-                                <th style="text-align:center; padding:15px 24px; color:#94a3b8; font-size:11px; text-transform:uppercase;">Tồn Tại Ngày</th>
-                                <th style="text-align:center; padding:15px 24px; color:#22c55e; font-size:11px; text-transform:uppercase;">Nhập (Trong Kỳ)</th>
-                                <th style="text-align:center; padding:15px 24px; color:#ef4444; font-size:11px; text-transform:uppercase;">Xuất (Trong Kỳ)</th>
-                                <th style="text-align:center; padding:15px 24px; color:#3b82f6; font-size:11px; text-transform:uppercase; font-weight:800;">Hiện Tại</th>
+                                <th style="padding:13px 14px; color:#94a3b8; font-size:11px; text-transform:uppercase;">Tên Sản Phẩm</th>
+                                <th style="text-align:right; padding:13px 14px; color:#ef4444; font-size:11px; text-transform:uppercase;">Giá Vốn</th>
+                                <th style="text-align:center; padding:13px 14px; color:#f59e0b; font-size:11px; text-transform:uppercase;">% Lợi Nhuận</th>
+                                <th style="text-align:right; padding:13px 14px; color:#10b981; font-size:11px; text-transform:uppercase;">Giá Bán</th>
+                                <th style="text-align:center; padding:13px 14px; color:#94a3b8; font-size:11px; text-transform:uppercase;">Tồn Tại Ngày</th>
+                                <th style="text-align:center; padding:13px 14px; color:#22c55e; font-size:11px; text-transform:uppercase;">Nhập (Trong Kỳ)</th>
+                                <th style="text-align:center; padding:13px 14px; color:#ef4444; font-size:11px; text-transform:uppercase;">Xuất (Trong Kỳ)</th>
+                                <th style="text-align:center; padding:13px 14px; color:#3b82f6; font-size:11px; text-transform:uppercase; font-weight:800;">Hiện Tại</th>
                             </tr>
                         </thead>
                         <tbody id="inventoryTableBody"></tbody>
@@ -535,22 +540,10 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                     <input type="text" id="categoryName" required placeholder="VD: Màn hình">
                 </div>
                 <div class="form-group">
-                    <label>Slug Type (Dùng để lọc)</label>
-                    <input type="text" id="categoryType" required placeholder="VD: manhinh">
-                </div>
-                <div class="form-group">
-                    <label>Mã hiển thị</label>
-                    <input type="text" id="categoryCode" required placeholder="VD: MN">
-                </div>
-                <div class="form-group">
-                    <label>Lợi nhuận mặc định (%)</label>
-                    <input type="number" id="categoryProfit" value="15" min="0" max="100">
-                </div>
-                <div class="form-group">
-                    <label>Trạng thái</label>
+                    <label>Trạng thái hiển thị</label>
                     <select id="categoryStatus">
-                        <option value="active">Hoạt động</option>
-                        <option value="inactive">Đã ẩn</option>
+                        <option value="Hiển thị">Hiển thị (Hiện)</option>
+                        <option value="Ẩn">Ẩn (Tạm ẩn)</option>
                     </select>
                 </div>
                 <div class="modal-actions">
@@ -585,22 +578,18 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
 
     <!-- PRODUCT MODAL -->
     <div class="modal" id="productModal" onclick="closeModal('productModal')">
-        <div class="modal-content" style="max-width: 900px; padding: 0" onclick="event.stopPropagation()">
+        <div class="modal-content" style="max-width: 820px; padding: 0" onclick="event.stopPropagation()">
             <div style="background: white; border-bottom: 1px solid #e2e8f0; padding: 20px 24px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center;">
-                <h3 id="productModalTitle" style="margin: 0; font-size: 20px; font-weight: 700; color: #1e293b;">Thông Tin Khóa Học/Sản Phẩm</h3>
+                <h3 id="productModalTitle" style="margin: 0; font-size: 20px; font-weight: 700; color: #1e293b;">Thêm sản phẩm</h3>
                 <button type="button" style="background: transparent; border: none; font-size: 20px; cursor: pointer; color: #64748b;" onclick="closeModal('productModal')">&times;</button>
             </div>
-            
+
             <form id="productForm" style="padding: 24px; background: #f8fafc; border-radius: 0 0 12px 12px;">
                 <input type="hidden" id="productId">
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
                     <!-- Cột Trái -->
-                    <div style="display: flex; flex-direction: column; gap: 16px;">
-                        <div class="adv-form-group">
-                            <label>Mã (SKU) <span style="color:red">*</span></label>
-                            <input type="text" class="adv-form-control" id="productCode" required placeholder="Nhập mã sản phẩm...">
-                        </div>
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
                         <div class="adv-form-group">
                             <label>Tên Sản phẩm <span style="color:red">*</span></label>
                             <input type="text" class="adv-form-control" id="productName" required placeholder="Nhập tên sản phẩm...">
@@ -613,97 +602,88 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                             <label>Nhà cung cấp/Phân phối</label>
                             <input type="text" class="adv-form-control" id="productSupplier" placeholder="Tên nhà xuất bản, cung cấp...">
                         </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                            <div class="adv-form-group">
-                                <label>Giá Vốn (VNĐ)</label>
-                                <input type="number" class="adv-form-control" id="productCost" required value="0">
-                            </div>
-                            <div class="adv-form-group">
-                                <label>Lợi Nhuận Biên (%)</label>
-                                <input type="number" class="adv-form-control" id="productProfit" required value="20">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Cột Phải -->
-                    <div style="display: flex; flex-direction: column; gap: 16px;">
                         <div class="adv-form-group">
-                            <label>Danh mục chính <span style="color:red">*</span></label>
+                            <label>Danh mục <span style="color:red">*</span></label>
                             <select class="adv-form-control" id="productType" required></select>
                         </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                            <div class="adv-form-group">
-                                <label>Số lượng kho (Chỉ xem)</label>
-                                <input type="number" class="adv-form-control" id="productStock" readonly style="background: #e9ecef; cursor: not-allowed;" title="Số lượng được tự động cập nhật qua Phiếu Nhập Hàng">
-                                <small style="font-size: 10px; color: #64748b;">Cập nhật qua Phiếu Nhập</small>
+                        <div class="adv-form-group">
+                            <label>Mô tả</label>
+                            <textarea class="adv-form-control" id="productShortDesc" rows="3" placeholder="VD: Bàn phím cơ layout 75%, 3 chế độ kết nối..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Cột Phải - Hình ảnh -->
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                        <div class="adv-form-group">
+                            <label>Hình Ảnh Sản Phẩm</label>
+                            <!-- File upload button -->
+                            <label for="productImageFile" style="display:inline-flex; align-items:center; gap:8px; cursor:pointer; background:#3b82f6; color:white; padding:8px 16px; border-radius:8px; font-size:13px; font-weight:600; transition:background 0.2s;" onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">
+                                <i class="bi bi-upload"></i> Chọn ảnh từ thiết bị
+                            </label>
+                            <input type="file" id="productImageFile" accept="image/*" style="display:none;" onchange="previewProductImage(this)">
+                            <input type="hidden" id="productImage">
+                            <div style="font-size:11px; color:#94a3b8; margin-top:4px;">Hỗ trợ: JPG, PNG, WEBP</div>
+                        </div>
+
+                        <!-- Preview ảnh -->
+                        <div id="productImagePreviewBox" style="flex:1; min-height:200px; background:white; border:2px dashed #e2e8f0; border-radius:12px; display:flex; align-items:center; justify-content:center; overflow:hidden; transition:border 0.2s;">
+                            <div id="productPreviewPlaceholder" style="text-align:center; color:#cbd5e1;">
+                                <i class="bi bi-image" style="font-size:40px;"></i>
+                                <div style="font-size:12px; margin-top:8px;">Chưa có ảnh</div>
                             </div>
-                            <div class="adv-form-group">
-                                <label>Đơn vị tính</label>
-                                <input type="text" class="adv-form-control" id="productUnit" value="Cái">
-                            </div>
+                            <img id="productImagePreview" src="" alt="Preview" style="display:none; max-width:100%; max-height:260px; object-fit:contain; border-radius:8px;">
                         </div>
+
                         <div class="adv-form-group">
-                            <label>Mô tả ngắn (Hiển thị ở danh sách)</label>
-                            <textarea class="adv-form-control" id="productShortDesc" rows="2" placeholder="VD: Bàn phím cơ layout 75%, 3 chế độ kết nối..."></textarea>
-                        </div>
-                        <div class="adv-form-group">
-                            <label>Hình Ảnh (assets/images/img/...)</label>
-                            <div style="display: flex; gap: 8px;">
-                                <input type="text" class="adv-form-control" id="productImage" value="assets/images/img/loa/loa.jpg">
-                                <button type="button" class="adv-btn adv-btn-success" onclick="openImagePicker()" style="white-space: nowrap; padding: 4px 10px;"><i class="bi bi-images"></i> Duyệt ảnh</button>
-                            </div>
-                        </div>
-                        <div class="adv-form-group">
-                            <label>Giá Bán Ra Dự Kiến (VNĐ)</label>
-                            <input type="number" class="adv-form-control" id="productPrice" style="background:#f1f5f9; font-weight: 600;" required readonly>
-                        </div>
-                        <div class="adv-form-group">
-                            <label>Trạng Thái Hiển Thị</label>
+                            <label>Trạng Thái</label>
                             <select class="adv-form-control" id="productStatus">
-                                <option value="Đang bán">Hoạt động (Đang bán)</option>
-                                <option value="Ngừng kinh doanh">Ẩn (Dừng bán)</option>
+                                <option value="Hiện">Hiện (Kích hoạt)</option>
+                                <option value="Ẩn">Ẩn (Tạm ngưng)</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
-                
-                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
                     <button type="button" class="adv-btn adv-btn-gray" onclick="closeModal('productModal')">Hủy bỏ</button>
-                    <button type="submit" class="adv-btn adv-btn-primary" id="btnSaveProduct">Lưu thay đổi</button>
+                    <button type="submit" class="adv-btn adv-btn-primary" id="btnSaveProduct">Lưu sản phẩm</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- USER MODAL -->
+    <!-- USER MODAL (QUẢN LÝ THÊM MỚI) -->
     <div class="modal" id="userModal" onclick="closeModal('userModal')">
         <div class="modal-content" style="max-width: 500px;" onclick="event.stopPropagation()">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3 id="userModalTitle">Thêm Tài Khoản</h3>
+                <h3 id="userModalTitle">Thêm Tài Khoản Mới</h3>
                 <span class="close-modal" onclick="closeModal('userModal')" style="font-size: 28px; cursor: pointer;">&times;</span>
             </div>
             <form id="userForm">
                 <input type="hidden" id="userIdForEdit">
                 <div class="form-group" id="userUsernameGroup">
-                    <label>Tên đăng nhập (Username)</label>
-                    <input type="text" id="userUsername" required>
+                    <label>Tên đăng nhập (Username) <span style="color:red">*</span></label>
+                    <input type="text" id="userUsername" required placeholder="VD: khachhang01">
                 </div>
                 <div class="form-group" id="userPasswordGroup">
-                    <label>Mật khẩu (Password)</label>
-                    <input type="password" id="userPassword" placeholder="Nhập để đặt mới...">
+                    <label>Mật khẩu khởi tạo <span style="color:red">*</span></label>
+                    <input type="password" id="userPassword" required placeholder="Nhập mật khẩu">
+                </div>
+                <div class="form-group" id="userConfirmPasswordGroup">
+                    <label>Xác nhận mật khẩu <span style="color:red">*</span></label>
+                    <input type="password" id="userConfirmPassword" required placeholder="Gõ lại mật khẩu">
                 </div>
                 <div class="form-group" id="userFullnameGroup">
-                    <label>Họ và tên khách hàng</label>
-                    <input type="text" id="userFullname" required>
+                    <label>Họ và tên khách hàng <span style="color:red">*</span></label>
+                    <input type="text" id="userFullname" required placeholder="VD: Nguyễn Văn A">
                 </div>
                 <div class="form-group">
                     <label>Email liên hệ</label>
-                    <input type="email" id="userEmail">
+                    <input type="email" id="userEmail" placeholder="khachhang@example.com">
                 </div>
                 <div class="form-group">
                     <label>Số điện thoại</label>
-                    <input type="text" id="userPhone">
+                    <input type="text" id="userPhone" placeholder="0123xxx...">
                 </div>
                 <div class="form-group">
                     <label>Vai trò hệ thống</label>
@@ -714,7 +694,7 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                 </div>
                 <div class="modal-actions" style="margin-top: 25px;">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('userModal')">Hủy bỏ</button>
-                    <button type="submit" class="btn btn-primary">Lưu thông tin</button>
+                    <button type="submit" class="btn btn-primary">Xác nhận Thêm</button>
                 </div>
             </form>
         </div>
@@ -756,8 +736,7 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                             <tr style="color: #94a3b8; font-size: 11px; text-transform: uppercase; text-align: left;">
                                 <th style="padding: 15px 10px;">Sản phẩm</th>
                                 <th style="padding: 15px 10px; width: 120px; text-align: center;">Số lượng</th>
-                                <th style="padding: 15px 10px; width: 180px;">Giá vốn (VND)</th>
-                                <th style="padding: 15px 10px; width: 180px;">Thành tiền</th>
+                                <th style="padding: 15px 10px; width: 150px;">Giá vốn (VND)</th>
                                 <th style="padding: 15px 10px; width: 50px;"></th>
                             </tr>
                         </thead>
@@ -788,31 +767,6 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
         </div>
     </div>
 
-    <!-- PRICING MODAL -->
-    <div class="modal" id="pricingModal" onclick="closeModal('pricingModal')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h3 id="pricingModalTitle">Thiết lập Giá & Lợi nhuận</h3>
-            <form id="pricingForm">
-                <input type="hidden" id="pricingProductId">
-                <div style="background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                    <p>Sản phẩm: <strong id="pricingProductName">-</strong></p>
-                    <p>Giá vốn hiện tại: <strong id="pricingProductCost">0 đ</strong></p>
-                </div>
-                <div class="form-group">
-                    <label>Lợi nhuận mong muốn (%) [Để trống nếu dùng mặc định loại]</label>
-                    <input type="number" id="pricingProductProfit" placeholder="VD: 20">
-                </div>
-                <div class="form-group">
-                    <label>Giá bán thực tế (VNĐ)</label>
-                    <input type="number" id="pricingProductPrice" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('pricingModal')">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Cập nhật giá</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- IMAGE PICKER MODAL -->
     <div class="modal" id="imagePickerModal" onclick="closeModal('imagePickerModal')">
@@ -882,4 +836,5 @@ async function logoutAdmin() {
 </script>
 
 </body>
+</html>
 </html>

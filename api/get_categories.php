@@ -2,18 +2,17 @@
 require_once '../includes/db.php';
 header('Content-Type: application/json; charset=utf-8');
 
-$sql = "SELECT id, name, type FROM tk_categories WHERE status = 'Hiển thị' ORDER BY id";
+$sql = "SELECT id, name FROM tk_categories WHERE status = 'Hiển thị' ORDER BY id";
 $result = mysqli_query($conn, $sql);
 $categories = [];
 
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
-        // Map data to match the JS expectation
         $categories[] = [
-            'id' => $row['id'],
+            'id' => (int)$row['id'],
             'name' => $row['name'],
-            'type' => strtolower($row['type']), // Just in case
-            'status' => 'active'
+            'type' => (int)$row['id'], // Map ID to type for JS compatibility
+            'status' => 'Hiển thị'
         ];
     }
     echo json_encode(['success' => true, 'categories' => $categories]);

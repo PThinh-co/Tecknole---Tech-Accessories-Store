@@ -25,7 +25,7 @@ $stmt->bind_param("si", $status, $id);
 
 if ($stmt->execute()) {
     // BƯỚC 2: ĐỒNG BỘ ẨN SẢN PHẨM TRONG DANH MỤC NẾU CẦN
-    $productStatus = ($status === 'Ẩn') ? 'Ngừng bán' : 'Đang bán';
+    $productStatus = ($status === 'Ẩn') ? 'Ẩn' : 'Hiện';
     
     // Sử dụng category_id để update sản phẩm vì database tk_products dùng id loại
     $stmt2 = $conn->prepare("UPDATE tk_products SET status = ? WHERE category_id = ?");

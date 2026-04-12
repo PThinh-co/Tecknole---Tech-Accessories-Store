@@ -12,23 +12,19 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 $data = json_decode(file_get_contents('php://input'), true);
 $id = isset($data['id']) ? (int)$data['id'] : 0;
 $name = mysqli_real_escape_string($conn, $data['name'] ?? '');
-$type = mysqli_real_escape_string($conn, $data['type'] ?? '');
-$code = mysqli_real_escape_string($conn, $data['code'] ?? '');
-$status = mysqli_real_escape_string($conn, $data['status'] ?? 'active');
+$status = mysqli_real_escape_string($conn, $data['status'] ?? 'Hiển thị');
 
-// Uniqueness checks
-$checkSql = "SELECT id FROM tk_categories WHERE (code = '$code' OR name = '$name' OR type = '$type') AND id != $id LIMIT 1";
+// Uniqueness checks (Tên)
+$checkSql = "SELECT id FROM tk_categories WHERE name = '$name' AND id != $id LIMIT 1";
 $resCheck = $conn->query($checkSql);
 if ($resCheck && $resCheck->num_rows > 0) {
-    exit(json_encode(['success' => false, 'message' => 'Lỗi: Tên, Mã hoặc Thuộc tính Thể loại đã tồn tại hoặc bị trùng!']));
+    exit(json_encode(['success' => false, 'message' => 'Lỗi: Tên danh mục đã tồn tại!']));
 }
 
-$default_profit = isset($data['default_profit']) ? (int)$data['default_profit'] : 15;
-
 if ($id > 0) {
-    $sql = "UPDATE tk_categories SET name = '$name', type = '$type', code = '$code', status = '$status', default_profit = $default_profit WHERE id = $id";
+    $sql = "UPDATE tk_categories SET name = '$name', status = '$status' WHERE id = $id";
 } else {
-    $sql = "INSERT INTO tk_categories (name, type, code, status, default_profit) VALUES ('$name', '$type', '$code', '$status', $default_profit)";
+    $sql = "INSERT INTO tk_categories (name, status) VALUES ('$name', '$status')";
 }
 
 if ($conn->query($sql)) {

@@ -29,7 +29,7 @@ if (!$ordRes || $ordRes->num_rows === 0) {
 $order = $ordRes->fetch_assoc();
 
 // Lấy chi tiết sản phẩm
-$itemSql = "SELECT i.*, p.name as product_name, p.code as product_code 
+$itemSql = "SELECT i.*, p.name as product_name 
             FROM tk_order_items i 
             LEFT JOIN tk_products p ON i.product_id = p.id 
             WHERE i.order_id = $id";

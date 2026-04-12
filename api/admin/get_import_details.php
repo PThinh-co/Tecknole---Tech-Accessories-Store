@@ -29,9 +29,9 @@ if (!$impRes || $impRes->num_rows === 0) {
 $import = $impRes->fetch_assoc();
 
 // Lấy chi tiết sản phẩm nhập
-$itemSql = "SELECT ii.*, p.name as product_name, p.code as product_code 
+$itemSql = "SELECT ii.*, p.name as product_name, p.profit_margin, p.price as current_price
             FROM tk_import_items ii 
-            LEFT JOIN tk_products p ON ii.product_id = p.id 
+            LEFT JOIN v_products_full p ON ii.product_id = p.id 
             WHERE ii.import_id = $id";
 $itemRes = $conn->query($itemSql);
 $items = [];

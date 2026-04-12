@@ -26,47 +26,21 @@ try {
     if ($import['status'] !== 'Nháp') throw new Exception("Chỉ có thể hoàn thành phiếu đang ở trạng thái 'Nháp'.");
 
     // 2. Duyệt từng sản phẩm trong phiếu nhập
-    $resItems = $conn->query("SELECT product_id, qty, cost_price FROM tk_import_items WHERE import_id = $id");
+    $resItems = $conn->query("SELECT product_id, quantity, import_price FROM tk_import_items WHERE import_id = $id");
     
     while ($item = $resItems->fetch_assoc()) {
         $p_id = (int)$item['product_id'];
-        $imp_qty = (int)$item['qty'];
-        $imp_cost = (float)$item['cost_price'];
+        $imp_qty = (int)$item['quantity'];
 
-        // Lấy dữ liệu tồn kho & giá vốn hiện tại
-        $pRes = $conn->query("SELECT stock, cost, profit FROM tk_products WHERE id = $p_id");
-        $p = $pRes->fetch_assoc();
-        if (!$p) continue;
-
-        $old_stock = (int)$p['stock'];
-        $old_cost = (float)$p['cost'];
-        $profit_margin = (int)($p['profit'] ?? 15); // Lấy tỷ lệ lợi nhuận đã lưu hoặc mặc định 15%
-
-        // TÍNH GIÁ NHẬP BÌNH QUÂN (Weighted Average Cost)
-        // Rule: (Tồn * Giá cũ + Nhập * Giá mới) / (Tổng số lượng)
-        $total_qty = $old_stock + $imp_qty;
-        
-        $new_avg_cost = $imp_cost; // Mặc định nếu trước đó chưa có hoặc tổng = 0
-        if ($total_qty > 0) {
-            $new_avg_cost = ($old_stock * $old_cost + $imp_qty * $imp_cost) / $total_qty;
-        }
-
-        // TÍNH GIÁ BÁN MỚI (Dựa trên tỷ lệ lợi nhuận đã lưu)
-        // Giá bán = Giá nhập * (100% + % Lợi nhuận)
-        $new_sale_price = round($new_avg_cost * (1 + $profit_margin / 100));
-
-        // Cập nhật Sản phẩm: Kho mới, Giá vốn bình quân mới, Giá bán mới
-        $stmtUpdateProduct = $conn->prepare("UPDATE tk_products SET stock = ?, cost = ?, price = ? WHERE id = ?");
-        $stmtUpdateProduct->bind_param("idii", $total_qty, $new_avg_cost, $new_sale_price, $p_id);
-        $stmtUpdateProduct->execute();
-        $stmtUpdateProduct->close();
+        // Cập nhật Kho (Giá vốn sẽ tự động tính từ VIEW v_product_costs sau khi đổi status phiếu)
+        $conn->query("UPDATE tk_products SET stock = stock + $imp_qty WHERE id = $p_id");
     }
 
     // 3. Cập nhật trạng thái phiếu nhập
     $conn->query("UPDATE tk_imports SET status = 'Hoàn thành' WHERE id = $id");
 
     mysqli_commit($conn);
-    echo json_encode(['success' => true, 'message' => 'Đã hoàn thành phiếu nhập. Giá vốn bình quân và Giá bán đã được tự động cập nhật!']);
+    echo json_encode(['success' => true, 'message' => 'Đã hoàn thành phiếu nhập. Kho đã được cập nhật, giá vốn bình quân sẽ tự động tính lại.']);
 
 } catch (Exception $e) {
     mysqli_rollback($conn);

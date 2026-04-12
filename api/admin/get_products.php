@@ -24,10 +24,9 @@ try {
         // Ép kiểu dữ liệu số cho JS xử lý chính xác
         $row['id'] = (int)$row['id'];
         $row['price'] = (int)$row['price'];
-        $row['old_price'] = (int)$row['old_price'];
         $row['stock'] = (int)$row['stock'];
         $row['cost'] = (int)$row['cost'];
-        $row['profit'] = (int)($row['profit'] ?? 0);
+        $row['profit_margin'] = (int)($row['profit_margin'] ?? 20);
 
         $products[] = $row;
     }

@@ -266,11 +266,5 @@
         </button>
       </div>
     </div>
-    <script src="assets/js/search-pagination.js?v=<?php echo time(); ?>"></script>
-    <!-- 
-    <script src="assets/js/product-detail.js"></script> 
-    <script src="assets/js/products-data-storage.js"></script>
-    <script src="assets/js/index-scripts.js"></script> 
-    -->
   </body>
 </html>

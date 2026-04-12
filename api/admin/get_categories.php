@@ -7,7 +7,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 }
 
 try {
-    $sql = "SELECT id, name, code, type, status FROM tk_categories ORDER BY id";
+    $sql = "SELECT id, name, status FROM tk_categories ORDER BY id";
     $result = mysqli_query($conn, $sql);
     $categories = [];
 
@@ -16,10 +16,7 @@ try {
             $categories[] = [
                 'id' => (int)$row['id'],
                 'name' => $row['name'],
-                'code' => $row['code'],
-                'type' => $row['type'],
-                'status' => $row['status'],
-                'default_profit' => (int)($row['default_profit'] ?? 15)
+                'status' => $row['status']
             ];
         }
         echo json_encode(['success' => true, 'categories' => $categories]);

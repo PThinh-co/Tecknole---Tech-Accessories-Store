@@ -8,11 +8,13 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
-$data = json_encode(file_get_contents('php://input'), true);
-if (!$data) $data = $_POST; // Fallback
-
 // Lấy dữ liệu từ JSON input
 $input = json_decode(file_get_contents('php://input'), true);
+if (!$input) {
+    // Thử lấy từ $_POST nếu không phải JSON
+    $input = $_POST;
+}
+
 $newPass = isset($input['new_password']) ? $input['new_password'] : '';
 
 if (strlen($newPass) < 6) {
@@ -20,10 +22,10 @@ if (strlen($newPass) < 6) {
     exit;
 }
 
-// Cập nhật cho user mang role 'admin'
-// Lưu ý: Ở đây ta cập nhật cho user 'admin' mặc định của hệ thống
-$stmt = mysqli_prepare($conn, "UPDATE tk_users SET password = ? WHERE role = 'admin' AND username = 'admin'");
-mysqli_stmt_bind_param($stmt, "s", $newPass);
+// Cập nhật cho admin hiện tại đang đăng nhập
+$adminUsername = $_SESSION['admin_username'];
+$stmt = mysqli_prepare($conn, "UPDATE tk_users SET password = ? WHERE role = 'admin' AND username = ?");
+mysqli_stmt_bind_param($stmt, "ss", $newPass, $adminUsername);
 
 if (mysqli_stmt_execute($stmt)) {
     echo json_encode(['success' => true, 'message' => 'Đã đổi mật khẩu thành công.']);

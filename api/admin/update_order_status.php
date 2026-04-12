@@ -34,21 +34,21 @@ try {
 
     if ($is_cancelled_now && !$was_cancelled_before) {
         // Cộng lại kho
-        $items = $conn->query("SELECT product_id, qty FROM tk_order_items WHERE order_id = $id");
+        $items = $conn->query("SELECT product_id, quantity FROM tk_order_items WHERE order_id = $id");
         while ($item = $items->fetch_assoc()) {
             $pid = $item['product_id'];
-            $qty = $item['qty'];
-            $conn->query("UPDATE tk_products SET stock = stock + $qty WHERE id = $pid");
+            $quantity = $item['quantity'];
+            $conn->query("UPDATE tk_products SET stock = stock + $quantity WHERE id = $pid");
         }
     } 
     // 3. Logic trừ lại kho (Nếu chuyển TỪ trạng thái Hủy sang trạng thái khác)
     else if (!$is_cancelled_now && $was_cancelled_before) {
         // Trừ lại kho
-        $items = $conn->query("SELECT product_id, qty FROM tk_order_items WHERE order_id = $id");
+        $items = $conn->query("SELECT product_id, quantity FROM tk_order_items WHERE order_id = $id");
         while ($item = $items->fetch_assoc()) {
             $pid = $item['product_id'];
-            $qty = $item['qty'];
-            $conn->query("UPDATE tk_products SET stock = stock - $qty WHERE id = $pid");
+            $quantity = $item['quantity'];
+            $conn->query("UPDATE tk_products SET stock = stock - $quantity WHERE id = $pid");
         }
     }
 
