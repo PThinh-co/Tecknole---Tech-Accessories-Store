@@ -38,11 +38,11 @@ try {
         $inData = $inRes->fetch_assoc();
         $total_import = isset($inData['total']) ? (int)$inData['total'] : 0;
 
-        // 3. Xuất trong kỳ
+        // 3. Xuất trong kỳ (Chỉ tính các đơn đã xác nhận hoặc đang đi giao)
         $qOut = "SELECT SUM(oi.quantity) as total FROM tk_order_items oi 
                  JOIN tk_orders o ON oi.order_id = o.id 
                  WHERE oi.product_id = $p_id 
-                 AND LOWER(o.status) NOT IN ('đã hủy', 'cancelled', 'hủy', 'failed', 'thất bại')
+                 AND o.status IN ('Đã xác nhận', 'Đang giao hàng', 'Đã giao thành công')
                  AND DATE(o.order_date) BETWEEN '$start' AND '$end'";
         $outRes = $conn->query($qOut);
         $outData = $outRes->fetch_assoc();
@@ -62,7 +62,7 @@ try {
             $fOutRes = $conn->query("SELECT SUM(oi.quantity) as total FROM tk_order_items oi 
                                      JOIN tk_orders o ON oi.order_id = o.id 
                                      WHERE oi.product_id = $p_id 
-                                     AND LOWER(o.status) NOT IN ('đã hủy', 'cancelled', 'hủy', 'failed', 'thất bại')
+                                     AND o.status IN ('Đã xác nhận', 'Đang giao hàng', 'Đã giao thành công')
                                      AND DATE(o.order_date) > '$point_date'");
             $fOutData = $fOutRes->fetch_assoc();
             $future_exports = isset($fOutData['total']) ? (int)$fOutData['total'] : 0;

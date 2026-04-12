@@ -427,7 +427,7 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                             <input type="number" class="adv-form-control" id="reportThreshold" value="20" style="height:45px; width:80px; font-size:14px; border:1px solid #f1f5f9; background:#f8fafc; border-radius:12px; text-align:center;">
                         </div>
                         <button class="adv-btn adv-btn-primary" onclick="loadInventoryReport()" style="padding:0 30px; border-radius:12px; height:45px; font-size: 14px; font-weight:700; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);">
-                             Tìm dữ liệu
+                            Tìm dữ liệu
                         </button>
                     </div>
                 </div>
@@ -436,34 +436,59 @@ $adminName = isset($_SESSION['admin_username']) ? $_SESSION['admin_username'] : 
                 <div id="urgentInventoryNotification" style="display: none; margin-bottom: 25px;"></div>
 
                 <!-- TỔNG QUAN CHỈ SỐ (STAT CARDS) -->
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px;">
-                    <div style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); padding: 24px; border-radius: 20px; color: white; display: flex; align-items: center; gap: 20px; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);">
-                        <div style="width: 56px; height: 56px; background: rgba(255,255,255,0.2); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px;">
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 30px;">
+                    <!-- Tổng loại -->
+                    <div style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); padding: 18px; border-radius: 16px; color: white; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);">
+                        <div style="width: 42px; height: 42px; background: rgba(255,255,255,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px;">
                             <i class="bi bi-boxes"></i>
                         </div>
                         <div>
-                            <div style="font-size:13px; opacity:0.8; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Tổng loại sản phẩm</div>
-                            <div id="totalReportItems" style="font-size:28px; font-weight:800;">0</div>
+                            <div style="font-size:10px; opacity:0.8; font-weight:600; text-transform:uppercase;">Số loại SP</div>
+                            <div id="totalReportItems" style="font-size:20px; font-weight:800;">0</div>
                         </div>
                     </div>
                     
-                    <div style="background: white; padding: 24px; border-radius: 20px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-                        <div style="width: 56px; height: 56px; background: #fff1f2; color:#ef4444; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px;">
+                    <!-- Hết hàng -->
+                    <div style="background: white; padding: 18px; border-radius: 16px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 42px; height: 42px; background: #fff1f2; color:#ef4444; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px;">
                             <i class="bi bi-exclamation-octagon-fill"></i>
                         </div>
                         <div>
-                            <div style="font-size:13px; color:#64748b; font-weight:600; text-transform:uppercase;">Hết hàng</div>
-                            <div id="outOfStockCount" style="font-size:28px; font-weight:800; color:#ef4444;">0</div>
+                            <div style="font-size:10px; color:#64748b; font-weight:600; text-transform:uppercase;">Hết hàng</div>
+                            <div id="outOfStockCount" style="font-size:20px; font-weight:800; color:#ef4444;">0</div>
                         </div>
                     </div>
 
-                    <div style="background: white; padding: 24px; border-radius: 20px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-                        <div style="width: 56px; height: 56px; background: #fffbeb; color:#f59e0b; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px;">
+                    <!-- Sắp hết hàng -->
+                    <div style="background: white; padding: 18px; border-radius: 16px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 42px; height: 42px; background: #fffbeb; color:#f59e0b; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px;">
                             <i class="bi bi-shield-exclamation"></i>
                         </div>
                         <div>
-                            <div style="font-size:13px; color:#64748b; font-weight:600; text-transform:uppercase;">Sắp hết hàng</div>
-                            <div id="lowStockCount" style="font-size:28px; font-weight:800; color:#f59e0b;">0</div>
+                            <div style="font-size:10px; color:#64748b; font-weight:600; text-transform:uppercase;">Cảnh báo</div>
+                            <div id="lowStockCount" style="font-size:20px; font-weight:800; color:#f59e0b;">0</div>
+                        </div>
+                    </div>
+
+                    <!-- TỔNG NHẬP TRONG KỲ -->
+                    <div style="background: white; padding: 18px; border-radius: 16px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 42px; height: 42px; background: #f0fdf4; color:#22c55e; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px;">
+                            <i class="bi bi-box-arrow-in-down"></i>
+                        </div>
+                        <div>
+                            <div style="font-size:10px; color:#64748b; font-weight:600; text-transform:uppercase;">Tổng Nhập (Kỳ)</div>
+                            <div id="totalQtyImported" style="font-size:20px; font-weight:800; color:#22c55e;">0</div>
+                        </div>
+                    </div>
+
+                    <!-- TỔNG XUẤT TRONG KỲ -->
+                    <div style="background: white; padding: 18px; border-radius: 16px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 42px; height: 42px; background: #eff6ff; color:#3b82f6; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px;">
+                            <i class="bi bi-box-arrow-up"></i>
+                        </div>
+                        <div>
+                            <div style="font-size:10px; color:#64748b; font-weight:600; text-transform:uppercase;">Tổng Xuất (Kỳ)</div>
+                            <div id="totalQtyExported" style="font-size:20px; font-weight:800; color:#3b82f6;">0</div>
                         </div>
                     </div>
                 </div>

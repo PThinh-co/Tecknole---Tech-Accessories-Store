@@ -20,9 +20,11 @@ try {
             ];
         }
         echo json_encode(['success' => true, 'categories' => $categories]);
-    } else {
+    }
+    else {
         echo json_encode(['success' => false]);
     }
-} catch (Exception $e) {
+}
+catch (Exception $e) {
     echo json_encode(['success' => false]);
 }

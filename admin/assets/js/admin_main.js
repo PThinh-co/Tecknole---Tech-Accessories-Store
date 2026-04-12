@@ -116,9 +116,9 @@ async function loadDashboard() {
                         if (o.status === 'Đã hủy' || o.status === 'cancelled') statusColor = '#ef4444';
                         if (o.status === 'Chưa xử lý' || o.status === 'pending') statusColor = '#f59e0b';
 
-                        const pmLabels = { 
-                            'cod': 'Thanh toán khi nhận hàng', 
-                            'banking': 'Chuyển khoản QR', 
+                        const pmLabels = {
+                            'cod': 'Thanh toán khi nhận hàng',
+                            'banking': 'Chuyển khoản QR',
                             'online': 'Thanh toán trực tuyến',
                             'transfer': 'Chuyển khoản ngân hàng'
                         };
@@ -181,9 +181,9 @@ async function viewDashboardOrderDetail(id) {
         const res = await fetch(`../api/admin/get_order_details.php?id=${id}`).then(r => r.json());
         if (res.success) {
             const o = res.order;
-            const pmLabels = { 
-                'cod': 'Thanh toán khi nhận hàng', 
-                'banking': 'Chuyển khoản QR', 
+            const pmLabels = {
+                'cod': 'Thanh toán khi nhận hàng',
+                'banking': 'Chuyển khoản QR',
                 'online': 'Thanh toán trực tuyến',
                 'transfer': 'Chuyển khoản ngân hàng'
             };
@@ -319,8 +319,8 @@ async function toggleUserStatus(id, current) {
         } else {
             alert('Lỗi: ' + res.message);
         }
-    } catch (e) { 
-        console.error(e); 
+    } catch (e) {
+        console.error(e);
         alert('Lỗi kết nối máy chủ.');
     }
 }
@@ -872,7 +872,7 @@ async function confirmPayment(orderId) {
         }).then(r => r.json());
         if (res.success) {
             alert('Đã xác nhận thanh toán.');
-            loadOrders();
+            initAdminData();
         } else { alert('Lỗi: ' + res.message); }
     } catch (e) { alert('Lỗi kết nối.'); }
 }
@@ -953,7 +953,7 @@ async function viewOrder(id) {
                     if (updateRes.success) {
                         alert(updateRes.message);
                         closeModal('orderModal');
-                        loadOrders();
+                        initAdminData();
                     } else alert(updateRes.message);
                 } catch (e) { console.error(e); }
             };
@@ -997,10 +997,14 @@ async function loadInventoryReport() {
         // Cập nhật Stat Cards
         const lowCount = data.filter(p => p.is_low).length;
         const outCount = data.filter(p => p.is_out).length;
+        const totalIn = data.reduce((sum, p) => sum + (p.imported || 0), 0);
+        const totalOut = data.reduce((sum, p) => sum + (p.exported || 0), 0);
 
         document.getElementById('totalReportItems').textContent = data.length;
         document.getElementById('outOfStockCount').textContent = outCount;
         document.getElementById('lowStockCount').textContent = lowCount;
+        document.getElementById('totalQtyImported').textContent = totalIn;
+        document.getElementById('totalQtyExported').textContent = totalOut;
 
         // Xử lý Thông báo khẩn cấp (Urgent Notification)
         const urgentDiv = document.getElementById('urgentInventoryNotification');
@@ -1075,6 +1079,7 @@ function closeModal(id) {
     const m = document.getElementById(id);
     if (m) m.style.display = 'none';
 }
+
 
 function openUserModal() {
     document.getElementById('userForm').reset();

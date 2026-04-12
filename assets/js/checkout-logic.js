@@ -134,10 +134,6 @@ async function loadUserInfo() {
     const addressSource = addressRadio.value;
     const isProfile = addressSource === 'profile';
 
-    document.getElementById('street').disabled = isProfile;
-    document.getElementById('province').disabled = isProfile;
-    document.getElementById('ward').disabled = isProfile;
-
     if (isProfile) {
         // Điền thông tin mặc định từ hồ sơ
         document.getElementById('receiver-name').value = window.currentUserData.fullName || window.currentUserData.fullname || '';
@@ -163,6 +159,11 @@ async function loadUserInfo() {
         await loadProvincesForCheckout();
         document.getElementById('address-desc').textContent = "Vui lòng nhập họ tên, SĐT và địa chỉ người nhận mới.";
     }
+
+    // Thiết lập trạng thái khóa/mở sau khi đã tải xong dữ liệu để tránh bị ghi đè
+    document.getElementById('street').disabled = isProfile;
+    document.getElementById('province').disabled = isProfile;
+    document.getElementById('ward').disabled = isProfile;
 }
 
 async function loadProvincesForCheckout(selectProvName = "", selectWardName = "") {

@@ -31,6 +31,10 @@ if (session_status() === PHP_SESSION_NONE) {
             <span>Tecknole</span>
           </a>
         </div>
+        <?php 
+        $current_page = basename($_SERVER['PHP_SELF']);
+        if ($current_page !== 'products.php'): 
+        ?>
         <div class="header-search">
           <form
             method="get"
@@ -50,9 +54,9 @@ if (session_status() === PHP_SESSION_NONE) {
                 }
               ?>
             </select>
-
+ 
             <div class="search-divider"></div>
-
+ 
             <input
               type="text"
               id="js-search"
@@ -65,9 +69,10 @@ if (session_status() === PHP_SESSION_NONE) {
             <button type="submit" class="submit-search">
               <i class="bi bi-search"></i> Tìm kiếm
             </button>
-
+ 
           </form>
         </div>
+        <?php endif; ?>
 
         <div class="auth-cart">
           <div id="authArea" style="display: flex; gap: 10px; align-items: center;">

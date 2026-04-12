@@ -23,12 +23,14 @@ if ($resCheck && $resCheck->num_rows > 0) {
 
 if ($id > 0) {
     $sql = "UPDATE tk_categories SET name = '$name', status = '$status' WHERE id = $id";
-} else {
+}
+else {
     $sql = "INSERT INTO tk_categories (name, status) VALUES ('$name', '$status')";
 }
 
 if ($conn->query($sql)) {
     echo json_encode(['success' => true, 'id' => ($id > 0 ? $id : $conn->insert_id)]);
-} else {
+}
+else {
     echo json_encode(['success' => false, 'message' => $conn->error]);
 }
