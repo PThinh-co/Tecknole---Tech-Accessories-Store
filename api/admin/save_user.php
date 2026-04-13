@@ -24,6 +24,39 @@ if (!$id && (empty($username) || empty($fullname) || empty($password))) {
     exit;
 }
 
+// Kiểm tra quyền hạn (Role check)
+$myRole = $_SESSION['admin_role'] ?? 'admin';
+$myId = $_SESSION['admin_user_id'] ?? 0;
+
+// 1. Không ai có thể tạo/sửa thành role super_admin (trừ khi can thiệp DB trực tiếp)
+if ($role === 'super_admin') {
+    exit(json_encode(['success' => false, 'message' => 'Hệ thống bảo vệ: Không thể thiết lập quyền Tối cao qua giao diện.']));
+}
+
+// 2. Admin thường không được phép tạo/sửa người khác thành role admin
+if ($myRole === 'admin' && $role === 'admin') {
+    exit(json_encode(['success' => false, 'message' => 'Hệ thống bảo vệ: Bạn không có quyền cấp quyền Quản trị viên.']));
+}
+
+// 3. Nếu là cập nhật, kiểm tra role của đối tượng bị sửa
+if ($id > 0) {
+    $targetRes = $conn->query("SELECT role FROM tk_users WHERE id = $id");
+    $targetUser = $targetRes->fetch_assoc();
+    if (!$targetUser) {
+        exit(json_encode(['success' => false, 'message' => 'Người dùng không tồn tại.']));
+    }
+    
+    // Bảo vệ Super Admin
+    if ($targetUser['role'] === 'super_admin') {
+        exit(json_encode(['success' => false, 'message' => 'Hệ thống bảo vệ: Không thể sửa tài khoản Tối cao.']));
+    }
+    
+    // Admin không được sửa Admin khác
+    if ($myRole === 'admin' && $targetUser['role'] === 'admin') {
+        exit(json_encode(['success' => false, 'message' => 'Hệ thống bảo vệ: Bạn không có quyền sửa tài khoản Quản trị viên khác.']));
+    }
+}
+
 try {
     if ($id > 0) {
         // UPDATE

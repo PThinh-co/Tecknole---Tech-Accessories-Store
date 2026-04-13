@@ -19,7 +19,7 @@ try {
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
         
-        if ($user['role'] !== 'admin') {
+        if ($user['role'] !== 'admin' && $user['role'] !== 'super_admin') {
             echo json_encode(['success' => false, 'message' => 'Tài khoản không có quyền quản trị.']);
             exit;
         }

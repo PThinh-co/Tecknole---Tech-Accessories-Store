@@ -18,7 +18,11 @@ async function initAdminData() {
             fetch('../api/admin/get_products.php').then(r => r.json())
         ]);
 
-        if (resUsers.success) window.adminUsers = resUsers.users;
+        if (resUsers.success) {
+            window.adminUsers = resUsers.users;
+            window.currentUserRole = resUsers.current_role;
+            window.currentUserId = resUsers.current_id;
+        }
         if (resCats.success) window.adminCategories = resCats.categories;
         if (resProducts.success) window.adminProducts = resProducts.products;
 
@@ -262,8 +266,24 @@ function loadUsers() {
     }
 
     tableBody.innerHTML = users.map(u => {
-        const statusClass = u.status === 'active' ? 'badge-active' : 'badge-locked';
-        const roleLabel = u.role === 'admin' ? '<span style="color:#ef4444; font-weight:bold;">Quản trị viên</span>' : '<span style="color:#3b82f6;">Khách hàng</span>';
+        const isStatusActive = u.status === 'active';
+        const statusClass = isStatusActive ? 'badge-active' : 'badge-locked';
+        
+        let roleLabel = '<span style="color:#3b82f6;">Khách hàng</span>';
+        if (u.role === 'super_admin') roleLabel = '<span style="color:#9333ea; font-weight:bold;">Quản trị cao</span>';
+        else if (u.role === 'admin') roleLabel = '<span style="color:#ef4444; font-weight:bold;">Quản trị viên</span>';
+
+        // Logic phân quyền:
+        // 1. Không ai có thể quản lý người có role là super_admin (kể cả chính họ ở đây)
+        // 2. Super_admin có thể quản lý admin và user
+        // 3. Admin chỉ có thể quản lý user
+        
+        let canManage = false;
+        if (window.currentUserRole === 'super_admin') {
+            if (u.role !== 'super_admin') canManage = true;
+        } else if (window.currentUserRole === 'admin') {
+            if (u.role === 'user') canManage = true;
+        }
 
         return `
             <tr>
@@ -272,15 +292,15 @@ function loadUsers() {
                 <td>${u.username}</td>
                 <td>${u.email || 'N/A'}</td>
                 <td>${roleLabel}</td>
-                <td><span class="badge ${statusClass}">${u.status === 'active' ? 'Hoạt động' : 'Đã khóa'}</span></td>
+                <td><span class="badge ${statusClass}">${isStatusActive ? 'Hoạt động' : 'Đã khóa'}</span></td>
                 <td>
-                    ${u.role === 'admin' ? '<span style="color:#94a3b8; font-style:italic; font-size:11px;">Hệ thống bảo vệ (Admin)</span>' : `
+                    ${!canManage ? '<span style="color:#94a3b8; font-style:italic; font-size:11px;">Hệ thống bảo vệ</span>' : `
                     <div style="display: flex; gap: 4px;">
                         <button class="adv-btn adv-btn-gray" style="padding: 4px 8px; font-size: 11px;" onclick="toggleUserStatus(${u.id}, '${u.status}')">
-                            ${u.status === 'active' ? 'Khóa tài khoản' : 'Mở tài khoản'}
+                            ${u.status === 'active' ? 'Khóa' : 'Mở'}
                         </button>
                         <button class="adv-btn adv-btn-warning" style="padding: 4px 8px; font-size: 11px; background-color: #f59e0b; color: white;" onclick="resetUserPassword(${u.id})">
-                             Khởi tạo lại Mật Khẩu
+                             Mật khẩu
                         </button>
                     </div>`}
                 </td>
@@ -1096,6 +1116,16 @@ function openUserModal() {
     document.getElementById('userPassword').required = true;
     document.getElementById('userConfirmPassword').required = true;
     document.getElementById('userFullname').required = true;
+
+    // Phân quyền chọn Role
+    const roleSelect = document.getElementById('userRole');
+    if (roleSelect) {
+        let options = '<option value="user">Khách hàng (User)</option>';
+        if (window.currentUserRole === 'super_admin') {
+            options += '<option value="admin">Quản trị viên (Admin)</option>';
+        }
+        roleSelect.innerHTML = options;
+    }
 
     document.getElementById('userModal').style.display = 'flex';
 }

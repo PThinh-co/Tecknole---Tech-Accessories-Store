@@ -23,6 +23,26 @@ if (strlen($newPass) < 6) {
     exit;
 }
 
+// Kiểm tra quyền hạn (Role check)
+$targetRes = $conn->query("SELECT role FROM tk_users WHERE id = $id");
+$targetUser = $targetRes->fetch_assoc();
+if (!$targetUser) {
+    exit(json_encode(['success' => false, 'message' => 'Người dùng không tồn tại.']));
+}
+
+$myRole = $_SESSION['admin_role'] ?? 'admin';
+$targetRole = $targetUser['role'];
+
+// Bảo vệ Super Admin
+if ($targetRole === 'super_admin') {
+    exit(json_encode(['success' => false, 'message' => 'Hệ thống bảo vệ: Không thể tác động lên tài khoản Tối cao.']));
+}
+
+// Nếu là Admin thường thì không được tác động lên Admin khác
+if ($myRole === 'admin' && $targetRole === 'admin') {
+    exit(json_encode(['success' => false, 'message' => 'Hệ thống bảo vệ: Bạn không có quyền tác động lên Quản trị viên khác.']));
+}
+
 $stmt = mysqli_prepare($conn, "UPDATE tk_users SET password = ? WHERE id = ?");
 mysqli_stmt_bind_param($stmt, "si", $newPass, $id);
 
