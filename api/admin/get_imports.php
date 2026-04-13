@@ -18,7 +18,7 @@ try {
     if ($end) $sql .= " AND DATE(import_date) <= '" . mysqli_real_escape_string($conn, $end) . "'";
     if ($status) $sql .= " AND status = '" . mysqli_real_escape_string($conn, $status) . "'";
     
-    $sql .= " ORDER BY import_date DESC";
+    $sql .= " ORDER BY import_date DESC, id DESC";
     $result = $conn->query($sql);
     
     $imports = [];

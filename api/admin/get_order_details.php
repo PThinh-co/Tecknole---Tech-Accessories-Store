@@ -32,7 +32,8 @@ $order = $ordRes->fetch_assoc();
 $itemSql = "SELECT i.*, p.name as product_name 
             FROM tk_order_items i 
             LEFT JOIN tk_products p ON i.product_id = p.id 
-            WHERE i.order_id = $id";
+            WHERE i.order_id = $id 
+            ORDER BY i.id ASC";
 $itemRes = $conn->query($itemSql);
 $items = [];
 if ($itemRes && $itemRes->num_rows > 0) {

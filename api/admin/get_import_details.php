@@ -32,7 +32,8 @@ $import = $impRes->fetch_assoc();
 $itemSql = "SELECT ii.*, p.name as product_name, p.profit_margin, p.price as current_price
             FROM tk_import_items ii 
             LEFT JOIN v_products_full p ON ii.product_id = p.id 
-            WHERE ii.import_id = $id";
+            WHERE ii.import_id = $id 
+            ORDER BY ii.id ASC";
 $itemRes = $conn->query($itemSql);
 $items = [];
 if ($itemRes && $itemRes->num_rows > 0) {

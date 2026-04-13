@@ -13,7 +13,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
-$sql = "SELECT * FROM tk_orders ORDER BY order_date DESC";
+$sql = "SELECT * FROM tk_orders ORDER BY order_date DESC, id DESC";
 $result = $conn->query($sql);
 
 $orders = [];
